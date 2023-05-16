@@ -81,7 +81,7 @@ scene.add(hitbox);
 
 // Ticket
 const textureLoader = new TextureLoader();
-const paperTexture = textureLoader.load('../assets/images/background-card-map.png');
+const paperTexture = textureLoader.load('/assets/images/background-card-map.png');
 
 const ticketGeo = new BoxGeometry(0.1, 0.005, 0.5);
 const ticketMat = new MeshLambertMaterial( {color: 0xE0C9A6} );

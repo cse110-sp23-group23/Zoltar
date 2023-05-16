@@ -14,7 +14,7 @@ function init() {
 	backgroundSource.connect(gainNode);
 	gainNode.connect(audioContext.destination);
 
-	fetch('../assets/audio/background.wav')
+	fetch('/assets/audio/background.wav')
     .then((response) => response.arrayBuffer())
     .then((data) => audioContext.decodeAudioData(data))
     .then((buffer) => {
