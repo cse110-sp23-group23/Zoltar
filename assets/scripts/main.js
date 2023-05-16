@@ -151,6 +151,7 @@ function init() {
 	window.addEventListener('click', shootRay);
 }
 
+// TODO: Fix this code by moving it into animate() and using Clock
 let flickering = false;
 function flicker(count) {
 	if (count === undefined || count <= 0) {
