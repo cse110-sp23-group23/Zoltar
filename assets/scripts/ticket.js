@@ -4,14 +4,28 @@ document.addEventListener('DOMContentLoaded', init);
 
 let ticket = {};
 
+/**
+ * Gets whether or not fortune card is currently on screen
+ * @param none
+ * @returns { boolean } 
+ */
 function isTicketCurrentlyDisplayed() {
 	return !ticket.main.classList.contains('hidden-animation');
 }
 
+/**
+ * Gets whether or not fortune card is currently displaying rear face
+ * @param none
+ * @returns { boolean }
+ */
 function isTicketCurrentlyFlipped() {
 	return !ticket.main.classList.contains('ticket-hoverable');
 }
 
+/**
+ * Slides ticket off screen
+ * @param none
+ */
 function toggleTicketOff() {
 	ticket.main.classList.add('hidden-animation');
 	ticket.main.classList.remove('ticket-hoverable');
@@ -22,6 +36,7 @@ function toggleTicketOff() {
 	}, ANIMATION_LENGTH_MS);
 }
 
+// hide ticket when user hits escape and card currently shown
 window.addEventListener('keydown', (event) => {
 	if (event.key === 'Escape' && isTicketCurrentlyDisplayed()
 		&& isTicketCurrentlyFlipped()) {
@@ -29,6 +44,10 @@ window.addEventListener('keydown', (event) => {
 	}
 });
 
+/**
+ * Slides ticket up from bottom of screen
+ * @param none
+ */
 function toggleTicketOn() {
 	ticket.main.classList.remove('hidden-animation');
 	setTimeout(() => {
@@ -36,6 +55,10 @@ function toggleTicketOn() {
 	}, ANIMATION_LENGTH_MS);
 }
 
+/**
+ * Starting from image face of ticket, flip
+ * @param none
+ */
 function flipTicket() {
 	if (isTicketCurrentlyFlipped()) {
 		return; 

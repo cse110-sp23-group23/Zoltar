@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', init);
 
 let backgroundSource;
 
+/**
+ * Starts background noise, fading in over 5 seconds
+ * @param none
+ */
 function playBackgroundNoise() {
 	backgroundSource.start();
 }
@@ -20,8 +24,8 @@ function init() {
     .then((buffer) => {
 		backgroundSource.buffer = buffer;
 		backgroundSource.loop = true;
-		gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-		gainNode.gain.linearRampToValueAtTime(1, audioContext.currentTime + 10);
+		gainNode.gain.setValueAtTime(0.0001, audioContext.currentTime);
+		gainNode.gain.exponentialRampToValueAtTime(1, audioContext.currentTime + 5);
     });
 }
 

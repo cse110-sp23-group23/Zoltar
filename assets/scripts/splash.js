@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', init);
 
 let splash, loadedMessage;
 
+/**
+ * Adds event listeners to trigger dismissal of splash screen
+ * and enabling of controls on any user input (key/mouse)
+ * @param {LockedControls} controls object containing controls
+ */
 function loaded(controls) {
 	let go = () => {
 		splash.classList.add('hidden');
