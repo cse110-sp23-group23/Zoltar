@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Zoltar! fortune teller. See your future, if you dare...">
+	<meta name="keywords" content="Zoltar, Fortune, Magic, Future, Prophecy">
+	<meta name="author" content="Team 23, UCSD CSE 110 Spring 2023">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Zoltar!</title>
+	<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="assets/styles/ticket.css">
+	<link rel="stylesheet" type="text/css" href="assets/styles/pagestyles.css">
+	<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+	<script type="importmap">
+		{
+			"imports": {
+			"three": "https://unpkg.com/three@v0.152.2/build/three.module.js",
+			"three/addons/": "https://unpkg.com/three@v0.152.2/examples/jsm/"
+			}
+		}
+	</script>
+</head>
+<body class="custom-mouse">
+	<section id="splash-screen">
+		<div class="titles">
+			<h1 class="splash-title">ZOLTAR!</h1>
+			<h4 class="loaded-message">loading...</h4>
+		</div>
+	</section>
+	<!--begin ticket-->
+	<div class="ticket-wrapper hidden-animation">
+		<div class="ticket-background">
+			<!--start background SVG-->
+			<div class="ticket-weathered-background">
+				<svg style="display: none;">
+					<defs>
+					<filter id="weathered-edges" x="0" y="0" width="100%" height="100%">
+						<feTurbulence baseFrequency="0.04" numOctaves="5" seed="10" type="fractalNoise" result="turbulence" />
+						<feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R" yChannelSelector="G" />
+					</filter>
+					</defs>
+				</svg>
+			</div>
+			<!--end SVG-->
+		</div>
+		<div class="ticket-back-content"></div>
+		<div class="ticket-front-content flipped">
+			<img src="assets/images/horizontalrule.png" class="rule top">
+			<button id="close-ticket">
+				<img src="assets/images/close.png">
+			</button>
+			<p class="ticket-title">YOUR FORTUNE</p>
+			<img src="assets/images/header.png" class="ticket-header-image">
+			<p class="ticket-text" id="fortune-content">Zoltar foresees a fateful encounter with a one-eyed, bow-tied llama, revealing an ancient guacamole recipe. This divine discovery shall bring world peace and avocado enlightenment. Trust the llama's wisdom.</p>
+			<p class="ticket-text">Your lucky numbers are 12, 14, 37, and 72.</p>
+			<img src="assets/images/horizontalrule.png" class="rule bottom">
+		</div>
+	</div>	
+	<!--end ticket-->
+	
+	<script type="module" src="assets/scripts/LockedControls.js"></script>
+	<script type="module" src="assets/scripts/ticket.js"></script>
+	<script type="module" src="assets/scripts/fortunes.js"></script>
+	<script type="module" src="assets/scripts/splash.js"></script>
+	<script type="module" src="assets/scripts/noise.js"></script>
+	<script type="module" src="assets/scripts/main.js"></script>
+</body>
+</html>
