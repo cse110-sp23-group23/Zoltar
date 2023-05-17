@@ -10,7 +10,7 @@ let audioContext;
  */
 function playBackgroundNoise() {
 	gainNode.gain.setValueAtTime(0.0001, audioContext.currentTime);
-	gainNode.gain.exponentialRampToValueAtTime(1, audioContext.currentTime + 5);
+	gainNode.gain.linearRampToValueAtTime(1, audioContext.currentTime + 3);
 	backgroundSource.start();
 }
 
