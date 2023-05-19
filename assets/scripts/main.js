@@ -19,7 +19,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { LockedControls } from './LockedControls.js';
 import { isTicketCurrentlyDisplayed, isTicketCurrentlyFlipped, toggleTicketOn } from './ticket.js';
 import { loaded } from './splash.js';
-import { produceFortune } from './fortunes.js';
+import { createFortuneOnTicket } from './fortunes.js';
 
 // Load 3D scene
 const scene = new Scene(); 
@@ -129,7 +129,7 @@ function shootRay(event) {
 }
 
 function buttonAdd() {
-	produceFortune();
+	createFortuneOnTicket();
 	scene.remove(ticket);
 	ticketSpawned = false;
 	controls.enabled = false;

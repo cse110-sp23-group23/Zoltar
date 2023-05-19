@@ -20,7 +20,7 @@ function loaded(controls) {
 	window.addEventListener('mousedown', go);
 	window.addEventListener('keydown', go);
 	loadedMessage.innerText = '[ press anywhere to continue ]'
-}
+} /* loaded */
 
 function init() {
 	splash = document.querySelector('#splash-screen');

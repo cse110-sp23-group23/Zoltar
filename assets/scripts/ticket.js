@@ -11,7 +11,7 @@ let ticket = {};
  */
 function isTicketCurrentlyDisplayed() {
 	return !ticket.main.classList.contains('hidden-animation');
-}
+} /* isTicketCurrentlyDisplayed */
 
 /**
  * Gets whether or not fortune card is currently displaying rear face
@@ -20,7 +20,7 @@ function isTicketCurrentlyDisplayed() {
  */
 function isTicketCurrentlyFlipped() {
 	return !ticket.main.classList.contains('ticket-hoverable');
-}
+} /* isTicketCurrentlyFlipped */
 
 /**
  * Slides ticket off screen
@@ -34,15 +34,7 @@ function toggleTicketOff() {
 		ticket.front.classList.add('flipped');
 		ticket.back.classList.remove('flipped');
 	}, ANIMATION_LENGTH_MS);
-}
-
-// hide ticket when user hits escape and card currently shown
-window.addEventListener('keydown', (event) => {
-	if (event.key === 'Escape' && isTicketCurrentlyDisplayed()
-		&& isTicketCurrentlyFlipped()) {
-		toggleTicketOff();
-	}
-});
+} /* toggleTicketOff */
 
 /**
  * Slides ticket up from bottom of screen
@@ -53,7 +45,7 @@ function toggleTicketOn() {
 	setTimeout(() => {
 		ticket.main.classList.add('ticket-hoverable');
 	}, ANIMATION_LENGTH_MS);
-}
+} /* toggleTicketOn */
 
 /**
  * Starting from image face of ticket, flip
@@ -67,7 +59,15 @@ function flipTicket() {
 	ticket.background.classList.add('flipped');
 	ticket.front.classList.toggle('flipped');
 	ticket.back.classList.toggle('flipped');
-}
+} /* flipTicket */
+
+// hide ticket when user hits escape and card currently shown
+window.addEventListener('keydown', (event) => {
+	if (event.key === 'Escape' && isTicketCurrentlyDisplayed()
+		&& isTicketCurrentlyFlipped()) {
+		toggleTicketOff();
+	}
+});
 
 function init() {
 	ticket = {

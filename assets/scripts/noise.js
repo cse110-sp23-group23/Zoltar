@@ -8,7 +8,7 @@ let backgroundSource;
  */
 function playBackgroundNoise() {
 	backgroundSource.start();
-}
+} /* playBackgroundNoise */
 
 function init() {
 	// background noise setup
