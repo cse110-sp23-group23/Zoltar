@@ -1,4 +1,5 @@
-import data from '../json/responses.json' assert { type: "json" };
+let data = undefined;
+fetch('assets/json/responses.json').then(response => response.json()).then(json => data = json);
 
 let fortuneText;
 
@@ -10,12 +11,15 @@ document.addEventListener('DOMContentLoaded', init);
  * @param none
  */
 function produceFortune() {
-	const fortune = data.fortunes[Math.floor(Math.random() * data.fortunes.length)].message;
-	fortuneText.innerText = fortune;
+    if (data === undefined) {
+        fortuneText.innerText = 'Fortunes are not claer...';
+    }
+    const fortune = data.fortunes[Math.floor(Math.random() * data.fortunes.length)].message;
+    fortuneText.innerText = fortune;
 }
 
 function init() {
-	fortuneText = document.querySelector('#fortune-content');
+    fortuneText = document.querySelector('#fortune-content');
 }
 
-export { produceFortune }; 
+export { produceFortune };
