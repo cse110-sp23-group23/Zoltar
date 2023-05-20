@@ -1,13 +1,11 @@
 import data from '../json/responses.json' assert { type: "json" };
 
-let fortuneText;
-let fortuneNumbers;
+let fortuneText, fortuneNumbers;
 
 document.addEventListener('DOMContentLoaded', init);
 
 /**
- * Replaces text on card in DOM with new fortune and new list of 
- * 		lucky numbers.
+ * Replaces text on card in DOM with new fortune and new list of lucky numbers.
  * @param none
  */
 function createFortuneOnTicket() {

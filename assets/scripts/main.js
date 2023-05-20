@@ -26,10 +26,7 @@ const scene = new Scene();
 
 // Loading manager
 const manager = new LoadingManager();
-
-manager.onLoad = function ( ) {	
-	loaded(controls);
-};
+manager.onLoad = () => { loaded(controls); };
 
 // Load camera perspective
 const camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
@@ -175,7 +172,7 @@ function shake() {
 	shakeDuration = 1;
 }
 
-let slideTowardDefault = false;
+let slideCameraTowardDefault = false;
 
 function animate() {
 	if (Math.random() < 0.005 && flickering === false) {
@@ -196,9 +193,9 @@ function animate() {
         }
     }
 
-	if (slideTowardDefault) {
+	if (slideCameraTowardDefault) {
 		if (camera.position.equals(defaultCameraPos)) {
-			slideTowardDefault = false;
+			slideCameraTowardDefault = false;
 		}
 		const adjustment = defaultCameraPos.clone().sub(camera.position).multiplyScalar(0.05);
 		camera.position.add(adjustment);
