@@ -26,7 +26,7 @@ function produceFortune() {
  * Places fortune into DOM
  * @param { String } text text to place (default to 'Hmmm... my vision is cloudy')
  */
-function placeFortune(text = 'Hmmm... my visiion is cloudy') {
+function placeFortune(text = 'Hmmm... my vision is cloudy') {
 	fortuneText.innerText = text;
 } /* placeFortune */
 
