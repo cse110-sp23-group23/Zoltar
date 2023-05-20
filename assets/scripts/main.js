@@ -1,19 +1,19 @@
 import {
-	Scene,
-	PerspectiveCamera,
-	WebGLRenderer,
-	Raycaster,
-	Vector2,
-	SpotLight,
 	AmbientLight,
 	BoxGeometry,
+	Clock,
+	LoadingManager,
+	Mesh,
 	MeshBasicMaterial,
 	MeshLambertMaterial,
+	PerspectiveCamera,
+	Raycaster,
+	Scene,
+	SpotLight,
 	TextureLoader,
-	Mesh,
-	LoadingManager,
+	Vector2,
 	Vector3,
-	Clock,
+	WebGLRenderer,
 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { LockedControls } from './LockedControls.js';

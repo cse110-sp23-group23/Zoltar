@@ -25,7 +25,7 @@ function init() {
 		backgroundSource.buffer = buffer;
 		backgroundSource.loop = true;
 		gainNode.gain.setValueAtTime(0.0001, audioContext.currentTime);
-		gainNode.gain.exponentialRampToValueAtTime(1, audioContext.currentTime + 5);
+		gainNode.gain.exponentialRampToValueAtTime(0.1, audioContext.currentTime + 5);
     });
 }
 
