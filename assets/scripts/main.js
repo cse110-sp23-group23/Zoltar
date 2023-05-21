@@ -52,7 +52,7 @@ camera.lookAt(48.3, -16.1, 79.7);
 
 // Load renderer
 const renderer = new WebGLRenderer({ alpha: false });
-renderer.setClearColor(0x000000); // black
+renderer.setClearColor(0x000000);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);

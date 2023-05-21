@@ -1,0 +1,14 @@
+{
+  "name": "zoltar",
+  "version": "1.0.0",
+  "description": "Site: https://cse110-sp23-group23.github.io/Zoltar/",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^29.5.0"
+  }
+}
