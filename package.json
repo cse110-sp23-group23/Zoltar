@@ -4,7 +4,7 @@
   "description": "Site: https://cse110-sp23-group23.github.io/Zoltar/",
   "type": "module",
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "lint:js": "eslint assets/scripts/*.js",
     "lint": "npm run lint:js"
   },
