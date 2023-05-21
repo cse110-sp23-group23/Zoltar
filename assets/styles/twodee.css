@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+#zoltar-image {
+    height: 100vh;
+    z-index: 2;
+}
+
+#wood-background {
+    position: absolute;
+    z-index: 1;
+
+}
