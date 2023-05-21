@@ -34,3 +34,4 @@ jobs:
         author_email: noreply@github.com
         message: 'Generated JSDocs'
         add: 'jsdocs/*'
+        token: ${{ secrets.GITHUB_TOKEN }}
