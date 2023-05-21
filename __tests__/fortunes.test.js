@@ -1,8 +1,5 @@
 import { jest } from '@jest/globals';
 import { produceFortune } from '../assets/scripts/fortunes';
-import fetch from 'node-fetch';
-
-global.fetch = fetch;
 
 describe("produceFortune", () => {
   test('should return a nonempty string', () => {
