@@ -6,12 +6,6 @@
   "scripts": {
     "test": "jest"
   },
-  "author": "",
-  "license": "MIT",
-  "name": "zoltar",
-  "scripts": {
-    "test": "jest"
-  },
   "jest": {
     "verbose": true
   },
