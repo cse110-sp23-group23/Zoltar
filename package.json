@@ -8,7 +8,7 @@
   },
   "jest": {
     "verbose": true,
-    "testEnvironment": 'jest-environment-node',
+    "testEnvironment": "jest-environment-node",
     "transform": {}
   },
   "devDependencies": {
