@@ -13,6 +13,9 @@ jobs:
     - run: npm install --save-dev node-fetch
     - run: npm install -D jest-environment-jsdom
     - run: npm ci -l verbose
-    - run: npm run test --passWithNoTests
+    - name: Run TESTS
+      run: npm run test --passWithNoTests
       env:
         NODE_OPTIONS: --experimental-vm-modules
+    - name: Run ESLINT
+      run: eslint . --ext .js,.jsx,.ts,.tsx
