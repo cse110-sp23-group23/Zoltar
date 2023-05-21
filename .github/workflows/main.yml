@@ -15,7 +15,7 @@ jobs:
     - run: npm install eslint
     - run: npm ci -l verbose
     - name: Run TESTS
-      run: npm run test --passWithNoTests
+      run: npm run test
       env:
         NODE_OPTIONS: --experimental-vm-modules
     - name: Run ESLINT
