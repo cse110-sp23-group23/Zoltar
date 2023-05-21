@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "lint:js": "eslint assets/scripts/*.js",
+    "lint:js": "eslint assets/scripts/*.js --fix",
     "lint": "npm run lint:js"
   },
   "jest": {
