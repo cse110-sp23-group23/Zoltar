@@ -13,4 +13,5 @@ jobs:
       with:
         node-version: '18'
     - run: npm ci -l verbose
+    - run: node --experimental-vm-modules
     - run: npm run test --passWithNoTests
