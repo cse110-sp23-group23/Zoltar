@@ -8,7 +8,7 @@ import {
 	MathUtils,
 	Spherical,
 	Vector3,
-} from 'three';
+} from 'three'; // eslint-disable-line import/no-unresolved
 
 const lookDirection = new Vector3();
 const spherical = new Spherical();
@@ -18,7 +18,7 @@ function contextmenu(event) {
 	event.preventDefault();
 }
 
-export class LockedControls {
+export default class LockedControls {
 	constructor(object, domElement) {
 		this.object = object;
 		this.domElement = domElement;
@@ -120,14 +120,6 @@ export class LockedControls {
 			};
 		})();
 
-		this.dispose = () => {
-			this.domElement.removeEventListener('contextmenu', contextmenu);
-			this.domElement.removeEventListener('pointerdown', onPointerDown);
-			this.domElement.removeEventListener('pointermove', onPointerMove);
-			this.domElement.removeEventListener('pointerup', onPointerUp);
-			window.removeEventListener('resize', this.handleResize);
-		};
-
 		const onPointerMove = this.onPointerMove.bind(this);
 		const onPointerDown = this.onPointerDown.bind(this);
 		const onPointerUp = this.onPointerUp.bind(this);
@@ -136,6 +128,14 @@ export class LockedControls {
 		this.domElement.addEventListener('pointerdown', onPointerDown);
 		this.domElement.addEventListener('pointermove', onPointerMove);
 		this.domElement.addEventListener('pointerup', onPointerUp);
+
+		this.dispose = () => {
+			this.domElement.removeEventListener('contextmenu', contextmenu);
+			this.domElement.removeEventListener('pointerdown', onPointerDown);
+			this.domElement.removeEventListener('pointermove', onPointerMove);
+			this.domElement.removeEventListener('pointerup', onPointerUp);
+			window.removeEventListener('resize', this.handleResize);
+		};
 
 		this.handleResize();
 		setOrientation(this);

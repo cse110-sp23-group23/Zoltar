@@ -21,7 +21,10 @@
     },
     "env": {
       "browser": true
-    }
+    },
+    "import/extensions": ["error", "ignorePackages", {
+      "js": "always"
+    }]
   },
   "devDependencies": {
     "jest": "^29.5",

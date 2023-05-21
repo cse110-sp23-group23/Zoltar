@@ -14,9 +14,10 @@ import {
 	Vector2,
 	Vector3,
 	WebGLRenderer,
-} from 'three';
+} from 'three'; // eslint-disable-line import/no-unresolved
+// eslint-disable-next-line import/no-unresolved
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { LockedControls } from './LockedControls.js';
+import LockedControls from './LockedControls.js';
 import { isTicketCurrentlyDisplayed, isTicketCurrentlyFlipped, toggleTicketOn } from './ticket.js';
 import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
@@ -34,12 +35,18 @@ const options = {
 	cameraSlide: {
 		speed: 0.05,
 	},
+	currentShakeDuration: 0,
+	currentFlickerCount: 0,
+	slideCameraTowardDefault: false,
 };
 
 // Load 3D scene and necesary objects
 const scene = new Scene();
 const clock = new Clock();
 const manager = new LoadingManager();
+const raycaster = new Raycaster();
+const pointer = new Vector2();
+const textureLoader = new TextureLoader();
 
 // Load camera perspective
 const camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
@@ -75,10 +82,6 @@ loader.load('assets/models/fixedangle.glb', (gltf) => {
 	scene.add(object);
 });
 
-// 3D event listeners
-const raycaster = new Raycaster();
-const pointer = new Vector2();
-
 // Ticket dispenser hitbox
 const hitboxGeo = new BoxGeometry(0.2, 0.11, 0.005);
 const hitboxMat = new MeshBasicMaterial({ color: 0xff0000 });
@@ -90,7 +93,6 @@ hitbox.rotateY(0.5);
 scene.add(hitbox);
 
 // Ticket
-const textureLoader = new TextureLoader();
 const paperTexture = textureLoader.load('./assets/images/background-card-map.png');
 
 const ticketGeo = new BoxGeometry(0.1, 0.005, 0.5);
@@ -105,26 +107,35 @@ let ticketSpawned = false;
 window.addEventListener('keydown', (event) => {
 	if (event.key === ' ' && !isTicketCurrentlyDisplayed() && controls.enabled && !ticketSpawned) {
 		ticketSpawned = true;
-		shakeDuration = 1;
+		options.currentShakeDuration = 1;
 		setTimeout(() => {
 			scene.add(ticket);
 		}, 1000);
 	}
 });
 
-// Flickering lights
+// Light creation
 const spotLight = new SpotLight(0xfff5b6, 3);
+const ambient = new AmbientLight(0xffffff, 0.03);
+
+// Light placement
 spotLight.position.set(-8.4, 3.4, -7);
-spotLight.castShadow = true;
+spotLight.target.position.set(-2.5, 1, -0.3);
+spotLight.angle = Math.PI / 20;
 spotLight.penumbra = 1;
 spotLight.distance = 30;
-spotLight.target.position.set(-2.5, 1, -0.3);
+spotLight.castShadow = true;
 scene.add(spotLight.target);
-spotLight.angle = Math.PI / 20;
 scene.add(spotLight);
-
-const ambient = new AmbientLight(0xffffff, 0.03);
 scene.add(ambient);
+
+function addCardToScene() {
+	createFortuneOnTicket();
+	toggleTicketOn();
+	scene.remove(ticket);
+	ticketSpawned = false;
+	controls.enabled = false;
+}
 
 // Test if hitbox is clicked on
 function shootRay(event) {
@@ -134,38 +145,12 @@ function shootRay(event) {
 	raycaster.setFromCamera(pointer, camera);
 	const intersects = raycaster.intersectObjects([hitbox, ticket]);
 	if (intersects.length > 0 && ticketSpawned) {
-		buttonAdd();
+		addCardToScene();
 	}
-}
-
-function buttonAdd() {
-	createFortuneOnTicket();
-	scene.remove(ticket);
-	ticketSpawned = false;
-	controls.enabled = false;
-	toggleTicketOn();
 }
 
 // When loaded, tell splash
 manager.onLoad = () => { tellPageLoaded(controls); };
-
-function init() {
-	const buttonRemove = document.querySelector('#close-ticket');
-	buttonRemove.addEventListener('click', () => { controls.enabled = true; });
-	window.addEventListener('keydown', (event) => {
-		if (event.key === 'Escape' && isTicketCurrentlyFlipped()) {
-			controls.enabled = true;
-		}
-	});
-
-	window.addEventListener('click', shootRay);
-}
-document.addEventListener('DOMContentLoaded', init);
-
-// Endpoints
-let shakeDuration = 0;
-let slideCameraTowardDefault = false;
-let flickerCount = 0;
 
 // Working variables
 let curFlickerOn = false;
@@ -176,20 +161,20 @@ const shakeDeltaVec = new Vector3();
 function animate() {
 	const delta = clock.getDelta();
 
-	if (shakeDuration > 0) {
+	if (options.currentShakeDuration > 0) {
 		shakeDeltaVec.random().subScalar(0.5).multiply(options.shake.intensity);
 		camera.position.add(shakeDeltaVec);
-		shakeDuration -= delta;
-		if (shakeDuration <= 0) {
-			slideCameraTowardDefault = true;
+		options.currentShakeDuration -= delta;
+		if (options.currentShakeDuration <= 0) {
+			options.slideCameraTowardDefault = true;
 		}
 	}
 
 	flickerTime += delta;
-	if (flickerCount === 0 && Math.random() < options.flicker.startProbability) {
-		flickerCount = options.flicker.countFunc();
+	if (options.currentFlickerCount === 0 && Math.random() < options.flicker.startProbability) {
+		options.currentFlickerCount = options.flicker.countFunc();
 	}
-	if (flickerCount > 0) {
+	if (options.currentFlickerCount > 0) {
 		if (curFlickerOn && flickerTime >= options.flicker.onInterval) {
 			scene.remove(ambient);
 			curFlickerOn = false;
@@ -197,15 +182,15 @@ function animate() {
 		} else if (!curFlickerOn && flickerTime >= curFlickerOffInterval) {
 			scene.add(ambient);
 			curFlickerOn = true;
-			flickerCount -= 1;
+			options.currentFlickerCount -= 1;
 			flickerTime = 0;
 			curFlickerOffInterval = options.flicker.timingFunc();
 		}
 	}
 
-	if (slideCameraTowardDefault) {
+	if (options.slideCameraTowardDefault) {
 		if (camera.position.equals(defaultCameraPos)) {
-			slideCameraTowardDefault = false;
+			options.slideCameraTowardDefault = false;
 		}
 		const adjustment = defaultCameraPos.clone().sub(camera.position)
 			.multiplyScalar(options.cameraSlide.speed);
@@ -217,4 +202,16 @@ function animate() {
 	controls.update(0.01);
 }
 
-animate();
+function init() {
+	const buttonRemove = document.querySelector('#close-ticket');
+	buttonRemove.addEventListener('click', () => { controls.enabled = true; });
+	window.addEventListener('keydown', (event) => {
+		if (event.key === 'Escape' && isTicketCurrentlyFlipped()) {
+			controls.enabled = true;
+		}
+	});
+
+	animate();
+	window.addEventListener('click', shootRay);
+}
+document.addEventListener('DOMContentLoaded', init);

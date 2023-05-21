@@ -1,7 +1,5 @@
 const ANIMATION_LENGTH_MS = 500;
 
-document.addEventListener('DOMContentLoaded', init);
-
 let ticket = {};
 
 /**
@@ -81,3 +79,4 @@ function init() {
 	ticket.main.addEventListener('click', flipTicket);
 	ticket.buttonRemove.addEventListener('click', toggleTicketOff);
 }
+document.addEventListener('DOMContentLoaded', init);
