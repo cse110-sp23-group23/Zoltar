@@ -28,8 +28,8 @@ const options = {
 	flicker: {
 		startProbability: 0.005,
 		onInterval: 0.1,
-		timingFunc: () => {return Math.floor(Math.random() * 0.07) + 0.07},
-		countFunc: () => {return Math.floor(Math.random() * 2) + 2},
+		timingFunc: () => (Math.floor(Math.random() * 0.07) + 0.07),
+		countFunc: () => (Math.floor(Math.random() * 2) + 2),
 	},
 	cameraSlide: {
 		speed: 0.05,
@@ -37,7 +37,7 @@ const options = {
 };
 
 // Load 3D scene and necesary objects
-const scene = new Scene(); 
+const scene = new Scene();
 const clock = new Clock();
 const manager = new LoadingManager();
 
@@ -46,7 +46,7 @@ manager.onLoad = () => { tellPageLoaded(controls); };
 
 // Load camera perspective
 const camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
-let defaultCameraPos = new Vector3(-4.2, 1.7, -3.5);
+const defaultCameraPos = new Vector3(-4.2, 1.7, -3.5);
 camera.position.copy(defaultCameraPos);
 camera.lookAt(48.3, -16.1, 79.7);
 
@@ -62,7 +62,7 @@ const controls = new LockedControls(camera, renderer.domElement);
 controls.constrainVertical = true;
 controls.verticalMin = 1.67;
 controls.verticalMax = 1.87;
-controls.lookSpeed = 0.035;			
+controls.lookSpeed = 0.035;
 controls.minLon = 29;
 controls.maxLon = 37;
 controls.enabled = false;
@@ -70,24 +70,24 @@ controls.enabled = false;
 // glTf 2.0 Loader
 const loader = new GLTFLoader(manager);
 loader.load('assets/models/fixedangle.glb', (gltf) => {
-	const object = gltf.scene;				
-	object.scale.set( 2, 2, 2 );			   
+	const object = gltf.scene;
+	object.scale.set(2, 2, 2);
 	object.position.x = 0;
 	object.position.y = -2;
 	object.position.z = 0;
 	scene.add(object);
-});	
+});
 
 // 3D event listeners
 const raycaster = new Raycaster();
 const pointer = new Vector2();
 
 // Ticket dispenser hitbox
-const hitboxGeo = new BoxGeometry(0.2, 0.11, 0.005); 
-const hitboxMat = new MeshBasicMaterial( {color: 0xff0000} ); 
+const hitboxGeo = new BoxGeometry(0.2, 0.11, 0.005);
+const hitboxMat = new MeshBasicMaterial({ color: 0xff0000 });
 hitboxMat.opacity = 0; // set to positive value to display hitbox
 hitboxMat.transparent = true;
-const hitbox = new Mesh(hitboxGeo, hitboxMat); 
+const hitbox = new Mesh(hitboxGeo, hitboxMat);
 hitbox.position.set(-2.005, -0.02, -0.75);
 hitbox.rotateY(0.5);
 scene.add(hitbox);
@@ -97,7 +97,7 @@ const textureLoader = new TextureLoader();
 const paperTexture = textureLoader.load('./assets/images/background-card-map.png');
 
 const ticketGeo = new BoxGeometry(0.1, 0.005, 0.5);
-const ticketMat = new MeshLambertMaterial( {color: 0xE0C9A6} );
+const ticketMat = new MeshLambertMaterial({ color: 0xE0C9A6 });
 ticketMat.map = paperTexture;
 ticketMat.roughness = 1;
 const ticket = new Mesh(ticketGeo, ticketMat);
@@ -184,7 +184,7 @@ function animate() {
 		shakeDuration -= delta;
 		if (shakeDuration <= 0) {
 			slideCameraTowardDefault = true;
-	}
+		}
 	}
 
 	flickerTime += delta;
@@ -209,7 +209,8 @@ function animate() {
 		if (camera.position.equals(defaultCameraPos)) {
 			slideCameraTowardDefault = false;
 		}
-		const adjustment = defaultCameraPos.clone().sub(camera.position).multiplyScalar(options.cameraSlide.speed);
+		const adjustment = defaultCameraPos.clone().sub(camera.position)
+			.multiplyScalar(options.cameraSlide.speed);
 		camera.position.add(adjustment);
 	}
 

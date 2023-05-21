@@ -17,7 +17,7 @@ export function tellPageLoaded(controls) {
 		window.removeEventListener('mousedown', go);
 		window.removeEventListener('keydown', go);
 		playBackgroundNoise();
-	}
+	};
 	window.addEventListener('mousedown', go);
 	window.addEventListener('keydown', go);
 	loadedMessage.innerText = '[ press anywhere to continue ]';
@@ -25,5 +25,5 @@ export function tellPageLoaded(controls) {
 
 function init() {
 	splash = document.querySelector('#splash-screen');
-	loadedMessage = document.querySelector('.loaded-message')
+	loadedMessage = document.querySelector('.loaded-message');
 }

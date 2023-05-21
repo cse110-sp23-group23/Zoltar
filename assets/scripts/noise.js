@@ -23,10 +23,10 @@ function init() {
 	gainNode.connect(audioContext.destination);
 
 	fetch('./assets/audio/background.wav')
-	.then((response) => response.arrayBuffer())
-	.then((data) => audioContext.decodeAudioData(data))
-	.then((buffer) => {
-		backgroundSource.buffer = buffer;
-		backgroundSource.loop = true;
-	});
+		.then((response) => response.arrayBuffer())
+		.then((data) => audioContext.decodeAudioData(data))
+		.then((buffer) => {
+			backgroundSource.buffer = buffer;
+			backgroundSource.loop = true;
+		});
 }
