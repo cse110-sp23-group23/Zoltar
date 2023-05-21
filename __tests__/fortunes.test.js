@@ -1,4 +1,4 @@
-const fortunes = require('./assets/scripts/fortunes');
+const fortunes = require('../assets/scripts/fortunes');
 
 describe("produceFortune", () => {
   test('should return a nonempty string', () => {
