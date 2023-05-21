@@ -28,7 +28,9 @@ jobs:
         output_dir: ./jsdocs
         front_page: README.md
     - name: Commit JSDOCS
-      run: |
-        git add ./jsdocs
-        git commit -m"JSDOCS generation"
-        git push
+      uses: EndBug/add-and-commit@v7
+      with:
+        author_name: GitHub Actions
+        author_email: noreply@github.com
+        message: 'Generated JSDocs'
+        add: 'jsdocs/*'
