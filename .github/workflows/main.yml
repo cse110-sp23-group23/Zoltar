@@ -3,7 +3,7 @@ on:
   push
 permissions: write-all
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -13,14 +13,26 @@ jobs:
     - run: npm install jest
     - run: npm install --save-dev node-fetch
     - run: npm install -D jest-environment-jsdom
-    - run: npm install eslint
     - run: npm ci -l verbose
     - name: Run TESTS
       run: npm run test
       env:
         NODE_OPTIONS: --experimental-vm-modules
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - run: npm install eslint
+    - run: npm ci -l verbose
     - name: Run ESLINT
       run: npm run lint
+  jsdocs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
     - name: Build JSDOCS
       uses: andstor/jsdoc-action@v1
       with:
