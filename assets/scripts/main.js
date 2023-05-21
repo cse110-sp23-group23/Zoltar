@@ -41,9 +41,6 @@ const scene = new Scene();
 const clock = new Clock();
 const manager = new LoadingManager();
 
-// When loaded, tell splash
-manager.onLoad = () => { tellPageLoaded(controls); };
-
 // Load camera perspective
 const camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
 const defaultCameraPos = new Vector3(-4.2, 1.7, -3.5);
@@ -149,8 +146,8 @@ function buttonAdd() {
 	toggleTicketOn();
 }
 
-// Toggle controls with ticket appearance
-document.addEventListener('DOMContentLoaded', init);
+// When loaded, tell splash
+manager.onLoad = () => { tellPageLoaded(controls); };
 
 function init() {
 	const buttonRemove = document.querySelector('#close-ticket');
@@ -163,6 +160,7 @@ function init() {
 
 	window.addEventListener('click', shootRay);
 }
+document.addEventListener('DOMContentLoaded', init);
 
 // Endpoints
 let shakeDuration = 0;

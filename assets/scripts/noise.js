@@ -1,5 +1,3 @@
-document.addEventListener('DOMContentLoaded', init);
-
 let gainNode;
 let backgroundSource;
 let audioContext;
@@ -30,3 +28,4 @@ function init() {
 			backgroundSource.loop = true;
 		});
 }
+document.addEventListener('DOMContentLoaded', init);

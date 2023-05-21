@@ -14,6 +14,10 @@ const lookDirection = new Vector3();
 const spherical = new Spherical();
 const target = new Vector3();
 
+function contextmenu(event) {
+	event.preventDefault();
+}
+
 export class LockedControls {
 	constructor(object, domElement) {
 		this.object = object;
@@ -41,6 +45,13 @@ export class LockedControls {
 		// Private variables
 		let lat = 0;
 		let lon = 0;
+
+		function setOrientation(controls) {
+			lookDirection.set(0, 0, -1).applyQuaternion(controls.object.quaternion);
+			spherical.setFromVector3(lookDirection);
+			lat = 90 - MathUtils.radToDeg(spherical.phi);
+			lon = MathUtils.radToDeg(spherical.theta);
+		}
 
 		this.handleResize = () => {
 			if (this.domElement === document) {
@@ -126,18 +137,7 @@ export class LockedControls {
 		this.domElement.addEventListener('pointermove', onPointerMove);
 		this.domElement.addEventListener('pointerup', onPointerUp);
 
-		function setOrientation(controls) {
-			lookDirection.set(0, 0, -1).applyQuaternion(controls.object.quaternion);
-			spherical.setFromVector3(lookDirection);
-			lat = 90 - MathUtils.radToDeg(spherical.phi);
-			lon = MathUtils.radToDeg(spherical.theta);
-		}
-
 		this.handleResize();
 		setOrientation(this);
 	}
-}
-
-function contextmenu(event) {
-	event.preventDefault();
 }

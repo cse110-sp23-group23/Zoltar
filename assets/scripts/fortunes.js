@@ -2,17 +2,6 @@ let data;
 let fortuneText;
 let fortuneNumbers;
 
-document.addEventListener('DOMContentLoaded', init);
-
-/**
- * Replaces text on card in DOM with new fortune and new list of lucky numbers.
- * @param none
- */
-export function createFortuneOnTicket() {
-	placeFortune(produceFortune(data.fortunes));
-	placeRandomNumbers(produceRandomNumbers(4, 1, 100));
-} /* createFortuneOnTicket */
-
 /**
  * Generates a random fortune from JSON file
  * @param { Array<Object> } array of fortune objects with .message field
@@ -61,9 +50,19 @@ export function placeRandomNumbers(arr = [1, 2, 3, 4]) {
 	fortuneNumbers.innerText = text;
 } /* placeRandomNumbers */
 
+/**
+ * Replaces text on card in DOM with new fortune and new list of lucky numbers.
+ * @param none
+ */
+export function createFortuneOnTicket() {
+	placeFortune(produceFortune(data.fortunes));
+	placeRandomNumbers(produceRandomNumbers(4, 1, 100));
+} /* createFortuneOnTicket */
+
 function init() {
 	fetch('assets/json/responses.json').then((response) => response.json()).then((json) => data = json);
 
 	fortuneText = document.querySelector('#fortune-content');
 	fortuneNumbers = document.querySelector('#ticket-lucky-numbers');
 }
+document.addEventListener('DOMContentLoaded', init);

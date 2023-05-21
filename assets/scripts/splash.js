@@ -1,7 +1,5 @@
 import { playBackgroundNoise } from './noise.js';
 
-document.addEventListener('DOMContentLoaded', init);
-
 let splash;
 let loadedMessage;
 
@@ -27,3 +25,4 @@ function init() {
 	splash = document.querySelector('#splash-screen');
 	loadedMessage = document.querySelector('.loaded-message');
 }
+document.addEventListener('DOMContentLoaded', init);
