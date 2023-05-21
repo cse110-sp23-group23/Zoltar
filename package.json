@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "lint:js": "eslint assets/scripts/*.js --fix",
+    "lint:js": "eslint assets/scripts/*.js",
     "lint": "npm run lint:js"
   },
   "jest": {
@@ -18,6 +18,9 @@
     "rules": {
         "indent": ["error", "tab"],
         "no-tabs": "off"
+    },
+    "env": {
+      "browser": true
     }
   },
   "devDependencies": {

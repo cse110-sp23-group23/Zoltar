@@ -10,9 +10,9 @@ import {
 	Vector3,
 } from 'three';
 
-const _lookDirection = new Vector3();
-const _spherical = new Spherical();
-const _target = new Vector3();
+const lookDirection = new Vector3();
+const spherical = new Spherical();
+const target = new Vector3();
 
 class LockedControls {
 	constructor( object, domElement ) {
@@ -42,7 +42,7 @@ class LockedControls {
 		let lat = 0;
 		let lon = 0;
 
-		this.handleResize = function () {
+		this.handleResize = () => {
 			if (this.domElement === document ) {
 				this.viewHalfX = window.innerWidth / 2;
 				this.viewHalfY = window.innerHeight / 2;
@@ -52,7 +52,7 @@ class LockedControls {
 			}
 		};
 
-		this.onPointerDown = function (event) {
+		this.onPointerDown = (event) => {
 			if (this.domElement !== document) {
 				this.domElement.focus();
 			}
@@ -63,7 +63,7 @@ class LockedControls {
 			this.mouseDragOn = false;
 		};
 
-		this.onPointerMove = function (event) {
+		this.onPointerMove = (event) => {
 			if (this.domElement === document) {
 				this.pointerX = event.pageX - this.viewHalfX;
 				this.pointerY = event.pageY - this.viewHalfY;
@@ -73,18 +73,18 @@ class LockedControls {
 			}
 		};
 
-		this.lookAt = function (x, y, z) {
+		this.lookAt = (x, y, z) => {
 			if (x.isVector3) {
-				_target.copy(x);
+				target.copy(x);
 			} else {
-				_target.set(x, y, z);
+				target.set(x, y, z);
 			}
-			this.object.lookAt(_target);
+			this.object.lookAt(target);
 			setOrientation(this);
 			return this;
 		};
 
-		this.update = function () {
+		this.update = (() => {
 			const targetPosition = new Vector3();
 			return function update(delta) {
 				if (this.enabled === false) return;
@@ -108,33 +108,33 @@ class LockedControls {
 				targetPosition.setFromSphericalCoords( 1, phi, theta ).add(position);
 				this.object.lookAt(targetPosition);
 			};
-		}();
+		})();
 
-		this.dispose = function () {
+		this.dispose = () => {
 			this.domElement.removeEventListener('contextmenu', contextmenu);
-			this.domElement.removeEventListener('pointerdown', _onPointerDown);
-			this.domElement.removeEventListener('pointermove', _onPointerMove);
-			this.domElement.removeEventListener('pointerup', _onPointerUp);
+			this.domElement.removeEventListener('pointerdown', onPointerDown);
+			this.domElement.removeEventListener('pointermove', onPointerMove);
+			this.domElement.removeEventListener('pointerup', onPointerUp);
 			window.removeEventListener('resize', this.handleResize);
-			window.removeEventListener('keydown', _onKeyDown);
-			window.removeEventListener('keyup', _onKeyUp);
+			window.removeEventListener('keydown', onKeyDown);
+			window.removeEventListener('keyup', onKeyUp);
 		};
 
-		const _onPointerMove = this.onPointerMove.bind(this);
-		const _onPointerDown = this.onPointerDown.bind(this);
-		const _onPointerUp = this.onPointerUp.bind(this);
+		const onPointerMove = this.onPointerMove.bind(this);
+		const onPointerDown = this.onPointerDown.bind(this);
+		const onPointerUp = this.onPointerUp.bind(this);
 
 		this.domElement.addEventListener('contextmenu', contextmenu);
-		this.domElement.addEventListener('pointerdown', _onPointerDown);
-		this.domElement.addEventListener('pointermove', _onPointerMove);
-		this.domElement.addEventListener('pointerup', _onPointerUp);
+		this.domElement.addEventListener('pointerdown', onPointerDown);
+		this.domElement.addEventListener('pointermove', onPointerMove);
+		this.domElement.addEventListener('pointerup', onPointerUp);
 
 		function setOrientation(controls) {
 			const quaternion = controls.object.quaternion;
-			_lookDirection.set(0, 0, - 1).applyQuaternion(quaternion);
-			_spherical.setFromVector3(_lookDirection);
-			lat = 90 - MathUtils.radToDeg(_spherical.phi);
-			lon = MathUtils.radToDeg(_spherical.theta);
+			lookDirection.set(0, 0, - 1).applyQuaternion(quaternion);
+			spherical.setFromVector3(lookDirection);
+			lat = 90 - MathUtils.radToDeg(spherical.phi);
+			lon = MathUtils.radToDeg(spherical.theta);
 		}
 
 		this.handleResize();
