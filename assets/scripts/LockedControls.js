@@ -138,6 +138,6 @@ export class LockedControls {
 	}
 }
 
-function contextmenu( event ) {
+function contextmenu(event) {
 	event.preventDefault();
 }

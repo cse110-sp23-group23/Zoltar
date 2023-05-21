@@ -54,7 +54,7 @@ export function produceRandomNumbers(n, low = 0, high = 100) {
  * Place list of random numbers into the DOM
  * @param { Array<Integer> } arr integers to put into list (default to [1,2,3,4])
  */
-export function placeRandomNumbers(arr = [1,2,3,4]) {
+export function placeRandomNumbers(arr = [1, 2, 3, 4]) {
 	const text = arr.reduce((prevText, nextNum, i, array) =>
 		`${prevText}${i < array.length - 1 ? ',' : ', and'} ${nextNum}` // place 'and' after last comma
 	);
@@ -63,7 +63,7 @@ export function placeRandomNumbers(arr = [1,2,3,4]) {
 
 function init() {
 	fetch('assets/json/responses.json').then((response) => response.json()).then((json) => data = json);
-	
+
 	fortuneText = document.querySelector('#fortune-content');
 	fortuneNumbers = document.querySelector('#ticket-lucky-numbers');
-} 
+}
