@@ -47,9 +47,10 @@ export function produceRandomNumbers(n, low = 0, high = 100) {
  */
 export function convertArrToReadableString(arr) {
 	return arr.reduce((prevText, nextNum, i, array) => {
-		const isLastItem = i < array.length - 1;
+		const isLastItem = i === array.length - 1;
 		const delimiter = isLastItem ? ', and' : ',';
-		return `${prevText}${delimiter} ${nextNum}`;
+		const result = `${prevText}${delimiter} ${nextNum}`;
+		return result;
 	});
 } /* convertArrToReadableString */
 
