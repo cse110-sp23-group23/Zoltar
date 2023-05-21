@@ -17,7 +17,7 @@ function createFortuneOnTicket() {
  * @return { String } random fortune
  */
 function produceFortune(arr) {
-	return arr[Math.floor(Math.random() * data.fortunes.length)].message;
+	return arr[Math.floor(Math.random() * arr.length)].message;
 } /* produceFortune */
 
 /**
