@@ -42,12 +42,14 @@ export function produceRandomNumbers(n, low = 0, high = 100) {
 /**
  * Takes in an integer array and returns a string of integers separated by
  * 		commas with an 'and' after final comma
- * @param { Array<Integer> } arr 
+ * @param { Array<Integer> } arr
  * @returns { String }
  */
 export function convertArrToReadableString(arr) {
 	return arr.reduce((prevText, nextNum, i, array) => {
-		return `${prevText}${i < array.length - 1 ? ',' : ', and'} ${nextNum}`
+		const isLastItem = i < array.length - 1;
+		const delimiter = isLastItem ? ', and' : ',';
+		return `${prevText}${delimiter} ${nextNum}`;
 	});
 } /* convertArrToReadableString */
 
