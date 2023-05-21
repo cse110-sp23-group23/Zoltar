@@ -6,15 +6,18 @@ let loadedMessage;
 /**
  * Adds event listeners to trigger dismissal of splash screen
  * and enabling of controls on any user input (key/mouse)
- * @param {LockedControls} controls object containing controls
+ * @param { LockedControls } [controls] object containing controls
  */
 export function tellPageLoaded(controls) {
 	const go = () => {
+		playBackgroundNoise();
 		splash.classList.add('hidden');
-		controls.enabled = true;
 		window.removeEventListener('mousedown', go);
 		window.removeEventListener('keydown', go);
-		playBackgroundNoise();
+		if (controls) {
+			const controlRef = controls;
+			controlRef.enabled = true;
+		}
 	};
 	window.addEventListener('mousedown', go);
 	window.addEventListener('keydown', go);

@@ -40,14 +40,23 @@ export function produceRandomNumbers(n, low = 0, high = 100) {
 } /* produceRandomNumbers */
 
 /**
+ * Takes in an integer array and returns a string of integers separated by
+ * 		commas with an 'and' after final comma
+ * @param { Array<Integer> } arr 
+ * @returns { String }
+ */
+export function convertArrToReadableString(arr) {
+	return arr.reduce((prevText, nextNum, i, array) => {
+		return `${prevText}${i < array.length - 1 ? ',' : ', and'} ${nextNum}`
+	});
+} /* convertArrToReadableString */
+
+/**
  * Place list of random numbers into the DOM
  * @param { Array<Integer> } arr integers to put into list (default to [1,2,3,4])
  */
 export function placeRandomNumbers(arr = [1, 2, 3, 4]) {
-	const text = arr.reduce((prevText, nextNum, i, array) =>
-		`${prevText}${i < array.length - 1 ? ',' : ', and'} ${nextNum}` // place 'and' after last comma
-	);
-	fortuneNumbers.innerText = text;
+	fortuneNumbers.innerText = convertArrToReadableString(arr);
 } /* placeRandomNumbers */
 
 /**

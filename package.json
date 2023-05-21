@@ -20,7 +20,8 @@
         "no-tabs": "off",
         "import/extensions": ["error", "ignorePackages", {
           "js": "always"
-        }]
+        }],
+        "import/prefer-default-export": "off"
     },
     "env": {
       "browser": true
