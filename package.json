@@ -1,7 +1,7 @@
 {
   "name": "Zoltar",
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "jest": {
     "verbose": true
