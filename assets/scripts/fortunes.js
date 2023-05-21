@@ -1,7 +1,4 @@
-let data;
-fetch('assets/json/responses.json').then(response => response.json()).then(json => data = json);
-
-let fortuneText, fortuneNumbers;
+let data, fortuneText, fortuneNumbers;
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -10,17 +7,17 @@ document.addEventListener('DOMContentLoaded', init);
  * @param none
  */
 function createFortuneOnTicket() {
-	placeFortune(produceFortune());
+	placeFortune(produceFortune(data.fortunes));
 	placeRandomNumbers(produceRandomNumbers(4,1,100));
 } /* createFortuneOnTicket */
 
 /**
  * Generates a random fortune from JSON file
- * @param none
+ * @param { Array<Object> } array of fortune objects with .message field
  * @return { String } random fortune
  */
-function produceFortune() {
-	return data.fortunes[Math.floor(Math.random() * data.fortunes.length)].message;
+function produceFortune(arr) {
+	return arr[Math.floor(Math.random() * data.fortunes.length)].message;
 } /* produceFortune */
 
 /**
@@ -63,6 +60,8 @@ function placeRandomNumbers(arr = [1,2,3,4]) {
 } /* placeRandomNumbers */
 
 function init() {
+	fetch('assets/json/responses.json').then((response) => response.json()).then((json) => data = json);
+	
 	fortuneText = document.querySelector('#fortune-content');
 	fortuneNumbers = document.querySelector('#ticket-lucky-numbers');
 } 
