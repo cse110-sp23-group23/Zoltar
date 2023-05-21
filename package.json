@@ -17,14 +17,14 @@
     "extends": "airbnb-base",
     "rules": {
         "indent": ["error", "tab"],
-        "no-tabs": "off"
+        "no-tabs": "off",
+        "import/extensions": ["error", "ignorePackages", {
+          "js": "always"
+        }]
     },
     "env": {
       "browser": true
-    },
-    "import/extensions": ["error", "ignorePackages", {
-      "js": "always"
-    }]
+    }
   },
   "devDependencies": {
     "jest": "^29.5",
