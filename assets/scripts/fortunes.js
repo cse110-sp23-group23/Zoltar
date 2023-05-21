@@ -49,8 +49,7 @@ export function convertArrToReadableString(arr) {
 	return arr.reduce((prevText, nextNum, i, array) => {
 		const isLastItem = i === array.length - 1;
 		const delimiter = isLastItem ? ', and' : ',';
-		const result = `${prevText}${delimiter} ${nextNum}`;
-		return result;
+		return `${prevText}${delimiter} ${nextNum}`;
 	});
 } /* convertArrToReadableString */
 
@@ -72,7 +71,9 @@ export function createFortuneOnTicket() {
 } /* createFortuneOnTicket */
 
 function init() {
-	fetch('assets/json/responses.json').then((response) => response.json()).then((json) => data = json);
+	fetch('assets/json/responses.json')
+		.then((response) => response.json())
+		.then((json) => { data = json; });
 
 	fortuneText = document.querySelector('#fortune-content');
 	fortuneNumbers = document.querySelector('#ticket-lucky-numbers');
