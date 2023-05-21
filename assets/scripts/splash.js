@@ -9,7 +9,7 @@ let splash, loadedMessage;
  * and enabling of controls on any user input (key/mouse)
  * @param {LockedControls} controls object containing controls
  */
-function loaded(controls) {
+function tellPageLoaded(controls) {
 	let go = () => {
 		splash.classList.add('hidden');
 		controls.enabled = true;
@@ -20,11 +20,11 @@ function loaded(controls) {
 	window.addEventListener('mousedown', go);
 	window.addEventListener('keydown', go);
 	loadedMessage.innerText = '[ press anywhere to continue ]'
-}
+} /* tellPageLoaded */
 
 function init() {
 	splash = document.querySelector('#splash-screen');
 	loadedMessage = document.querySelector('.loaded-message')
 }
 
-export { loaded };
+export { tellPageLoaded };

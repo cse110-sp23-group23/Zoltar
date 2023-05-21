@@ -12,7 +12,7 @@ function playBackgroundNoise() {
 	gainNode.gain.setValueAtTime(0.0001, audioContext.currentTime);
 	gainNode.gain.linearRampToValueAtTime(1, audioContext.currentTime + 3);
 	backgroundSource.start();
-}
+} /* playBackgroundNoise */
 
 function init() {
 	// background noise setup
@@ -28,6 +28,8 @@ function init() {
     .then((buffer) => {
 		backgroundSource.buffer = buffer;
 		backgroundSource.loop = true;
+		gainNode.gain.setValueAtTime(0.0001, audioContext.currentTime);
+		gainNode.gain.exponentialRampToValueAtTime(0.1, audioContext.currentTime + 5);
     });
 }
 

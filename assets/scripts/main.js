@@ -1,35 +1,48 @@
 import {
-	Scene,
-	PerspectiveCamera,
-	WebGLRenderer,
-	Raycaster,
-	Vector2,
-	SpotLight,
 	AmbientLight,
 	BoxGeometry,
+	Clock,
+	LoadingManager,
+	Mesh,
 	MeshBasicMaterial,
 	MeshLambertMaterial,
+	PerspectiveCamera,
+	Raycaster,
+	Scene,
+	SpotLight,
 	TextureLoader,
-	Mesh,
-	LoadingManager,
+	Vector2,
 	Vector3,
-	Clock,
+	WebGLRenderer,
 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { LockedControls } from './LockedControls.js';
 import { isTicketCurrentlyDisplayed, isTicketCurrentlyFlipped, toggleTicketOn } from './ticket.js';
-import { loaded } from './splash.js';
-import { produceFortune } from './fortunes.js';
+import { tellPageLoaded } from './splash.js';
+import { createFortuneOnTicket } from './fortunes.js';
 
-// Load 3D scene
+const options = {
+	shake: {
+		intensity: new Vector3(0.03, 0.03, 0.03),
+	},
+	flicker: {
+		startProbability: 0.005,
+		onInterval: 0.1,
+		timingFunc: () => {return Math.floor(Math.random() * 0.07) + 0.07},
+		countFunc: () => {return Math.floor(Math.random() * 2) + 2},
+	},
+	cameraSlide: {
+		speed: 0.05,
+	},
+};
+
+// Load 3D scene and necesary objects
 const scene = new Scene(); 
-
-// Loading manager
+const clock = new Clock();
 const manager = new LoadingManager();
 
-manager.onLoad = function ( ) {	
-	loaded(controls);
-};
+// When loaded, tell splash
+manager.onLoad = () => { tellPageLoaded(controls); };
 
 // Load camera perspective
 const camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
@@ -39,7 +52,7 @@ camera.lookAt(48.3, -16.1, 79.7);
 
 // Load renderer
 const renderer = new WebGLRenderer({ alpha: false });
-renderer.setClearColor(0x000000); // black
+renderer.setClearColor(0x000000);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -95,7 +108,7 @@ let ticketSpawned = false;
 window.addEventListener('keydown', (event) => {
 	if (event.key === ' ' && !isTicketCurrentlyDisplayed() && controls.enabled && !ticketSpawned) {
 		ticketSpawned = true;
-		shake();
+		shakeDuration = 1;
 		setTimeout(() => {
 			scene.add(ticket);
 		}, 1000);
@@ -129,7 +142,7 @@ function shootRay(event) {
 }
 
 function buttonAdd() {
-	produceFortune();
+	createFortuneOnTicket();
 	scene.remove(ticket);
 	ticketSpawned = false;
 	controls.enabled = false;
@@ -151,61 +164,57 @@ function init() {
 	window.addEventListener('click', shootRay);
 }
 
-// TODO: Fix this code by moving it into animate() and using Clock
-let flickering = false;
-function flicker(count) {
-	if (count === undefined || count <= 0) {
-		flickering = false;
-		return;
-	}
-	flickering = true;
-	scene.remove(ambient);
-	setTimeout(() => { 
-		scene.add(ambient); 
-		setTimeout(() => { flicker(count-1); }, (Math.random() * 70) + 70);
-	}, 50);
-}
-
+// Endpoints
 let shakeDuration = 0;
-const shakeIntensity = new Vector3(0.03, 0.03, 0.03);
-const clock = new Clock();
-const tmpVector = new Vector3();
+let slideCameraTowardDefault = false;
+let flickerCount = 0;
 
-function shake() {
-	shakeDuration = 1;
-}
-
-let slideTowardDefault = false;
+// Working variables
+let curFlickerOn = false;
+let flickerTime = 0;
+let curFlickerOffInterval = options.flicker.timingFunc();
+const shakeDeltaVec = new Vector3();
 
 function animate() {
-	if (Math.random() < 0.005 && flickering === false) {
-		flicker(Math.floor(Math.random() * 2) + 2);
-	}
-
 	const delta = clock.getDelta();
-    // If there's shaking to be done
+
     if (shakeDuration > 0) {
-        tmpVector.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5)
-            .multiply(shakeIntensity);
-        camera.position.add(tmpVector);
+        shakeDeltaVec.random().subScalar(0.5).multiply(options.shake.intensity);
+        camera.position.add(shakeDeltaVec);
         shakeDuration -= delta;
-        
-        // If the shaking is over, reset the camera position
         if (shakeDuration <= 0) {
-			slideTowardDefault = true;
+			slideCameraTowardDefault = true;
         }
     }
 
-	if (slideTowardDefault) {
-		if (camera.position.equals(defaultCameraPos)) {
-			slideTowardDefault = false;
+	flickerTime += delta;
+	if (flickerCount === 0 && Math.random() < options.flicker.startProbability) {
+		flickerCount = options.flicker.countFunc();
+	}
+	if (flickerCount > 0) {
+		if (curFlickerOn && flickerTime >= options.flicker.onInterval) {
+			scene.remove(ambient);
+			curFlickerOn = false;
+			flickerTime = 0;
+		} else if (!curFlickerOn && flickerTime >= curFlickerOffInterval) {
+			scene.add(ambient);
+			curFlickerOn = true;
+			flickerCount--;
+			flickerTime = 0;
+			curFlickerOffInterval = options.flicker.timingFunc();
 		}
-		const adjustment = defaultCameraPos.clone().sub(camera.position).multiplyScalar(0.05);
+	}
+
+	if (slideCameraTowardDefault) {
+		if (camera.position.equals(defaultCameraPos)) {
+			slideCameraTowardDefault = false;
+		}
+		const adjustment = defaultCameraPos.clone().sub(camera.position).multiplyScalar(options.cameraSlide.speed);
 		camera.position.add(adjustment);
 	}
 
 	renderer.render(scene, camera);
-	requestAnimationFrame( animate );
+	requestAnimationFrame(animate);
 	controls.update(0.01)
 }
 
