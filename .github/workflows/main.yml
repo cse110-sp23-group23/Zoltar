@@ -28,7 +28,7 @@ jobs:
         output_dir: ./jsdocs
         front_page: README.md
     - name: Commit JSDOCS
-      run: 
+      run: |
         git add ./jsdocs
         git commit -m"JSDOCS generation"
         git push
