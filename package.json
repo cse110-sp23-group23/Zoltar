@@ -9,8 +9,7 @@
   "jest": {
     "verbose": true,
     "testEnvironment": "jest-environment-jsdom",
-    "transform": {},
-    "setupFilesAfterEnv": ["./__tests__/jest.setup.js"]
+    "transform": {}
   },
   "devDependencies": {
     "jest": "^29.5"
