@@ -1,4 +1,5 @@
-import data from '../json/responses.json' assert { type: "json" };
+let data;
+fetch('assets/json/responses.json').then(response => response.json()).then(json => data = json);
 
 let fortuneText, fortuneNumbers;
 

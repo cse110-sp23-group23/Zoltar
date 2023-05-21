@@ -8,7 +8,14 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "jest": "^29.5.0"
+  "name": "zoltar",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "verbose": true
+  },
+  "devDependencies": {
+    "jest": "^29.5"
   }
 }

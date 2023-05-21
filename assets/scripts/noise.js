@@ -1,20 +1,24 @@
 document.addEventListener('DOMContentLoaded', init);
 
+let gainNode;
 let backgroundSource;
+let audioContext;
 
 /**
  * Starts background noise, fading in over 5 seconds
  * @param none
  */
 function playBackgroundNoise() {
+	gainNode.gain.setValueAtTime(0.0001, audioContext.currentTime);
+	gainNode.gain.linearRampToValueAtTime(1, audioContext.currentTime + 3);
 	backgroundSource.start();
 } /* playBackgroundNoise */
 
 function init() {
 	// background noise setup
-	const audioContext = new window.AudioContext();
+	audioContext = new window.AudioContext();
 	backgroundSource = audioContext.createBufferSource();
-	const gainNode = audioContext.createGain();
+	gainNode = audioContext.createGain();
 	backgroundSource.connect(gainNode);
 	gainNode.connect(audioContext.destination);
 
