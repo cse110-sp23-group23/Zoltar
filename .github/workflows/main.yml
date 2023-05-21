@@ -27,3 +27,8 @@ jobs:
         recurse: true
         output_dir: ./jsdocs
         front_page: README.md
+    - name: Commit JSDOCS
+      run: 
+        git add ./jsdocs
+        git commit -m"JSDOCS generation"
+        git push
