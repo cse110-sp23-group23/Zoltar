@@ -20,3 +20,10 @@ jobs:
         NODE_OPTIONS: --experimental-vm-modules
     - name: Run ESLINT
       run: npm run lint
+    - name: Build JSDOCS
+      uses: andstor/jsdoc-action@v1
+      with:
+        source_dir: ./assets/scripts
+        recurse: true
+        output_dir: ./jsdocs
+        front_page: README.md
