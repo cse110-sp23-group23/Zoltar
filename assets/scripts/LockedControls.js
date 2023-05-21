@@ -7,7 +7,7 @@ Original: https://github.com/mrdoob/three.js/blob/master/examples/jsm/controls/L
 import {
 	MathUtils,
 	Spherical,
-	Vector3
+	Vector3,
 } from 'three';
 
 const _lookDirection = new Vector3();

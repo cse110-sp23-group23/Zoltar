@@ -19,4 +19,4 @@ jobs:
       env:
         NODE_OPTIONS: --experimental-vm-modules
     - name: Run ESLINT
-      run: npm run lint
+      run: npm run lint --fix
