@@ -1,6 +1,10 @@
 name: CI Pipeline
+run-name: Action by @${{ github.actor }}
 on: 
-  push
+  push:
+    branches:
+    - main
+  pull_request:
 permissions: write-all
 jobs:
   test:
@@ -48,4 +52,15 @@ jobs:
         author_email: noreply@github.com
         message: 'Generated JSDocs'
         add: 'jsdocs/*'
-        token: ${{ secrets.GITHUB_TOKEN }}
+  deploy:
+    needs: [test, lint, jsdocs]
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
