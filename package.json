@@ -7,7 +7,9 @@
     "test": "jest"
   },
   "jest": {
-    "verbose": true
+    "verbose": true,
+    "testEnvironment": 'jest-environment-node',
+    "transform": {}
   },
   "devDependencies": {
     "jest": "^29.5"
