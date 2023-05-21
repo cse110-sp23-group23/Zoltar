@@ -67,4 +67,4 @@ function init() {
 	fortuneNumbers = document.querySelector('#ticket-lucky-numbers');
 } 
 
-export { createFortuneOnTicket }; 
+export { produceFortune, createFortuneOnTicket }; 
