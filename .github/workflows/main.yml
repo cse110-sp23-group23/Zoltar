@@ -13,6 +13,7 @@ jobs:
       with:
         node-version: '18'
     - run: npm ci -l verbose
+    - run: npm install --save-dev node-fetch
     - run: npm install -D jest-environment-jsdom
     - run: npm run test --passWithNoTests
       env:
