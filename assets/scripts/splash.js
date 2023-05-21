@@ -2,15 +2,16 @@ import { playBackgroundNoise } from './noise.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
-let splash, loadedMessage;
+let splash;
+let loadedMessage;
 
 /**
  * Adds event listeners to trigger dismissal of splash screen
  * and enabling of controls on any user input (key/mouse)
  * @param {LockedControls} controls object containing controls
  */
-function tellPageLoaded(controls) {
-	let go = () => {
+export function tellPageLoaded(controls) {
+	const go = () => {
 		splash.classList.add('hidden');
 		controls.enabled = true;
 		window.removeEventListener('mousedown', go);
@@ -19,12 +20,10 @@ function tellPageLoaded(controls) {
 	}
 	window.addEventListener('mousedown', go);
 	window.addEventListener('keydown', go);
-	loadedMessage.innerText = '[ press anywhere to continue ]'
+	loadedMessage.innerText = '[ press anywhere to continue ]';
 } /* tellPageLoaded */
 
 function init() {
 	splash = document.querySelector('#splash-screen');
 	loadedMessage = document.querySelector('.loaded-message')
 }
-
-export { tellPageLoaded };

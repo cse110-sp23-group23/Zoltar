@@ -69,7 +69,7 @@ controls.enabled = false;
 
 // glTf 2.0 Loader
 const loader = new GLTFLoader(manager);
-loader.load('assets/models/fixedangle.glb', function (gltf) {
+loader.load('assets/models/fixedangle.glb', (gltf) => {
 	const object = gltf.scene;				
 	object.scale.set( 2, 2, 2 );			   
 	object.position.x = 0;
@@ -132,7 +132,7 @@ scene.add(ambient);
 // Test if hitbox is clicked on
 function shootRay(event) {
 	pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-	pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
+	pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
 	raycaster.setFromCamera(pointer, camera);
 	const intersects = raycaster.intersectObjects([hitbox, ticket]);
@@ -178,14 +178,14 @@ const shakeDeltaVec = new Vector3();
 function animate() {
 	const delta = clock.getDelta();
 
-    if (shakeDuration > 0) {
-        shakeDeltaVec.random().subScalar(0.5).multiply(options.shake.intensity);
-        camera.position.add(shakeDeltaVec);
-        shakeDuration -= delta;
-        if (shakeDuration <= 0) {
+	if (shakeDuration > 0) {
+		shakeDeltaVec.random().subScalar(0.5).multiply(options.shake.intensity);
+		camera.position.add(shakeDeltaVec);
+		shakeDuration -= delta;
+		if (shakeDuration <= 0) {
 			slideCameraTowardDefault = true;
-        }
-    }
+	}
+	}
 
 	flickerTime += delta;
 	if (flickerCount === 0 && Math.random() < options.flicker.startProbability) {
@@ -199,7 +199,7 @@ function animate() {
 		} else if (!curFlickerOn && flickerTime >= curFlickerOffInterval) {
 			scene.add(ambient);
 			curFlickerOn = true;
-			flickerCount--;
+			flickerCount -= 1;
 			flickerTime = 0;
 			curFlickerOffInterval = options.flicker.timingFunc();
 		}
@@ -215,7 +215,7 @@ function animate() {
 
 	renderer.render(scene, camera);
 	requestAnimationFrame(animate);
-	controls.update(0.01)
+	controls.update(0.01);
 }
 
 animate();

@@ -14,8 +14,8 @@ const lookDirection = new Vector3();
 const spherical = new Spherical();
 const target = new Vector3();
 
-class LockedControls {
-	constructor( object, domElement ) {
+export class LockedControls {
+	constructor(object, domElement) {
 		this.object = object;
 		this.domElement = domElement;
 
@@ -43,7 +43,7 @@ class LockedControls {
 		let lon = 0;
 
 		this.handleResize = () => {
-			if (this.domElement === document ) {
+			if (this.domElement === document) {
 				this.viewHalfX = window.innerWidth / 2;
 				this.viewHalfY = window.innerHeight / 2;
 			} else {
@@ -52,14 +52,14 @@ class LockedControls {
 			}
 		};
 
-		this.onPointerDown = (event) => {
+		this.onPointerDown = () => {
 			if (this.domElement !== document) {
 				this.domElement.focus();
 			}
 			this.mouseDragOn = true;
 		};
 
-		this.onPointerUp = function (event) {
+		this.onPointerUp = () => {
 			this.mouseDragOn = false;
 		};
 
@@ -94,7 +94,7 @@ class LockedControls {
 				}
 				let verticalLookRatio = 1;
 				if (this.constrainVertical) {
-					verticalLookRatio = Math.PI / ( this.verticalMax - this.verticalMin );
+					verticalLookRatio = Math.PI / (this.verticalMax - this.verticalMin);
 				}
 				lon = MathUtils.clamp(lon - this.pointerX * actualLookSpeed, this.minLon, this.maxLon);
 				if (this.lookVertical) lat -= this.pointerY * actualLookSpeed * verticalLookRatio;
@@ -102,10 +102,9 @@ class LockedControls {
 				let phi = MathUtils.degToRad(90 - lat);
 				const theta = MathUtils.degToRad(lon);
 				if (this.constrainVertical) {
-					phi = MathUtils.mapLinear( phi, 0, Math.PI, this.verticalMin, this.verticalMax );
+					phi = MathUtils.mapLinear(phi, 0, Math.PI, this.verticalMin, this.verticalMax);
 				}
-				const position = this.object.position;
-				targetPosition.setFromSphericalCoords( 1, phi, theta ).add(position);
+				targetPosition.setFromSphericalCoords(1, phi, theta).add(this.object.position);
 				this.object.lookAt(targetPosition);
 			};
 		})();
@@ -116,8 +115,6 @@ class LockedControls {
 			this.domElement.removeEventListener('pointermove', onPointerMove);
 			this.domElement.removeEventListener('pointerup', onPointerUp);
 			window.removeEventListener('resize', this.handleResize);
-			window.removeEventListener('keydown', onKeyDown);
-			window.removeEventListener('keyup', onKeyUp);
 		};
 
 		const onPointerMove = this.onPointerMove.bind(this);
@@ -130,21 +127,17 @@ class LockedControls {
 		this.domElement.addEventListener('pointerup', onPointerUp);
 
 		function setOrientation(controls) {
-			const quaternion = controls.object.quaternion;
-			lookDirection.set(0, 0, - 1).applyQuaternion(quaternion);
+			lookDirection.set(0, 0, -1).applyQuaternion(controls.object.quaternion);
 			spherical.setFromVector3(lookDirection);
 			lat = 90 - MathUtils.radToDeg(spherical.phi);
 			lon = MathUtils.radToDeg(spherical.theta);
 		}
 
 		this.handleResize();
-		setOrientation( this );
+		setOrientation(this);
 	}
-
 }
 
 function contextmenu( event ) {
 	event.preventDefault();
 }
-
-export { LockedControls };

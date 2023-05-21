@@ -7,9 +7,9 @@ let ticket = {};
 /**
  * Gets whether or not fortune card is currently on screen
  * @param none
- * @returns { boolean } 
+ * @returns { boolean }
  */
-function isTicketCurrentlyDisplayed() {
+export function isTicketCurrentlyDisplayed() {
 	return !ticket.main.classList.contains('hidden-animation');
 } /* isTicketCurrentlyDisplayed */
 
@@ -18,7 +18,7 @@ function isTicketCurrentlyDisplayed() {
  * @param none
  * @returns { boolean }
  */
-function isTicketCurrentlyFlipped() {
+export function isTicketCurrentlyFlipped() {
 	return !ticket.main.classList.contains('ticket-hoverable');
 } /* isTicketCurrentlyFlipped */
 
@@ -40,7 +40,7 @@ function toggleTicketOff() {
  * Slides ticket up from bottom of screen
  * @param none
  */
-function toggleTicketOn() {
+export function toggleTicketOn() {
 	ticket.main.classList.remove('hidden-animation');
 	setTimeout(() => {
 		ticket.main.classList.add('ticket-hoverable');
@@ -53,7 +53,7 @@ function toggleTicketOn() {
  */
 function flipTicket() {
 	if (isTicketCurrentlyFlipped()) {
-		return; 
+		return;
 	}
 	ticket.main.classList.remove('ticket-hoverable');
 	ticket.background.classList.add('flipped');
@@ -81,5 +81,3 @@ function init() {
 	ticket.main.addEventListener('click', flipTicket);
 	ticket.buttonRemove.addEventListener('click', toggleTicketOff);
 }
-
-export { isTicketCurrentlyDisplayed, isTicketCurrentlyFlipped, toggleTicketOn };
