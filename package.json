@@ -1,0 +1,12 @@
+{
+  "name": "Zoltar",
+  "scripts": {
+    "test": "test"
+  },
+  "jest": {
+    "verbose": true
+  },
+  "devDependencies": {
+    "jest": "^29.5"
+  }
+}
