@@ -13,6 +13,13 @@
     "testEnvironment": "jest-environment-jsdom",
     "transform": {}
   },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "rules": {
+        "indent": ["error", "tab"],
+        "no-tabs": "off"
+    }
+  },
   "devDependencies": {
     "jest": "^29.5",
     "eslint": "^8.39.0",
