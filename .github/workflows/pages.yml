@@ -1,14 +1,9 @@
 name: GitHub Pages
 run-name: Deploy to Pages by @${{ github.actor }}
 on: 
-  push:
-    branches:
-    - gh-pages
-  create:
-    branches:
-    - gh-pages
-  pull_request:
-  workflow_dispatch:
+  workflow_run:
+    workflows: [Build]
+    types: [CI Pipeline]
 permissions: write-all
 jobs:
   deploy:
@@ -16,6 +11,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
