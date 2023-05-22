@@ -77,30 +77,10 @@ jobs:
         find ./assets/scripts -name "*.js" -exec npx uglifyjs {} -o {} \;
     - name: Push to new branch
       run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'noreply@github.com'
         git branch -D gh-pages || true 
         git checkout -b gh-pages
         git add .
         git commit -m "Minified JavaScript files"
         git push origin gh-pages
-  deploy:
-    needs: [minify]
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v1
-      with:
-        path: '.'
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v2
-      with:
-        branch: gh-pages
