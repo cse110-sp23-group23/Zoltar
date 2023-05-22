@@ -71,10 +71,9 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v3
     - name: Installs
-      run: npm install uglify-js
+      run: npm install uglify-js -g
     - name: Minify
-      run: |
-        find ./assets/scripts -name "*.js" -exec uglifyjs {} -o {} --compress --module \;
+      run: find ./assets/scripts -name "*.js" -exec uglifyjs {} -o {} --compress --mangle --module \;
     - name: Push to new branch
       run: |
         git config --global user.name 'GitHub Actions'
