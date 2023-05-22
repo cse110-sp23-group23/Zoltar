@@ -4,6 +4,9 @@ on:
   push:
     branches:
     - gh-pages
+  create:
+    branches:
+    - gh-pages
   pull_request:
   workflow_dispatch:
 permissions: write-all
