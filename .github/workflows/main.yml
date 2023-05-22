@@ -74,7 +74,7 @@ jobs:
       run: npm install uglify-js
     - name: Minify
       run: |
-        find ./assets/scripts -name "*.js" -exec npx uglifyjs {} -o {} \;
+        find ./assets/scripts -name "*.js" -exec npx uglify-js {} -o {} --compress --mangle \;
     - name: Push to new branch
       run: |
         git config --global user.name 'GitHub Actions'
