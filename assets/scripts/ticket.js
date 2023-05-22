@@ -67,15 +67,6 @@ window.addEventListener('keydown', (event) => {
 	}
 });
 
-/**
- * Test function
- * @param TEST
- */
-function test() {
-	return 'testing something';
-}
-test();
-
 function init() {
 	ticket = {
 		main: document.querySelector('.ticket-wrapper'),
