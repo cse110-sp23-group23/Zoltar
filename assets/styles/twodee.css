@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#zoltar-image {
+    height: 100vh;
+    z-index: 2;
+    position: relative;
+}
+
+#wood-background {
+    position: absolute;
+    z-index: 1;
+
+}
+
+button {
+    z-index: 3;
+    position: absolute;
+    top: 0;
+}
+
+#ticket {
+    width: 400px;
+    height: 700px;
+    background-color: rgb(255, 255, 214);
+    z-index: 10;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
