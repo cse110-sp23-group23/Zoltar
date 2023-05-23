@@ -57,3 +57,25 @@ html, body {
 	color: white;
 	font-weight: 100;
 }
+
+.long-loading-message {
+	position: absolute;
+	bottom: 0;
+}
+
+.link-to-2d {
+	font-family: Bodoni, monospace;
+	font-size: 1vw;
+	color: white;
+	font-weight: 100;
+}
+
+.link-to-2d a {
+	color: #FDDB26;
+	text-decoration: none;
+}
+
+.link-to-2d a:hover {
+	text-decoration: underline;
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
