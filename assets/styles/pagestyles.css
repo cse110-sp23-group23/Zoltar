@@ -57,3 +57,17 @@ html, body {
 	color: white;
 	font-weight: 100;
 }
+
+#ticket-generation {
+	position: absolute;
+	height: 50px;
+    width: 250px;
+	left: 40%;
+	top: 75%;
+	border-radius: 5px;
+	background-color: #eac910;
+	font-weight: bold;
+	font-family: Cinzel;
+	font-size: large;
+	cursor: url('../images/customcursorpoint.png'), auto;
+}

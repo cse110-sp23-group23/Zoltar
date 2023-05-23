@@ -124,8 +124,24 @@ ticketMat.roughness = 1;
 const ticket = new Mesh(ticketGeo, ticketMat);
 ticket.rotateY(0.57);
 
+const ticketGenButton = document.querySelector('#ticket-generation');
+
 window.addEventListener('keydown', (event) => {
 	if (event.key === ' ' && !isTicketCurrentlyDisplayed() && controls.enabled && !state.ticketSpawned) {
+		ticketGenButton.classList.add('hidden');
+		state.ticketSpawned = true;
+		state.currentShakeDuration = options.shake.durationMS / 1000;
+		setTimeout(() => {
+			ticket.position.copy(options.ticketSlide.initialPosition);
+			scene.add(ticket);
+			state.ticketFramesLeft = options.ticketSlide.framesToEnd;
+		}, options.shake.durationMS);
+	}
+});
+
+ticketGenButton.addEventListener('click', () => {
+	if (!isTicketCurrentlyDisplayed() && controls.enabled && !state.ticketSpawned) {
+		ticketGenButton.classList.add('hidden');
 		state.ticketSpawned = true;
 		state.currentShakeDuration = options.shake.durationMS / 1000;
 		setTimeout(() => {
@@ -231,13 +247,17 @@ window.addEventListener('resize', () => {
 
 function init() {
 	const buttonRemove = document.querySelector('#close-ticket');
-	buttonRemove.addEventListener('click', () => { controls.enabled = true; });
+	buttonRemove.addEventListener('click', () => { 
+		buttonRemove.blur();
+		ticketGenButton.classList.remove('hidden');
+		controls.enabled = true; 
+	});
 	window.addEventListener('keydown', (event) => {
 		if (event.key === 'Escape' && isTicketCurrentlyFlipped()) {
+			ticketGenButton.classList.remove('hidden');
 			controls.enabled = true;
 		}
 	});
-
 	animate();
 	window.addEventListener('click', shootRay);
 }
