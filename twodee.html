@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="description" content="Zoltar! fortune teller. See your future, if you dare...">
+	<meta name="keywords" content="Zoltar, Fortune, Magic, Future, Prophecy">
+	<meta name="author" content="Team 23, UCSD CSE 110 Spring 2023">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Zoltar!</title>
+	<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="assets/styles/pagestyles.css">
+	<link rel="stylesheet" type="text/css" href="assets/styles/twodee.css">
+
+</head>
+<body>
+	<section id="splash-screen">
+		<div class="titles">
+			<h1 class="splash-title">ZOLTAR!</h1>
+			<h4 class="loaded-message">loading...</h4>
+		</div>
+	</section>
+
+	<section class="container">
+		<img id="zoltar-image" alt="Image of Zoltar" src="assets/images/zoltar.jpg" usemap="#zoltar">
+		<!-- <img id="wood-background" alt="wooden backdrop" src="assets/images/background.jpg"> -->
+	</section>
+
+	<map name ="zoltar">
+		<area shape ="circle" alt="zoltar_map"
+		coords="325,495,50"
+		href="#" 
+		target="_blank">
+	</map>
+
+
+	<button id="generate-ticket">Generate Ticket</button>
+
+	<section id="ticket">
+		<h1>Fortune:</h1>
+		<p id="fortune-output"></p>
+	</section>
+
+	<script type="module" src="/assets/scripts/2d/main.js"></script>
+</body>
+</html>
