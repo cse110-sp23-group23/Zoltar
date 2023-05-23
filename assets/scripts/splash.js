@@ -2,6 +2,7 @@ import { playBackgroundNoise } from './noise.js';
 
 let splash;
 let loadedMessage;
+let longLoadingMessage;
 
 /**
  * Adds event listeners to trigger dismissal of splash screen
@@ -22,10 +23,12 @@ export function tellPageLoaded(controls) {
 	window.addEventListener('mousedown', go);
 	window.addEventListener('keydown', go);
 	loadedMessage.innerText = '[ press anywhere to continue ]';
+	longLoadingMessage.innerHTML = '';
 } /* tellPageLoaded */
 
 function init() {
 	splash = document.querySelector('#splash-screen');
 	loadedMessage = document.querySelector('.loaded-message');
+	longLoadingMessage = document.querySelector('.long-loading-message');
 }
 document.addEventListener('DOMContentLoaded', init);
