@@ -247,10 +247,10 @@ window.addEventListener('resize', () => {
 
 function init() {
 	const buttonRemove = document.querySelector('#close-ticket');
-	buttonRemove.addEventListener('click', () => { 
+	buttonRemove.addEventListener('click', () => {
 		buttonRemove.blur();
 		ticketGenButton.classList.remove('hidden');
-		controls.enabled = true; 
+		controls.enabled = true;
 	});
 	window.addEventListener('keydown', (event) => {
 		if (event.key === 'Escape' && isTicketCurrentlyFlipped()) {
