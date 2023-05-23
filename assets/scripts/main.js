@@ -221,6 +221,14 @@ function animate() {
 	controls.update(0.01);
 }
 
+window.addEventListener('resize', () => {
+	const width = window.innerWidth;
+	const height = window.innerHeight;
+	renderer.setSize(width, height);
+	camera.aspect = width / height;
+	camera.updateProjectionMatrix();
+});
+
 function init() {
 	const buttonRemove = document.querySelector('#close-ticket');
 	buttonRemove.addEventListener('click', () => { controls.enabled = true; });

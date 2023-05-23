@@ -128,6 +128,7 @@ export default class LockedControls {
 		this.domElement.addEventListener('pointerdown', onPointerDown);
 		this.domElement.addEventListener('pointermove', onPointerMove);
 		this.domElement.addEventListener('pointerup', onPointerUp);
+		window.addEventListener('resize', this.handleResize);
 
 		this.dispose = () => {
 			this.domElement.removeEventListener('contextmenu', contextmenu);
