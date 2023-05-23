@@ -23,8 +23,13 @@ import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
 
 const options = {
+	camera: {
+		defaultPosition: new Vector3(-4.2, 1.7, -3.5),
+		defaultLookAt: new Vector3(48.3, -16.1, 79.7)
+	},
 	shake: {
 		intensity: new Vector3(0.03, 0.03, 0.03),
+		durationMS: 1000
 	},
 	flicker: {
 		startProbability: 0.005,
@@ -35,9 +40,24 @@ const options = {
 	cameraSlide: {
 		speed: 0.05,
 	},
+	ticketSlide: {
+		speed: 0.05,
+		initialPosition: new Vector3(-1.82, -0.051, -0.45),
+		finalPosition: new Vector3(-1.945, -0.051, -0.65),
+		framesToEnd: 70
+	}
+};
+
+const state = {
 	currentShakeDuration: 0,
 	currentFlickerCount: 0,
 	slideCameraTowardDefault: false,
+	ticketFramesLeft: 0,
+	ticketSpawned: false,
+	flickerOn: false,
+	flickerTime: 0,
+	curFlickerOffInterval: options.flicker.timingFunc(), // changes each iteration
+	shakeDeltaVec: new Vector3()
 };
 
 // Load 3D scene and necesary objects
@@ -47,15 +67,19 @@ const manager = new LoadingManager();
 const raycaster = new Raycaster();
 const pointer = new Vector2();
 const textureLoader = new TextureLoader();
+const loader = new GLTFLoader(manager);
+const renderer = new WebGLRenderer({ alpha: false });
+const camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
+
+// Light creation
+const spotLight = new SpotLight(0xfff5b6, 3);
+const ambient = new AmbientLight(0xffffff, 0.03);
 
 // Load camera perspective
-const camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
-const defaultCameraPos = new Vector3(-4.2, 1.7, -3.5);
-camera.position.copy(defaultCameraPos);
-camera.lookAt(48.3, -16.1, 79.7);
+camera.position.copy(options.camera.defaultPosition);
+camera.lookAt(options.camera.defaultLookAt);
 
 // Load renderer
-const renderer = new WebGLRenderer({ alpha: false });
 renderer.setClearColor(0x000000);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -72,7 +96,6 @@ controls.maxLon = 37;
 controls.enabled = false;
 
 // glTf 2.0 Loader
-const loader = new GLTFLoader(manager);
 loader.load('assets/models/fixedangle.glb', (gltf) => {
 	const object = gltf.scene;
 	object.scale.set(2, 2, 2);
@@ -94,29 +117,24 @@ scene.add(hitbox);
 
 // Ticket
 const paperTexture = textureLoader.load('./assets/images/background-card-map.png');
-
 const ticketGeo = new BoxGeometry(0.1, 0.005, 0.5);
 const ticketMat = new MeshLambertMaterial({ color: 0xE0C9A6 });
 ticketMat.map = paperTexture;
 ticketMat.roughness = 1;
 const ticket = new Mesh(ticketGeo, ticketMat);
-ticket.position.set(-1.945, -0.051, -0.65);
 ticket.rotateY(0.57);
 
-let ticketSpawned = false;
 window.addEventListener('keydown', (event) => {
-	if (event.key === ' ' && !isTicketCurrentlyDisplayed() && controls.enabled && !ticketSpawned) {
-		ticketSpawned = true;
-		options.currentShakeDuration = 1;
+	if (event.key === ' ' && !isTicketCurrentlyDisplayed() && controls.enabled && !state.ticketSpawned) {
+		state.ticketSpawned = true;
+		state.currentShakeDuration = options.shake.durationMS / 1000;
 		setTimeout(() => {
+			ticket.position.copy(options.ticketSlide.initialPosition);
 			scene.add(ticket);
-		}, 1000);
+			state.ticketFramesLeft = options.ticketSlide.framesToEnd;
+		}, options.shake.durationMS);
 	}
 });
-
-// Light creation
-const spotLight = new SpotLight(0xfff5b6, 3);
-const ambient = new AmbientLight(0xffffff, 0.03);
 
 // Light placement
 spotLight.position.set(-8.4, 3.4, -7);
@@ -133,7 +151,7 @@ function addCardToScene() {
 	createFortuneOnTicket();
 	toggleTicketOn();
 	scene.remove(ticket);
-	ticketSpawned = false;
+	state.ticketSpawned = false;
 	controls.enabled = false;
 }
 
@@ -144,7 +162,7 @@ function shootRay(event) {
 
 	raycaster.setFromCamera(pointer, camera);
 	const intersects = raycaster.intersectObjects([hitbox, ticket]);
-	if (intersects.length > 0 && ticketSpawned) {
+	if (intersects.length > 0 && state.ticketSpawned) {
 		addCardToScene();
 	}
 }
@@ -152,49 +170,50 @@ function shootRay(event) {
 // When loaded, tell splash
 manager.onLoad = () => { tellPageLoaded(controls); };
 
-// Working variables
-let curFlickerOn = false;
-let flickerTime = 0;
-let curFlickerOffInterval = options.flicker.timingFunc();
-const shakeDeltaVec = new Vector3();
-
 function animate() {
 	const delta = clock.getDelta();
 
-	if (options.currentShakeDuration > 0) {
-		shakeDeltaVec.random().subScalar(0.5).multiply(options.shake.intensity);
-		camera.position.add(shakeDeltaVec);
-		options.currentShakeDuration -= delta;
-		if (options.currentShakeDuration <= 0) {
-			options.slideCameraTowardDefault = true;
+	if (state.currentShakeDuration > 0) {
+		state.shakeDeltaVec.random().subScalar(0.5).multiply(options.shake.intensity);
+		camera.position.add(state.shakeDeltaVec);
+		state.currentShakeDuration -= delta;
+		if (state.currentShakeDuration <= 0) {
+			state.slideCameraTowardDefault = true;
 		}
 	}
 
-	flickerTime += delta;
-	if (options.currentFlickerCount === 0 && Math.random() < options.flicker.startProbability) {
-		options.currentFlickerCount = options.flicker.countFunc();
+	state.flickerTime += delta;
+	if (state.currentFlickerCount === 0 && Math.random() < options.flicker.startProbability) {
+		state.currentFlickerCount = options.flicker.countFunc();
 	}
-	if (options.currentFlickerCount > 0) {
-		if (curFlickerOn && flickerTime >= options.flicker.onInterval) {
+	if (state.currentFlickerCount > 0) {
+		if (state.flickerOn && state.flickerTime >= options.flicker.onInterval) {
 			scene.remove(ambient);
-			curFlickerOn = false;
-			flickerTime = 0;
-		} else if (!curFlickerOn && flickerTime >= curFlickerOffInterval) {
+			state.flickerOn = false;
+			state.flickerTime = 0;
+		} else if (!state.flickerOn && state.flickerTime >= state.curFlickerOffInterval) {
 			scene.add(ambient);
-			curFlickerOn = true;
-			options.currentFlickerCount -= 1;
-			flickerTime = 0;
-			curFlickerOffInterval = options.flicker.timingFunc();
+			state.flickerOn = true;
+			state.currentFlickerCount -= 1;
+			state.flickerTime = 0;
+			state.curFlickerOffInterval = options.flicker.timingFunc();
 		}
 	}
 
-	if (options.slideCameraTowardDefault) {
-		if (camera.position.equals(defaultCameraPos)) {
-			options.slideCameraTowardDefault = false;
+	if (state.slideCameraTowardDefault) {
+		if (camera.position.equals(options.camera.defaultPosition)) {
+			state.slideCameraTowardDefault = false;
 		}
-		const adjustment = defaultCameraPos.clone().sub(camera.position)
+		const adjustment = options.camera.defaultPosition.clone().sub(camera.position)
 			.multiplyScalar(options.cameraSlide.speed);
 		camera.position.add(adjustment);
+	}
+	
+	if (state.ticketFramesLeft > 0) { 
+		const adjustment = options.ticketSlide.finalPosition.clone().sub(ticket.position)
+			.multiplyScalar(options.ticketSlide.speed);
+		ticket.position.add(adjustment);
+		state.ticketFramesLeft -= 1;
 	}
 
 	renderer.render(scene, camera);
