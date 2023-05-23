@@ -25,11 +25,11 @@ import { createFortuneOnTicket } from './fortunes.js';
 const options = {
 	camera: {
 		defaultPosition: new Vector3(-4.2, 1.7, -3.5),
-		defaultLookAt: new Vector3(48.3, -16.1, 79.7)
+		defaultLookAt: new Vector3(48.3, -16.1, 79.7),
 	},
 	shake: {
 		intensity: new Vector3(0.03, 0.03, 0.03),
-		durationMS: 1000
+		durationMS: 1000,
 	},
 	flicker: {
 		startProbability: 0.005,
@@ -44,8 +44,8 @@ const options = {
 		speed: 0.05,
 		initialPosition: new Vector3(-1.82, -0.051, -0.45),
 		finalPosition: new Vector3(-1.945, -0.051, -0.65),
-		framesToEnd: 70
-	}
+		framesToEnd: 70,
+	},
 };
 
 const state = {
@@ -57,7 +57,7 @@ const state = {
 	flickerOn: false,
 	flickerTime: 0,
 	curFlickerOffInterval: options.flicker.timingFunc(), // changes each iteration
-	shakeDeltaVec: new Vector3()
+	shakeDeltaVec: new Vector3(),
 };
 
 // Load 3D scene and necesary objects
@@ -208,8 +208,8 @@ function animate() {
 			.multiplyScalar(options.cameraSlide.speed);
 		camera.position.add(adjustment);
 	}
-	
-	if (state.ticketFramesLeft > 0) { 
+
+	if (state.ticketFramesLeft > 0) {
 		const adjustment = options.ticketSlide.finalPosition.clone().sub(ticket.position)
 			.multiplyScalar(options.ticketSlide.speed);
 		ticket.position.add(adjustment);
