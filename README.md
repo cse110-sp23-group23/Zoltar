@@ -1,3 +1,4 @@
+![CI Pipeline Badge](https://github.com/cse110-sp23-group23/Zoltar/actions/workflows/main.yml/badge.svg)
 # Zoltar
 ### Team 23 Final Project, UCSD CSE 110 Spring 2023
 
