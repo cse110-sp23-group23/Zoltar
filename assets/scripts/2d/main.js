@@ -1,8 +1,11 @@
 document.addEventListener('DOMContentLoaded', init);
-const generateTicket = document.querySelector(`#generate-ticket`);
 const fortuneOutput = document.querySelector(`#fortune-output`);
 const imageMap = document.querySelector(`map`);
 const ticket = document.querySelector(`#ticket`);
+const zoltar = document.querySelector(`#zoltar-image`);
+const closeTicket = document.getElementById(`closeTicket`)
+
+
 ticket.style.display = `none`;
 const responses = [
 	'It is certain',
@@ -35,20 +38,33 @@ function init() {
 
     setTimeout(() => {
         splash.style.display = `none`;
-    },2000);
+    },100);
 
 
 }
 
-generateTicket.addEventListener(`click`, () => {
-    fortuneOutput.textContent = responses[Math.floor(Math.random() * responses.length)];
-});
-
-imageMap.addEventListener(`click`,(e) => {
+zoltar.addEventListener(`click`,(e) => {
 	e.preventDefault();
 	fortuneOutput.textContent = responses[Math.floor(Math.random() * responses.length)];
-	ticket.style.display = `flex`
+	ticket.style.display = `flex`;
+	slideIn();
 });
+
+/**
+ * Sliding animation of ticket
+ * doesnt work lol
+ */
+function slideIn() {
+	let isOpen = ticket.classList.contains(`slide-in`);
+
+	ticket.setAttribute('class', isOpen ? 'slide-out' : 'slide-in');
+}
+/**
+ * Closes the ticket
+ */
+closeTicket.addEventListener(`click`, () => {
+	ticket.style.display = `none`;
+})
 
 document.addEventListener('keydown', evt =>{
 	if(evt.key  === 'Escape' ){
