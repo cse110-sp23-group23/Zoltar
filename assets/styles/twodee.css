@@ -163,4 +163,10 @@ img.shake {
 
 .volume-controls img {
     filter: invert(1);
+    display: none;
 }
+
+.volume-controls img:active{
+    transform: scale(0.95);
+}
+

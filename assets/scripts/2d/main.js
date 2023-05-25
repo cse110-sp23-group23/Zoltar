@@ -11,8 +11,8 @@ const fortuneNumber = document.querySelector(`#fortune-number`);
 const splash = document.querySelector('#splash-screen');
 const loadedMessage = document.querySelector('.loaded-message');
 const volumeControl = document.querySelector(`.volume-controls`);
-const volumeOn = document.querySelector(`.volumeOn`);
-const volumeOff = document.querySelector(`.volumeOff`);
+const volumeOn = document.querySelector(`#volumeOn`);
+const volumeOff = document.querySelector(`#volumeOff`);
 
 
 const LOADING_DELAY = 2000;
@@ -22,15 +22,26 @@ const CLOSE = 0;
 let backgroundmp3, thundermp3;
 let responses;
 
-let muteAudio = false;
+let muteAudio;
 let disableZoltar = false;
 
 function init() {
 	setTimeout(() => {
 		splash.style.display = `none`;
 	}, LOADING_DELAY);
+
+	if (!(localStorage.getItem("MuteAudio"))) {
+		localStorage.setItem("MuteAudio", false);
+		muteAudio = false;
+	} else {
+		muteAudio = localStorage.getItem("MuteAudio");
+		console.log(muteAudio);
+		muteAudio ? volumeOff.style.display = `inline` : volumeOn.style.display = `inline`;
+	}
+
 	getResponses();
 	getAudio();
+
 }
 
 /**
@@ -85,19 +96,18 @@ async function getResponses() {
  * Gets Background audio
  * Gets thunderAudio
  */
-async function getAudio() {
+function getAudio() {
 	backgroundmp3 = new Audio('assets/audio/background.wav');
 	backgroundmp3.loop = true;
 	backgroundmp3.muted = true;
-	backgroundmp3.volume = 0.4;
-	backgroundmp3.play();
+	backgroundmp3.volume = muteAudio ? 0 : 0.4;
 	setTimeout(() => {
 		backgroundmp3.muted = false;
+		backgroundmp3.play();	// caught (in promise) DOMException: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD
 	}, LOADING_DELAY);
 
 	thundermp3 = new Audio('assets/audio/thunder2d.wav');
-	thundermp3.volume = 0.5;
-
+	thundermp3.volume = muteAudio ? 0 : 0.5;
 }
 
 /**
@@ -153,17 +163,22 @@ function shakeZoltar() {
 }
 
 /**
- * NOT DONE
+ * Toggles muteAudio and volume icons when called. Sets muteAudio to localStorage so that 
+ * setting is persistent between page loads.
  */
 function toggleAudio() {
 	if (muteAudio) {
 		backgroundmp3.volume = 0.4;
 		thundermp3.volume = 0.5;
-
+		volumeOn.style.display = `inline`;
+		volumeOff.style.display = `none`;
 	} else {
 		backgroundmp3.volume = 0;
 		thundermp3.volume = 0;
+		volumeOn.style.display = `none`;
+		volumeOff.style.display = `inline`;
 	}
 
 	muteAudio = !muteAudio;
+	localStorage.setItem("MuteAudio", muteAudio);
 }
