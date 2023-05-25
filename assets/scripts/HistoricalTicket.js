@@ -6,7 +6,7 @@ class HistoricalTicket extends HTMLElement {
 
 		const shadow = this.attachShadow({ mode: 'open' });
 		this.wrapper = document.createElement('div');
-		this.wrapper.classList.add('ticket-wrapper', 'hidden');
+		this.wrapper.classList.add('ticket-wrapper');
 		const background = document.createElement('div');
 		background.classList.add('ticket-background');
 		background.innerHTML = `
@@ -25,7 +25,7 @@ class HistoricalTicket extends HTMLElement {
 		this.ticketContent.classList.add('ticket-front-content');
 		const style = document.createElement('style');
 		style.innerHTML = `
-			@import url('./assets/styles/ticket.css');
+			@import url('./assets/styles/pasttickets.css');
 		`;
 		this.wrapper.appendChild(background);
 		this.wrapper.appendChild(this.ticketContent);
@@ -45,14 +45,6 @@ class HistoricalTicket extends HTMLElement {
 			<p class="ticket-text">Your lucky numbers are ${convertArrToReadableString(state.currentNumbers)}.</p>
 			<img src="assets/images/horizontalrule.png" class="rule bottom">
 			`;
-	}
-
-	set selected(value) {
-		if (value) {
-			this.wrapper.classList.remove('hidden');
-		} else {
-			this.wrapper.classList.add('hidden');
-		}
 	}
 }
 
