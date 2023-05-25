@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<meta name="description" content="Zoltar! fortune teller. See your future, if you dare...">
 	<meta name="keywords" content="Zoltar, Fortune, Magic, Future, Prophecy">
 	<meta name="author" content="Team 23, UCSD CSE 110 Spring 2023">
@@ -10,8 +11,11 @@
 	<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="assets/styles/pagestyles.css">
 	<link rel="stylesheet" type="text/css" href="assets/styles/twodee.css">
+	<link rel="stylesheet" type="text/css" href="assets/styles/ticket.css">
+
 
 </head>
+
 <body>
 	<section id="splash-screen">
 		<div class="titles">
@@ -29,11 +33,16 @@
 
 
 	<section id="ticket" class="slide-in">
+		<img src="/assets/images/horizontalrule.png" class="top">
 		<span class="closeTicket" id="closeTicket">&times;</span>
-		<h1>Fortune</h1>
+		<h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
+		<img src="assets/images/header.png" class="ticket-header-image">
 		<p id="fortune-output"></p>
+		<img src="/assets/images/horizontalrule.png" class="bottom">
 	</section>
+	
 
 	<script type="module" src="/assets/scripts/2d/main.js"></script>
 </body>
+
 </html>
