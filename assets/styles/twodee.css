@@ -64,12 +64,6 @@ button {
 
 }
 
-.top {
-}
-
-.bottom {
-}
-
 .closeTicket:hover {
     color: white;
 }
@@ -81,8 +75,4 @@ button {
 
 .visible {
     top: 50%;
-}
-
-.top {
-    
 }
