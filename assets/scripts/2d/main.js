@@ -10,16 +10,25 @@ const ticketX = document.getElementById(`closeTicket`);
 const fortuneNumber = document.querySelector(`#fortune-number`);
 const splash = document.querySelector('#splash-screen');
 const loadedMessage = document.querySelector('.loaded-message');
+const volumeControl = document.querySelector(`.volume-controls`);
+const volumeOn = document.querySelector(`.volumeOn`);
+const volumeOff = document.querySelector(`.volumeOff`);
+
+
+const LOADING_DELAY = 2000;
+const OPEN = 1;
+const CLOSE = 0;
 
 let backgroundmp3, thundermp3;
 let responses;
 
+let muteAudio = false;
 let disableZoltar = false;
 
 function init() {
 	setTimeout(() => {
 		splash.style.display = `none`;
-	}, 2000);
+	}, LOADING_DELAY);
 	getResponses();
 	getAudio();
 }
@@ -31,12 +40,9 @@ function init() {
  * ticket pops up.
  */
 zoltar.addEventListener(`click`, (e) => {
-	thundermp3.play();
 	e.preventDefault();
 
-	if (disableZoltar) return;
-
-	ticketHandler();
+	disableZoltar ? ticketHandler(CLOSE) : ticketHandler(OPEN);
 });
 
 
@@ -44,7 +50,7 @@ zoltar.addEventListener(`click`, (e) => {
  * Closes the ticket through the X on the ticket
  */
 ticketX.addEventListener('click', () => {
-	closeTicket();
+	ticketHandler(CLOSE);
 })
 
 /**
@@ -52,9 +58,16 @@ ticketX.addEventListener('click', () => {
  */
 document.addEventListener('keydown', evt => {
 	if (evt.key === 'Escape') {
-		closeTicket();
+		ticketHandler(CLOSE);
+	} else if (evt.key === ` `) {
+		disableZoltar ? ticketHandler(CLOSE) : ticketHandler(OPEN);
 	}
+
 });
+
+volumeControl.addEventListener(`click`, () => {
+	toggleAudio();
+})
 
 
 //-------------------Refactored-------------------
@@ -76,28 +89,36 @@ async function getAudio() {
 	backgroundmp3 = new Audio('assets/audio/background.wav');
 	backgroundmp3.loop = true;
 	backgroundmp3.muted = true;
+	backgroundmp3.volume = 0.4;
 	backgroundmp3.play();
 	setTimeout(() => {
 		backgroundmp3.muted = false;
-	}, 2000);
+	}, LOADING_DELAY);
 
 	thundermp3 = new Audio('assets/audio/thunder2d.wav');
-	thundermp3.volume = 0.2;
+	thundermp3.volume = 0.5;
 
 }
 
 /**
- * Called when a button that invokes Zoltar is pressed.
- * Shakes Zoltar, then displays the ticket after a 1.3s delay.
+ * When called with OPEN, plays thunder, shakes Zoltar, and displays the ticket and disables
+ * Zoltar to prevent new tickets reappearing
+ * WHen called with CLOSE, simply closes the ticket.
+ * @param {boolean} action CLOSE = 0, OPEN = 1
  */
-function ticketHandler() {
-	shakeZoltar();
-	assignTicketContent();
-	disableZoltar = true;
+function ticketHandler(action) {
+	if (action) {
+		thundermp3.play();
+		shakeZoltar();
+		assignTicketContent();
+		disableZoltar = true;
 
-	setTimeout(() => {
-		displayTicket();
-	}, 1300);
+		setTimeout(() => {
+			displayTicket();
+		}, 1300);
+	} else {
+		closeTicket();
+	}
 }
 
 /**
@@ -129,4 +150,20 @@ function displayTicket() {
  */
 function shakeZoltar() {
 	zoltar.classList.add(`shake`)
+}
+
+/**
+ * NOT DONE
+ */
+function toggleAudio() {
+	if (muteAudio) {
+		backgroundmp3.volume = 0.4;
+		thundermp3.volume = 0.5;
+
+	} else {
+		backgroundmp3.volume = 0;
+		thundermp3.volume = 0;
+	}
+
+	muteAudio = !muteAudio;
 }
