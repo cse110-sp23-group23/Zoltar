@@ -15,6 +15,10 @@ const responses = [
 let splash, loadedMessage;
 
 function init() {
+	
+	let background = new Audio('assets/audio/background.wav');
+	background.loop = true;
+	background.play();
 	splash = document.querySelector('#splash-screen');
 	loadedMessage = document.querySelector('.loaded-message');
 
@@ -29,6 +33,9 @@ function init() {
  * When Zoltar is clicked, the ticket pops up and displays your fortune
  */
 zoltar.addEventListener(`click`,(e) => {
+	let thunder = new Audio('assets/audio/thunder2d.wav');
+	thunder.volume = 0.2;
+	thunder.play();
 	e.preventDefault();
 	fortuneOutput.textContent = responses[Math.floor(Math.random() * responses.length)];
 	ticket.style.display = `flex`;
@@ -39,7 +46,7 @@ zoltar.addEventListener(`click`,(e) => {
 /**
  * Closes the ticket
  */
-ticketX.addEventListener(`click`, () => {
+ticketX.addEventListener('click', () => {
 	closeTicket();
 })
 
@@ -50,6 +57,7 @@ document.addEventListener('keydown', evt =>{
 		}
 	}
 });
+
 
 function closeTicket() {
 	ticket.classList.toggle(`visible`);
