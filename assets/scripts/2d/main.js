@@ -35,9 +35,8 @@ function init() {
 		muteAudio = false;
 	} else {
 		muteAudio = localStorage.getItem("MuteAudio");
-		console.log(muteAudio);
-		muteAudio ? volumeOff.style.display = `inline` : volumeOn.style.display = `inline`;
 	}
+	muteAudio ? volumeOff.style.display = `inline` : volumeOn.style.display = `inline`;
 
 	getResponses();
 	getAudio();
