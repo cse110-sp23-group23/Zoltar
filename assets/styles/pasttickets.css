@@ -1,0 +1,28 @@
+.count-tickets-circle {
+	position: absolute;
+	bottom: 2vw;
+	right: 2vw;
+	background-color: rgba(253, 219, 38, 0.95);
+	width: 5vw;
+	height: 5vw;
+	border-radius: 5vw;
+	text-align: center;
+	border: none;
+	font-size: 2vw;
+	font-family: Cinzel;
+}
+
+.count-tickets-circle:hover {
+	background-color: rgba(213, 179, 0, 0.95);
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.ticket-history {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 50vw;
+	height: 50vw;
+	z-index: 250;
+}

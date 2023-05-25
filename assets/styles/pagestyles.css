@@ -59,20 +59,6 @@ html, body {
 	font-weight: 100;
 }
 
-#ticket-generation {
-	position: absolute;
-	height: 50px;
-    width: 250px;
-	left: 40%;
-	top: 75%;
-	border-radius: 5px;
-	background-color: #eac910;
-	font-weight: bold;
-	font-family: Cinzel;
-	font-size: large;
-	cursor: url('../images/customcursorpoint.png'), auto;
-}
-
 .long-loading-message {
 	position: absolute;
 	bottom: 0;
@@ -93,4 +79,57 @@ html, body {
 .link-to-2d a:hover {
 	text-decoration: underline;
 	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.save-delete-ticket {
+	position: absolute;
+	display: block;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 200;
+}
+
+#save-button, #discard-button {
+	border: 0.1vw solid black;
+	border-radius: 0.35vw;
+	width: 12vw;
+	text-align: center;
+	padding: 1.5vw 0 1.5vw 0;
+	font-size: 1.1vw;
+	font-family: Cinzel, fantasy;
+	box-shadow: 0 0 50px 3px rgb(30,30,30);
+	transition: background-color 200ms ease-in-out;
+}
+
+#save-button {
+	background-color: rgba(253, 219, 38, 0.95);
+	margin-left: 3vw;
+}
+
+#save-button:hover {
+	background-color: rgba(213, 179, 0, 0.95);
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+#discard-button {
+	background-color: rgba(230, 230, 230, 0.95);
+}
+
+#discard-button:hover {
+	background-color: rgba(180, 180, 180, 0.95);
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.cover {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: rgba(60, 60, 60, 0.40);
+	transition: all 1500ms ease-in-out;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 150;
 }
