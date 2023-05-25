@@ -1,3 +1,7 @@
+body {
+    cursor: url('../images/customcursorpoint.png'), auto;
+}
+
 .container {
     display: flex;
     align-items: center;
@@ -8,6 +12,7 @@
     height: 100vh;
     z-index: 2;
     position: relative;
+    cursor: url('../images/customcursorclick.png'), pointer;
 }
 
 #wood-background {
@@ -28,9 +33,10 @@ button {
     min-height: 500px;
     z-index: 10;
     position: fixed;
-    top: 50%;
-    left: 50%;
+
     transform: translate(-50%, -50%);
+
+    left: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,13 +46,9 @@ button {
 }
 
 
-#ticket img {
-    position: absolute;
-    z-index: 0;
-}
-
 #ticket h1 {
     z-index: 2;
+    font-size: 2rem;
 }
 
 .closeTicket {
@@ -58,6 +60,7 @@ button {
     top: 5px;
     z-index:2;
     transition: 0.2s;
+    cursor: url('../images/customcursorclick.png'), pointer;
 
 }
 
@@ -65,12 +68,11 @@ button {
     color: white;
 }
 
-@keyframes slide-in {
-    100% { transform: translateX(0%); }
+.slide-in {
+    transition: 0.5s;
+    top:150%;
 }
 
-@keyframes slide-out {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-100%); }
+.visible {
+    top: 50%;
 }
-
