@@ -91,7 +91,6 @@ html, body {
 }
 
 #save-button, #discard-button {
-	border: 0.1vw solid black;
 	border-radius: 0.35vw;
 	width: 12vw;
 	text-align: center;
@@ -99,6 +98,7 @@ html, body {
 	font-size: 1.1vw;
 	font-family: Cinzel, fantasy;
 	box-shadow: 0 0 50px 3px rgb(30,30,30);
+	border: 0.1vw solid black;
 	transition: background-color 200ms ease-in-out;
 }
 
@@ -153,6 +153,9 @@ canvas {
 	border: none;
 	font-size: 2vw;
 	font-family: Cinzel;
+	transition: all 200ms ease-in-out;
+	box-shadow: 0 0 50px 3px rgb(30,30,30);
+	border: 0.1vw solid black;
 }
 
 .count-tickets-circle:hover {
@@ -161,22 +164,85 @@ canvas {
 }
 
 .ticket-history {
-	position: absolute;
+	position: relative;
 	top: 40vh;
 	transform: translateY(-50%);
 	width: 100%;
 	height: 35vw;
-	overflow: hidden;
 	z-index: 250;
 	transition: transform 0.3s ease-out;
 }
 
 .ticket-history-controls {
+	font-family: Carolingia, fantasy;
 	position: absolute;
 	z-index: 300;
-	bottom: 20vh;
 	left: 50%;
+	top: 42vw;
 	transform: translateX(-50%);
+}
+
+.ticket-history-controls button {
+	background-color: rgba(253, 219, 38, 0.95);
+	border: none;
+	width: 5vw;
+	height: 2.5vw;
+	border-radius: 0.6vw;
+	margin: 0.5vw;
+	transition: all 200ms ease-in-out;
+	font-family: Cinzel, fantasy;
+	font-size: 1vw;
+}
+
+.ticket-history-controls button:hover {
+	cursor: url('../images/customcursorclick.png'), pointer;
+	background-color: rgba(213, 179, 0, 0.95);
+}
+
+#ticket-history-input {
+	font-family: Carolingia, fantasy;
+	background-color: rgba(230, 230, 230, 0.95);
+	border: none;
+	width: 2.5vw;
+	height: 2.5vw;
+	text-align: center;
+	border-radius: 0.4vw;
+	transition: all 200ms ease-in-out;
+	font-size: 1vw;
+	padding-left: 0.6vw;
+}
+
+#ticket-history-input:hover {
+	cursor: url('../images/customcursorclick.png'), pointer;
+	background-color: rgba(203, 203, 203, 0.95);
+}
+
+#ticket-history-input:focus {
+	background-color: rgba(203, 203, 203, 0.95)
+}
+
+#close-history {
+	background-color: transparent;
+	border: none;
+	position: absolute;
+	left: 1.2vw;
+	top: 1.2vw;
+	z-index: 999;
+}
+
+#close-history img {
+	width: 2vw;
+}
+
+#close-history:hover {
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.ticket-history-label {
+	font-size: 1vw;
+	font-weight: bolder;
+	color: #FDDB26;
+	margin-left: 0.3vw;
 }
 
 historical-ticket {

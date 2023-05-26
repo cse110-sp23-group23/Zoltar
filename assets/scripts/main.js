@@ -124,8 +124,18 @@ ticketMat.roughness = 1;
 const ticket = new Mesh(ticketGeo, ticketMat);
 ticket.rotateY(0.57);
 
+/**
+ * Returns whether or not ticket can currently be dispensed; tests all edge cases
+ * @param none
+ * @return { Boolean }
+ */
+function canTriggerTicket() {
+	return !isTicketCurrentlyDisplayed() && controls.enabled && !state.ticketSpawned
+		&& document.querySelector('.cover').classList.contains('hidden');
+} /* canTriggerTicket */
+
 window.addEventListener('keydown', (event) => {
-	if (event.key === ' ' && !isTicketCurrentlyDisplayed() && controls.enabled && !state.ticketSpawned) {
+	if (event.key === ' ' && canTriggerTicket()) {
 		state.ticketSpawned = true;
 		state.currentShakeDuration = options.shake.durationMS / 1000;
 		setTimeout(() => {
