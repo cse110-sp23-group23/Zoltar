@@ -124,24 +124,18 @@ ticketMat.roughness = 1;
 const ticket = new Mesh(ticketGeo, ticketMat);
 ticket.rotateY(0.57);
 
-const ticketGenButton = document.querySelector('#ticket-generation');
+/**
+ * Returns whether or not new event can be queued
+ * @param none
+ * @return { Boolean }
+ */
+export function canTriggerEvent() {
+	return !isTicketCurrentlyDisplayed() && controls.enabled && !state.ticketSpawned
+		&& document.querySelector('.cover').classList.contains('hidden');
+} /* canTriggerEvent */
 
 window.addEventListener('keydown', (event) => {
-	if (event.key === ' ' && !isTicketCurrentlyDisplayed() && controls.enabled && !state.ticketSpawned) {
-		ticketGenButton.classList.add('hidden');
-		state.ticketSpawned = true;
-		state.currentShakeDuration = options.shake.durationMS / 1000;
-		setTimeout(() => {
-			ticket.position.copy(options.ticketSlide.initialPosition);
-			scene.add(ticket);
-			state.ticketFramesLeft = options.ticketSlide.framesToEnd;
-		}, options.shake.durationMS);
-	}
-});
-
-ticketGenButton.addEventListener('click', () => {
-	if (!isTicketCurrentlyDisplayed() && controls.enabled && !state.ticketSpawned) {
-		ticketGenButton.classList.add('hidden');
+	if (event.key === ' ' && canTriggerEvent()) {
 		state.ticketSpawned = true;
 		state.currentShakeDuration = options.shake.durationMS / 1000;
 		setTimeout(() => {
@@ -246,17 +240,14 @@ window.addEventListener('resize', () => {
 });
 
 function init() {
-	const buttonRemove = document.querySelector('#close-ticket');
-	buttonRemove.addEventListener('click', () => {
-		buttonRemove.blur();
-		ticketGenButton.classList.remove('hidden');
-		controls.enabled = true;
-	});
-	window.addEventListener('keydown', (event) => {
-		if (event.key === 'Escape' && isTicketCurrentlyFlipped()) {
-			ticketGenButton.classList.remove('hidden');
+	const buttons = [
+		document.querySelector('#save-button'),
+		document.querySelector('#discard-button'),
+	];
+	buttons.forEach((el) => {
+		el.addEventListener('click', () => {
 			controls.enabled = true;
-		}
+		})
 	});
 	animate();
 	window.addEventListener('click', shootRay);

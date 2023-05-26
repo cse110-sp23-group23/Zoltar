@@ -59,20 +59,6 @@ html, body {
 	font-weight: 100;
 }
 
-#ticket-generation {
-	position: absolute;
-	height: 50px;
-    width: 250px;
-	left: 40%;
-	top: 75%;
-	border-radius: 5px;
-	background-color: #eac910;
-	font-weight: bold;
-	font-family: Cinzel;
-	font-size: large;
-	cursor: url('../images/customcursorpoint.png'), auto;
-}
-
 .long-loading-message {
 	position: absolute;
 	bottom: 0;
@@ -93,4 +79,180 @@ html, body {
 .link-to-2d a:hover {
 	text-decoration: underline;
 	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.save-delete-ticket {
+	position: absolute;
+	display: block;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 200;
+}
+
+#save-button, #discard-button {
+	border-radius: 0.35vw;
+	width: 12vw;
+	text-align: center;
+	padding: 1.5vw 0 1.5vw 0;
+	font-size: 1.1vw;
+	font-family: Cinzel, fantasy;
+	box-shadow: 0 0 50px 3px rgb(30,30,30);
+	border: 0.1vw solid black;
+	transition: background-color 200ms ease-in-out;
+}
+
+#save-button {
+	background-color: rgba(253, 219, 38, 0.95);
+	margin-left: 3vw;
+}
+
+#save-button:hover {
+	background-color: rgba(213, 179, 0, 0.95);
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+#discard-button {
+	background-color: rgba(230, 230, 230, 0.95);
+}
+
+#discard-button:hover {
+	background-color: rgba(180, 180, 180, 0.95);
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.cover {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: rgba(60, 60, 60, 0.40);
+	transition: all 1500ms ease-in-out;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 150;
+}
+
+canvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: -99;
+}
+
+.count-tickets-circle {
+	position: absolute;
+	bottom: 2vw;
+	right: 2vw;
+	background-color: rgba(253, 219, 38, 0.95);
+	width: 5vw;
+	height: 5vw;
+	border-radius: 5vw;
+	text-align: center;
+	border: none;
+	font-size: 2vw;
+	font-family: Cinzel, fantasy;
+	transition: all 200ms ease-in-out;
+	box-shadow: 0 0 50px 3px rgb(30,30,30);
+	border: 0.1vw solid black;
+}
+
+.count-tickets-circle:hover {
+	background-color: rgba(213, 179, 0, 0.95);
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.history-wrapper {
+	display: flex;
+	justify-content: center;
+}
+
+.ticket-history {
+	position: relative;
+	top: 40vh;
+	transform: translateY(-50%);
+	width: 100%;
+	height: 35vw;
+	z-index: 250;
+	transition: transform 0.3s ease-out;
+}
+
+.ticket-history-controls {
+	font-family: Carolingia, fantasy;
+	position: absolute;
+	z-index: 300;
+	bottom: 15vh;
+}
+
+.ticket-history-controls button {
+	background-color: rgba(253, 219, 38, 0.95);
+	border: none;
+	width: 5vw;
+	height: 2.5vw;
+	border-radius: 0.6vw;
+	margin: 0.5vw;
+	transition: all 200ms ease-in-out;
+	font-family: Carolingia, fantasy;
+	font-size: 1vw;
+}
+
+.ticket-history-controls button:hover {
+	cursor: url('../images/customcursorclick.png'), pointer;
+	background-color: rgba(213, 179, 0, 0.95);
+}
+
+#ticket-history-input {
+	font-family: Carolingia, fantasy;
+	background-color: rgba(230, 230, 230, 0.95);
+	border: none;
+	width: 2.5vw;
+	height: 2.5vw;
+	text-align: center;
+	border-radius: 0.4vw;
+	transition: all 200ms ease-in-out;
+	font-size: 1vw;
+	padding-left: 0.6vw;
+}
+
+#ticket-history-input:hover {
+	cursor: url('../images/customcursorclick.png'), pointer;
+	background-color: rgba(203, 203, 203, 0.95);
+}
+
+#ticket-history-input:focus {
+	background-color: rgba(203, 203, 203, 0.95)
+}
+
+#close-history {
+	background-color: transparent;
+	border: none;
+	position: absolute;
+	left: 1.2vw;
+	top: 1.2vw;
+	z-index: 999;
+}
+
+#close-history img {
+	width: 2vw;
+}
+
+#close-history:hover {
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.ticket-history-label {
+	font-size: 1vw;
+	font-weight: bolder;
+	color: #FDDB26;
+	margin-left: 0.3vw;
+}
+
+historical-ticket {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	height: 35vw;
+	width: 25vw;
+	transition: transform 500ms linear;
 }

@@ -1,6 +1,6 @@
+import { state, updateTicket } from './ticket.js';
+
 let data;
-let fortuneText;
-let fortuneNumbers;
 
 /**
  * Generates a random fortune from JSON file
@@ -12,21 +12,13 @@ export function produceFortune(arr) {
 } /* produceFortune */
 
 /**
- * Places fortune into DOM
- * @param { String } text text to place (default to 'Hmmm... my vision is cloudy')
- */
-export function placeFortune(text = 'Hmmm... my vision is cloudy') {
-	fortuneText.innerText = text;
-} /* placeFortune */
-
-/**
  * Generates an array of n distinct integers spaced between low and high.
  * Gives back an empty array if no input n, or if there aren't enough numbers
  * 		between high and low to fill the array
  * @param { Integer } n number of unique integers to generate
  * @param { Integer } low bottom bound for random integers, inclusive (default 0)
  * @param { Integer } high top bound for random integers, exclusive (default 100)
- * @returns { Array<Integer> } array of n unique integers
+ * @return { Array<Integer> } array of n unique integers
  */
 export function produceRandomNumbers(n, low = 0, high = 100) {
 	if (n === undefined || (high - low) < n) { // no input or not enough numbers
@@ -40,42 +32,18 @@ export function produceRandomNumbers(n, low = 0, high = 100) {
 } /* produceRandomNumbers */
 
 /**
- * Takes in an integer array and returns a string of integers separated by
- * 		commas with an 'and' after final comma
- * @param { Array<Integer> } arr
- * @returns { String }
- */
-export function convertArrToReadableString(arr) {
-	return arr.reduce((prevText, nextNum, i, array) => {
-		const isLastItem = i === array.length - 1;
-		const delimiter = isLastItem ? ', and' : ',';
-		return `${prevText}${delimiter} ${nextNum}`;
-	});
-} /* convertArrToReadableString */
-
-/**
- * Place list of random numbers into the DOM
- * @param { Array<Integer> } arr integers to put into list (default to [1,2,3,4])
- */
-export function placeRandomNumbers(arr = [1, 2, 3, 4]) {
-	fortuneNumbers.innerText = convertArrToReadableString(arr);
-} /* placeRandomNumbers */
-
-/**
  * Replaces text on card in DOM with new fortune and new list of lucky numbers.
  * @param none
  */
 export function createFortuneOnTicket() {
-	placeFortune(produceFortune(data.fortunes));
-	placeRandomNumbers(produceRandomNumbers(4, 1, 100));
+	state.currentMessage = produceFortune(data.fortunes);
+	state.currentNumbers = produceRandomNumbers(4, 1, 100);
+	updateTicket();
 } /* createFortuneOnTicket */
 
 function init() {
 	fetch('assets/json/responses.json')
 		.then((response) => response.json())
 		.then((json) => { data = json; });
-
-	fortuneText = document.querySelector('#fortune-content');
-	fortuneNumbers = document.querySelector('#ticket-lucky-numbers');
 }
 document.addEventListener('DOMContentLoaded', init);

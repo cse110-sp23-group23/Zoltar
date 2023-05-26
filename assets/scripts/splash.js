@@ -2,7 +2,6 @@ import { playBackgroundNoise } from './noise.js';
 
 let splash;
 let loadedMessage;
-let ticketGeneration;
 let longLoadingMessage;
 
 /**
@@ -14,7 +13,6 @@ export function tellPageLoaded(controls) {
 	const go = () => {
 		playBackgroundNoise();
 		splash.classList.add('hidden');
-		ticketGeneration.classList.remove('hidden');
 		window.removeEventListener('mousedown', go);
 		window.removeEventListener('keydown', go);
 		if (controls) {
@@ -31,7 +29,6 @@ export function tellPageLoaded(controls) {
 function init() {
 	splash = document.querySelector('#splash-screen');
 	loadedMessage = document.querySelector('.loaded-message');
-	ticketGeneration = document.querySelector('#ticket-generation');
 	longLoadingMessage = document.querySelector('.long-loading-message');
 }
 document.addEventListener('DOMContentLoaded', init);

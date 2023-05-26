@@ -21,6 +21,7 @@
 	</script>
 </head>
 <body class="custom-mouse">
+	<div class="cover hidden"></div>
 	<section id="splash-screen">
 		<div class="titles">
 			<h1 class="splash-title">ZOLTAR!</h1>
@@ -28,11 +29,10 @@
 		</div>
 		<div class="long-loading-message hidden">
 			<h4 class="link-to-2d">
-				Oops! If you want to use a faster version, click <a href="#">here</a>.
+				Oops! If you want to use a faster version, click <a href="twodee.html">here</a>.
 			</h4>
 		</div>
 	</section>
-	<button id="ticket-generation" class="hidden" type="button">Reveal My Fortune!</button>
 	<!--begin ticket-->
 	<div class="ticket-wrapper hidden-animation">
 		<div class="ticket-background">
@@ -63,6 +63,29 @@
 		</div>
 	</div>	
 	<!--end ticket-->
+	<div class="save-delete-ticket hidden">
+		<button id="discard-button">Discard</button>
+		<button id="save-button">Save</button>
+	</div>
+	<button class="count-tickets-circle">
+		<span id="ticket-count">0</span>
+	</button>
+	<div class="history-wrapper">
+		<button id="close-history" type="button" class="hidden">
+			<img src="assets/images/close.png">
+		</button>
+		<div class="ticket-history hidden">
+			
+		</div>
+		<div class="ticket-history-controls hidden">
+			<button id="left-button">←</button>
+			<input type="number" id="ticket-history-input" max="99" min="1" value="1">
+			<label class="ticket-history-label" for="ticket-history-input">
+				/ <span id="ticket-history-total">0</span>
+			</label>
+			<button id="right-button">→</button>
+		</div>
+	</div>
 	<script>
 		// offer 2d version after 20s, loaded inline for faster execution
         setTimeout(() => {
@@ -74,6 +97,8 @@
 	<script type="module" src="assets/scripts/fortunes.js"></script>
 	<script type="module" src="assets/scripts/splash.js"></script>
 	<script type="module" src="assets/scripts/noise.js"></script>
+	<script type="module" src="assets/scripts/storage.js"></script>
+	<script type="module" src="assets/scripts/HistoricalTicket.js"></script>
 	<script type="module" src="assets/scripts/main.js"></script>
 </body>
 </html>
