@@ -53,8 +53,8 @@ export function saveState(ticketState) {
 function translateCards() {
 	currentCards.forEach((card, i) => {
 		const distance = i - state.currentlySelected;
-		const geoSumDistance = (distance < 0 ? -1 : 1) * 300 * (1 - 0.9**Math.abs(distance));
-		const scaleFactor = 0.9**Math.abs(distance);
+		const geoSumDistance = (distance < 0 ? -1 : 1) * 300 * (1 - 0.9 ** Math.abs(distance));
+		const scaleFactor = 0.9 ** Math.abs(distance);
 		const cardMod = card;
 		cardMod.style.transform = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
 	});
