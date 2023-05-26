@@ -72,7 +72,7 @@ function flipTicket() {
 
 /**
  * Hides prompt for user to save or discard ticket
- * @param { Integer } index representing button clicked; 0 for discard, 1 for save 
+ * @param { Integer } index representing button clicked; 0 for discard, 1 for save
  */
 function hideSavePrompt(index) {
 	buttons.main.classList.add('hidden');

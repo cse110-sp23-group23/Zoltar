@@ -53,9 +53,10 @@ export function saveState(ticketState) {
 function translateCards() {
 	currentCards.forEach((card, i) => {
 		const distance = i - state.currentlySelected;
-		const geoSumDistance = (distance < 0 ? -1 : 1) * 300 * (1 - Math.pow(0.9, Math.abs(distance)));
-		const scaleFactor = Math.pow(0.9, Math.abs(distance));
-		card.style.transform = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
+		const geoSumDistance = (distance < 0 ? -1 : 1) * 300 * (1 - 0.9**Math.abs(distance));
+		const scaleFactor = 0.9**Math.abs(distance);
+		const cardMod = card;
+		cardMod.style.transform = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
 	});
 } /* translateCards */
 
@@ -87,7 +88,7 @@ function displayStorage() {
  * @param { Integer } value number to be clamped
  * @param { Integer } lo lowest allowed value
  * @param { Integer } hi highest allowed value
- * @return { Integer } 
+ * @return { Integer }
  */
 function clamp(value, lo, hi) {
 	if (value < lo) {
@@ -98,8 +99,8 @@ function clamp(value, lo, hi) {
 
 /**
  * Returns index offset by value of dir, clamped to ends of array
- * @param { Integer } curIndex 
- * @param { Integer } dir -1 for left, 1 right for 
+ * @param { Integer } curIndex
+ * @param { Integer } dir -1 for left, 1 right for
  * @return { Integer } next index selected
  */
 function getNextSelected(curIndex, dir) {
@@ -108,7 +109,7 @@ function getNextSelected(curIndex, dir) {
 
 /**
  * Animates movement of cards either left or right
- * @param { integer } dir direction of movement, -1 is left, 1 is right 
+ * @param { integer } dir direction of movement, -1 is left, 1 is right
  */
 function slide(dir) {
 	state.currentlySelected = getNextSelected(state.currentlySelected, dir);
@@ -150,7 +151,7 @@ function init() {
 		inputField: document.querySelector('#ticket-history-input'),
 		inputCounter: document.querySelector('#ticket-history-total'),
 		exitHistoryButton: document.querySelector('#close-history'),
-	}
+	};
 
 	updateCounts(getAllTickets().length);
 
@@ -160,14 +161,14 @@ function init() {
 
 	window.addEventListener('keydown', (event) => {
 		if (event.key === 'ArrowLeft' || event.key === 'a') {
-			slide(-1)
+			slide(-1);
 		} else if (event.key === 'ArrowRight' || event.key === 'd') {
-			slide(1)
+			slide(1);
 		} else if (event.key === 'Escape' && isHistoryOpen()) {
 			exitHistory();
 		}
 	});
-	
+
 	domContent.inputField.addEventListener('change', updateSliderFromInput);
 
 	domContent.exitHistoryButton.addEventListener('click', exitHistory);

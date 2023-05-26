@@ -247,7 +247,7 @@ function init() {
 	buttons.forEach((el) => {
 		el.addEventListener('click', () => {
 			controls.enabled = true;
-		})
+		});
 	});
 	animate();
 	window.addEventListener('click', shootRay);
