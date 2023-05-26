@@ -1,3 +1,5 @@
+import { canTriggerEvent } from './main.js';
+
 let domContent = {};
 let currentCards = [];
 const state = {
@@ -154,14 +156,18 @@ function init() {
 
 	updateCounts(getAllTickets().length);
 
-	domContent.circleButton.addEventListener('click', displayStorage);
+	domContent.circleButton.addEventListener('click', () => {
+		if (canTriggerEvent()) {
+			displayStorage();
+		}
+	});
 	domContent.leftButton.addEventListener('click', () => { slide(-1); });
 	domContent.rightButton.addEventListener('click', () => { slide(1); });
 
 	window.addEventListener('keydown', (event) => {
-		if (event.key === 'ArrowLeft') {
+		if (event.key === 'ArrowLeft' || event.key === 'a') {
 			slide(-1)
-		} else if (event.key === 'ArrowRight') {
+		} else if (event.key === 'ArrowRight' || event.key === 'd') {
 			slide(1)
 		} else if (event.key === 'Escape' && isHistoryOpen()) {
 			exitHistory();

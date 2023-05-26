@@ -152,7 +152,7 @@ canvas {
 	text-align: center;
 	border: none;
 	font-size: 2vw;
-	font-family: Cinzel;
+	font-family: Cinzel, fantasy;
 	transition: all 200ms ease-in-out;
 	box-shadow: 0 0 50px 3px rgb(30,30,30);
 	border: 0.1vw solid black;
@@ -161,6 +161,11 @@ canvas {
 .count-tickets-circle:hover {
 	background-color: rgba(213, 179, 0, 0.95);
 	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.history-wrapper {
+	display: flex;
+	justify-content: center;
 }
 
 .ticket-history {
@@ -177,9 +182,7 @@ canvas {
 	font-family: Carolingia, fantasy;
 	position: absolute;
 	z-index: 300;
-	left: 50%;
-	top: 42vw;
-	transform: translateX(-50%);
+	bottom: 15vh;
 }
 
 .ticket-history-controls button {
@@ -190,7 +193,7 @@ canvas {
 	border-radius: 0.6vw;
 	margin: 0.5vw;
 	transition: all 200ms ease-in-out;
-	font-family: Cinzel, fantasy;
+	font-family: Carolingia, fantasy;
 	font-size: 1vw;
 }
 

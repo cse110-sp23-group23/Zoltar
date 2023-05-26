@@ -29,7 +29,7 @@
 		</div>
 		<div class="long-loading-message hidden">
 			<h4 class="link-to-2d">
-				Oops! If you want to use a faster version, click <a href="#">here</a>.
+				Oops! If you want to use a faster version, click <a href="twodee.html">here</a>.
 			</h4>
 		</div>
 	</section>
@@ -70,19 +70,21 @@
 	<button class="count-tickets-circle">
 		<span id="ticket-count">0</span>
 	</button>
-	<button id="close-history" type="button" class="hidden">
-		<img src="assets/images/close.png">
-	</button>
-	<div class="ticket-history hidden">
-		
-	</div>
-	<div class="ticket-history-controls hidden">
-		<button id="left-button">←</button>
-		<input type="number" id="ticket-history-input" max="99" min="1" value="1">
-		<label class="ticket-history-label" for="ticket-history-input">
-			 / <span id="ticket-history-total">0</span>
-		</label>
-		<button id="right-button">→</button>
+	<div class="history-wrapper">
+		<button id="close-history" type="button" class="hidden">
+			<img src="assets/images/close.png">
+		</button>
+		<div class="ticket-history hidden">
+			
+		</div>
+		<div class="ticket-history-controls hidden">
+			<button id="left-button">←</button>
+			<input type="number" id="ticket-history-input" max="99" min="1" value="1">
+			<label class="ticket-history-label" for="ticket-history-input">
+				/ <span id="ticket-history-total">0</span>
+			</label>
+			<button id="right-button">→</button>
+		</div>
 	</div>
 	<script>
 		// offer 2d version after 20s, loaded inline for faster execution

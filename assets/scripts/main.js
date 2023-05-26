@@ -125,17 +125,17 @@ const ticket = new Mesh(ticketGeo, ticketMat);
 ticket.rotateY(0.57);
 
 /**
- * Returns whether or not ticket can currently be dispensed; tests all edge cases
+ * Returns whether or not new event can be queued
  * @param none
  * @return { Boolean }
  */
-function canTriggerTicket() {
+export function canTriggerEvent() {
 	return !isTicketCurrentlyDisplayed() && controls.enabled && !state.ticketSpawned
 		&& document.querySelector('.cover').classList.contains('hidden');
-} /* canTriggerTicket */
+} /* canTriggerEvent */
 
 window.addEventListener('keydown', (event) => {
-	if (event.key === ' ' && canTriggerTicket()) {
+	if (event.key === ' ' && canTriggerEvent()) {
 		state.ticketSpawned = true;
 		state.currentShakeDuration = options.shake.durationMS / 1000;
 		setTimeout(() => {
