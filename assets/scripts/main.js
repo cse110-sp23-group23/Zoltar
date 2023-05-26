@@ -18,7 +18,7 @@ import {
 // eslint-disable-next-line import/no-unresolved
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import LockedControls from './LockedControls.js';
-import { isTicketCurrentlyDisplayed, isTicketCurrentlyFlipped, toggleTicketOn } from './ticket.js';
+import { isTicketCurrentlyDisplayed, toggleTicketOn } from './ticket.js';
 import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
 

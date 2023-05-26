@@ -49,6 +49,7 @@ function toggleTicketOff() {
  * @param none
  */
 export function toggleTicketOn() {
+	ticket.ticketCount.classList.add('hidden');
 	ticket.main.classList.remove('hidden-animation');
 	setTimeout(() => {
 		ticket.main.classList.add('ticket-hoverable');
@@ -76,6 +77,7 @@ function flipTicket() {
 function hideSavePrompt(index) {
 	buttons.main.classList.add('hidden');
 	buttons.cover.classList.add('hidden');
+	ticket.ticketCount.classList.remove('hidden');
 	if (index === 1) {
 		saveState(state);
 	}
@@ -121,6 +123,7 @@ function init() {
 		buttonRemove: document.querySelector('#close-ticket'),
 		text: document.querySelector('#fortune-content'),
 		numbers: document.querySelector('#ticket-lucky-numbers'),
+		ticketCount: document.querySelector('.count-tickets-circle'),
 	};
 
 	buttons = {

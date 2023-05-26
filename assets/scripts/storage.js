@@ -1,5 +1,3 @@
-import { canTriggerEvent } from './main.js';
-
 let domContent = {};
 let currentCards = [];
 const state = {
@@ -89,7 +87,7 @@ function displayStorage() {
  * @param { Integer } value number to be clamped
  * @param { Integer } lo lowest allowed value
  * @param { Integer } hi highest allowed value
- * @returns 
+ * @return { Integer } 
  */
 function clamp(value, lo, hi) {
 	if (value < lo) {
@@ -156,11 +154,7 @@ function init() {
 
 	updateCounts(getAllTickets().length);
 
-	domContent.circleButton.addEventListener('click', () => {
-		if (canTriggerEvent()) {
-			displayStorage();
-		}
-	});
+	domContent.circleButton.addEventListener('click', displayStorage);
 	domContent.leftButton.addEventListener('click', () => { slide(-1); });
 	domContent.rightButton.addEventListener('click', () => { slide(1); });
 
