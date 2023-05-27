@@ -9,18 +9,17 @@ import { clamp } from '../assets/scripts/storage';
  */
 describe(`clamp`, () => {
     test(`should clamp value to low`, () => {
-      let result = clamp(0, 10, 20);
-      expect(result).toBe(10);
+        let result = clamp(0, 10, 20);
+        expect(result).toBe(10);
     })
-  
+
     test(`should clamp value to high`, () => {
-      let result = clamp(100, 10, 20);
-      expect(result).toBe(20);
+        let result = clamp(100, 10, 20);
+        expect(result).toBe(20);
     })
-  
+
     test(`should clamp value to value`, () => {
-      let result = clamp(15, 10, 20);
-      expect(result).toBe(15);
+        let result = clamp(15, 10, 20);
+        expect(result).toBe(15);
     })
-  }) 
-  
+})
