@@ -90,7 +90,7 @@ function displayStorage() {
  * @param { Integer } hi highest allowed value
  * @return { Integer }
  */
-function clamp(value, lo, hi) {
+export function clamp(value, lo, hi) {
 	if (value < lo) {
 		return lo;
 	}
