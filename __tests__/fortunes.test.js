@@ -23,7 +23,7 @@ describe("produceRandomNumbers", () => {
     expect(result.length).toBe(3);
     expect(typeof result).toBe(`object`);
     for (let i = 0; i < result.length; i++) {
-      expect(typeof result[i].toBe(`number`));
+      expect(typeof result[i]).toBe(`number`);
     }
   })
 
