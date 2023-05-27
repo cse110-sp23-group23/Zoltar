@@ -25,7 +25,7 @@ export function produceRandomNumbers(n, low = 0, high = 100) {
 		return [];
 	}
 	const list = new Set();
-	while (list.size <= n) {
+	while (list.size < n) {
 		list.add(Math.floor(Math.random() * (high - low)) + low);
 	}
 	return [...list];
