@@ -1,5 +1,4 @@
-import { jest } from '@jest/globals';
-import { clamp } from '../assets/scripts/storage';
+import { clamp } from '../assets/scripts/storage.js';
 
 /**
  * Test:
@@ -7,19 +6,19 @@ import { clamp } from '../assets/scripts/storage';
  *  - Return clamp value as high
  *  - Return clamp value as value
  */
-describe(`clamp`, () => {
-    test(`should clamp value to low`, () => {
-        let result = clamp(0, 10, 20);
-        expect(result).toBe(10);
-    })
+describe('clamp', () => {
+	test('should clamp value to low', () => {
+		const result = clamp(0, 10, 20);
+		expect(result).toBe(10);
+	});
 
-    test(`should clamp value to high`, () => {
-        let result = clamp(100, 10, 20);
-        expect(result).toBe(20);
-    })
+	test('should clamp value to high', () => {
+		const result = clamp(100, 10, 20);
+		expect(result).toBe(20);
+	});
 
-    test(`should clamp value to value`, () => {
-        let result = clamp(15, 10, 20);
-        expect(result).toBe(15);
-    })
-})
+	test('should clamp value to value', () => {
+		const result = clamp(15, 10, 20);
+		expect(result).toBe(15);
+	});
+});
