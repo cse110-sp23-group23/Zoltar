@@ -71,6 +71,7 @@ function displayStorage() {
 	}
 	domContent.cover.classList.remove('hidden');
 	domContent.historyWrapper.classList.remove('hidden');
+	domContent.circleButton.classList.add('hidden');
 	if (currentCards.length !== allTickets.length) {
 		currentCards = [];
 		allTickets.forEach((ticket) => {
@@ -137,6 +138,7 @@ function updateSliderFromInput() {
 function exitHistory() {
 	domContent.cover.classList.add('hidden');
 	domContent.historyWrapper.classList.add('hidden');
+	domContent.circleButton.classList.remove('hidden');
 } /* exitHistory */
 
 function init() {
