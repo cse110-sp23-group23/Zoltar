@@ -157,6 +157,10 @@ scene.add(spotLight.target);
 scene.add(spotLight);
 scene.add(ambient);
 
+/**
+ * Generates card and displays on screen
+ * @param none
+ */
 function addCardToScene() {
 	createFortuneOnTicket();
 	toggleTicketOn();
@@ -165,11 +169,14 @@ function addCardToScene() {
 	controls.enabled = false;
 }
 
-// Test if hitbox is clicked on
+/**
+ * Shoots ray from camera and measures instersection with hitbox of
+ * ticket; if hit, displays cards
+ * @param { Object } event event listener action
+ */
 function shootRay(event) {
 	pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
 	pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
 	raycaster.setFromCamera(pointer, camera);
 	const intersects = raycaster.intersectObjects([hitbox, ticket]);
 	if (intersects.length > 0 && state.ticketSpawned) {
@@ -180,6 +187,10 @@ function shootRay(event) {
 // When loaded, tell splash
 manager.onLoad = () => { tellPageLoaded(controls); };
 
+/**
+ * Animation farm; generates each frame and calls self
+ * @param none
+ */
 function animate() {
 	const delta = clock.getDelta();
 
