@@ -31,7 +31,9 @@ describe('produceRandomNumbers', () => {
     let result = produceRandomNumbers(5, 0, 5);
     let expectedNumbers = [0, 1, 2, 3, 4];
     expect(result.length).toBe(expectedNumbers.length);
-    expect(new Set(result)).toBe(new Set(expectedNumbers));
+    expectedNumbers.forEach((n) => {
+      expect(result).toContain(n);
+    });
   });
 
   test('should return numbers in range [low,high)', () => {
