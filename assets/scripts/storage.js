@@ -10,7 +10,7 @@ const state = {
  * @return { Boolean }
  */
 function isHistoryOpen() {
-	return !domContent.ticketHistory.classList.contains('hidden');
+	return !domContent.historyWrapper.classList.contains('hidden');
 }
 
 /**
@@ -65,13 +65,15 @@ function translateCards() {
  * @param none
  */
 function displayStorage() {
+	const allTickets = getAllTickets();
+	if (allTickets.length === 0) {
+		return;
+	}
 	domContent.cover.classList.remove('hidden');
-	domContent.ticketHistory.classList.remove('hidden');
-	domContent.exitHistoryButton.classList.remove('hidden');
-	domContent.ticketHistoryControls.classList.remove('hidden');
-	if (currentCards.length < getAllTickets().length) {
+	domContent.historyWrapper.classList.remove('hidden');
+	if (currentCards.length !== allTickets.length) {
 		currentCards = [];
-		getAllTickets().forEach((ticket) => {
+		allTickets.forEach((ticket) => {
 			const card = document.createElement('historical-ticket');
 			card.content = ticket;
 			currentCards.push(card);
@@ -134,9 +136,7 @@ function updateSliderFromInput() {
  */
 function exitHistory() {
 	domContent.cover.classList.add('hidden');
-	domContent.ticketHistory.classList.add('hidden');
-	domContent.exitHistoryButton.classList.add('hidden');
-	domContent.ticketHistoryControls.classList.add('hidden');
+	domContent.historyWrapper.classList.add('hidden');
 } /* exitHistory */
 
 function init() {
@@ -145,12 +145,12 @@ function init() {
 		circleButton: document.querySelector('.count-tickets-circle'),
 		cover: document.querySelector('.cover'),
 		ticketHistory: document.querySelector('.ticket-history'),
-		ticketHistoryControls: document.querySelector('.ticket-history-controls'),
 		leftButton: document.querySelector('#left-button'),
 		rightButton: document.querySelector('#right-button'),
 		inputField: document.querySelector('#ticket-history-input'),
 		inputCounter: document.querySelector('#ticket-history-total'),
 		exitHistoryButton: document.querySelector('#close-history'),
+		historyWrapper: document.querySelector('.history-wrapper'),
 	};
 
 	updateCounts(getAllTickets().length);
