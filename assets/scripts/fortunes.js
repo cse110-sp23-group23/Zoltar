@@ -41,7 +41,7 @@ export function produceRandomNumbers(n, low = 0, high = 100) {
  */
 function produceFortuneFromGPT(message) {
 	const url = `${ENDPOINT_URL}?prompt=${encodeURIComponent(message)}`;
-	fetch(url)
+	return fetch(url)
 		.then((response) => response.json())
 		.catch(() => produceFortuneFromArr(data.fortunes)); // fallback if problem
 } /* produceFortuneFromGPT */
