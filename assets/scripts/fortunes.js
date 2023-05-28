@@ -69,7 +69,7 @@ export async function produceFortune(tryGPT = false, options = { message: '', ar
  * @param none
  */
 export function createFortuneOnTicket() {
-	const options = { message: 'give me a fortune related to birds', arr: data.fortunes };
+	const options = { message: 'I am worried about final exams.', arr: data.fortunes };
 	produceFortune(true, options).then((response) => { state.currentMessage = response; }).then(
 		() => {
 			state.currentNumbers = produceRandomNumbers(4, 1, 100);
