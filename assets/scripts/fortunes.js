@@ -76,7 +76,6 @@ export function createFortuneOnTicket() {
 			updateTicket();
 		},
 	);
-	updateTicket();
 } /* createFortuneOnTicket */
 
 function init() {
