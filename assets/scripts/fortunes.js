@@ -1,7 +1,7 @@
 import { state, updateTicket } from './ticket.js';
 
 const ENDPOINT_URL = 'https://subtle-licorice-abd04e.netlify.app/.netlify/functions/gptendpoint';
-const ENABLE_GPT_FLAG = true;
+const ENABLE_GPT_FLAG = false;
 
 let data;
 
