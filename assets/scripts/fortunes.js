@@ -1,6 +1,7 @@
 import { state, updateTicket } from './ticket.js';
 
 const ENDPOINT_URL = 'https://subtle-licorice-abd04e.netlify.app/.netlify/functions/gptendpoint';
+const ENABLE_GPT_FLAG = true;
 
 let data;
 
@@ -37,7 +38,7 @@ export function produceRandomNumbers(n, low = 0, high = 100) {
  * Takes in a message, queries openAI though serverless function, returns
  * response
  * @param { String } message message to be passed to gpt
- * @return { String }
+ * @return { Promise }
  */
 function produceFortuneFromGPT(message) {
 	const url = `${ENDPOINT_URL}?prompt=${encodeURIComponent(message)}`;
@@ -53,7 +54,7 @@ function produceFortuneFromGPT(message) {
  * @return { String }
  */
 export async function produceFortune(tryGPT = false, options = { message: '', arr: data.fortunes }) {
-	if (tryGPT) {
+	if (tryGPT && ENABLE_GPT_FLAG) {
 		try {
 			return produceFortuneFromGPT(options.message);
 		} catch (error) {
@@ -69,8 +70,12 @@ export async function produceFortune(tryGPT = false, options = { message: '', ar
  */
 export function createFortuneOnTicket() {
 	const options = { message: 'give me a fortune related to birds', arr: data.fortunes };
-	produceFortune(true, options).then((response) => { state.currentMessage = response; });
-	state.currentNumbers = produceRandomNumbers(4, 1, 100);
+	produceFortune(true, options).then((response) => { state.currentMessage = response; }).then(
+		() => {
+			state.currentNumbers = produceRandomNumbers(4, 1, 100);
+			updateTicket();
+		},
+	);
 	updateTicket();
 } /* createFortuneOnTicket */
 
