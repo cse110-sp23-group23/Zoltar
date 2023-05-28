@@ -52,9 +52,13 @@ function produceFortuneFromGPT(message) {
  * @param { String } message (optional) user input to pass to APi
  * @return { String }
  */
-export function produceFortune(tryGPT = false, options = { message: '', arr: data.fortunes }) {
+export async function produceFortune(tryGPT = false, options = { message: '', arr: data.fortunes }) {
 	if (tryGPT) {
-		return produceFortuneFromGPT(options.message);
+		try {
+			return produceFortuneFromGPT(options.message);
+		} catch (error) {
+			// fall through
+		}
 	}
 	return produceFortuneFromArr(options.arr);
 } /* produceFortune */
@@ -65,7 +69,7 @@ export function produceFortune(tryGPT = false, options = { message: '', arr: dat
  */
 export function createFortuneOnTicket() {
 	const options = { message: 'give me a fortune related to birds', arr: data.fortunes };
-	state.currentMessage = produceFortune(true, options);
+	produceFortune(true, options).then((response) => { state.currentMessage = response; });
 	state.currentNumbers = produceRandomNumbers(4, 1, 100);
 	updateTicket();
 } /* createFortuneOnTicket */
