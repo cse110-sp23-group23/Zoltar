@@ -56,7 +56,7 @@ function produceFortuneFromGPT(message) {
 export async function produceFortune(tryGPT = false, options = { message: '', arr: data.fortunes }) {
 	if (tryGPT && ENABLE_GPT_FLAG) {
 		try {
-			return produceFortuneFromGPT(options.message);
+			return await produceFortuneFromGPT(options.message);
 		} catch (error) {
 			// fall through
 		}
@@ -70,12 +70,10 @@ export async function produceFortune(tryGPT = false, options = { message: '', ar
  */
 export async function createFortuneOnTicket() {
 	const options = { message: 'I am worried about final exams.', arr: data.fortunes };
-	produceFortune(true, options).then((response) => { state.currentMessage = response; }).then(
-		() => {
-			state.currentNumbers = produceRandomNumbers(4, 1, 100);
-			updateTicket();
-		},
-	);
+	const response = await produceFortune(true, options);
+	state.currentMessage = response;
+	state.currentNumbers = produceRandomNumbers(4, 1, 100);
+	updateTicket();
 } /* createFortuneOnTicket */
 
 function init() {
