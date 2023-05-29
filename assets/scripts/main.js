@@ -51,6 +51,7 @@ const options = {
 const state = {
 	currentShakeDuration: 0,
 	responseGenerated: true,
+	shakeEndHappened: true,
 	currentFlickerCount: 0,
 	slideCameraTowardDefault: false,
 	ticketFramesLeft: 0,
@@ -197,12 +198,13 @@ function animate() {
 		state.shakeDeltaVec.random().subScalar(0.5).multiply(options.shake.intensity);
 		camera.position.add(state.shakeDeltaVec);
 		state.currentShakeDuration -= delta;
-		if (state.currentShakeDuration <= 0 && state.responseGenerated) { // do once when done
-			ticket.position.copy(options.ticketSlide.initialPosition);
-			state.ticketFramesLeft = options.ticketSlide.framesToEnd;
-			scene.add(ticket); // spawn ticket
-			state.slideCameraTowardDefault = true; // move back to original position
-		}
+		state.shakeEndHappened = false;
+	} else if (!state.shakeEndHappened) { // do once when done
+		state.shakeEndHappened = true;
+		ticket.position.copy(options.ticketSlide.initialPosition);
+		state.ticketFramesLeft = options.ticketSlide.framesToEnd;
+		scene.add(ticket); // spawn ticket
+		state.slideCameraTowardDefault = true; // move back to original position
 	}
 
 	state.flickerTime += delta;
