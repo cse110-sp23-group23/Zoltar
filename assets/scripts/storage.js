@@ -141,6 +141,21 @@ function exitHistory() {
 	domContent.circleButton.classList.remove('hidden');
 } /* exitHistory */
 
+/**
+ * Determines and takes appropriate action during keypress, attached to
+ * event listener
+ * @param { Event } event - event object passed in
+ */
+function keyHandler(event) {
+	if (event.key === 'ArrowLeft' || event.key === 'a') {
+		slide(-1);
+	} else if (event.key === 'ArrowRight' || event.key === 'd') {
+		slide(1);
+	} else if (event.key === 'Escape' && isHistoryOpen()) {
+		exitHistory();
+	}
+} /* keyHandler */
+
 function init() {
 	domContent = {
 		ticketCounter: document.getElementById('ticket-count'),
@@ -155,24 +170,13 @@ function init() {
 		historyWrapper: document.querySelector('.history-wrapper'),
 	};
 
-	updateCounts(getAllTickets().length);
-
 	domContent.circleButton.addEventListener('click', displayStorage);
 	domContent.leftButton.addEventListener('click', () => { slide(-1); });
 	domContent.rightButton.addEventListener('click', () => { slide(1); });
-
-	window.addEventListener('keydown', (event) => {
-		if (event.key === 'ArrowLeft' || event.key === 'a') {
-			slide(-1);
-		} else if (event.key === 'ArrowRight' || event.key === 'd') {
-			slide(1);
-		} else if (event.key === 'Escape' && isHistoryOpen()) {
-			exitHistory();
-		}
-	});
-
 	domContent.inputField.addEventListener('change', updateSliderFromInput);
-
 	domContent.exitHistoryButton.addEventListener('click', exitHistory);
+	window.addEventListener('keydown', keyHandler);
+
+	updateCounts(getAllTickets().length);
 }
 window.addEventListener('DOMContentLoaded', init);

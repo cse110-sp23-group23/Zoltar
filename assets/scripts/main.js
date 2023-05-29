@@ -25,7 +25,6 @@ import { createFortuneOnTicket } from './fortunes.js';
 const options = {
 	camera: {
 		defaultPosition: new Vector3(-4.2, 1.7, -3.5),
-		defaultLookAt: new Vector3(48.3, -16.1, 79.7),
 	},
 	shake: {
 		intensity: new Vector3(0.03, 0.03, 0.03),
@@ -79,7 +78,6 @@ const ambient = new AmbientLight(0xffffff, 0.03);
 
 // Load camera perspective
 camera.position.copy(options.camera.defaultPosition);
-camera.lookAt(options.camera.defaultLookAt);
 
 // Load renderer
 renderer.setClearColor(0x000000);
@@ -237,7 +235,7 @@ function animate() {
 
 	renderer.render(scene, camera);
 	requestAnimationFrame(animate);
-	controls.update(0.01);
+	controls.update(delta);
 }
 
 window.addEventListener('resize', () => {

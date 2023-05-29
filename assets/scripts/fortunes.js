@@ -49,6 +49,7 @@ function produceFortuneFromGPT(message) {
 
 /**
  * Fetches and returns fortune, using API if possible and flagged
+ * @async
  * @param { Boolean } tryGPT flag to try GPT API first; true = try, false = don't try
  * @param { String } message (optional) user input to pass to APi
  * @return { String }
@@ -66,6 +67,7 @@ export async function produceFortune(tryGPT = false, options = { message: '', ar
 
 /**
  * Replaces text on card in DOM with new fortune and new list of lucky numbers.
+ * @async
  * @param none
  */
 export async function createFortuneOnTicket() {

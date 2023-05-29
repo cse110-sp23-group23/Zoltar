@@ -21,6 +21,7 @@
 	</script>
 </head>
 <body class="custom-mouse">
+	<!--begin splash screen-->
 	<div class="cover hidden"></div>
 	<section id="splash-screen">
 		<div class="titles">
@@ -33,7 +34,8 @@
 			</h4>
 		</div>
 	</section>
-	<!--begin ticket-->
+	<!--end splash screen-->
+	<!--begin main ticket-->
 	<div class="ticket-wrapper hidden-animation">
 		<div class="ticket-background">
 			<!--start background SVG-->
@@ -62,7 +64,8 @@
 			<img src="assets/images/horizontalrule.png" class="rule bottom">
 		</div>
 	</div>	
-	<!--end ticket-->
+	<!--end main ticket-->
+	<!--ticket history interface and controls-->
 	<div class="save-delete-ticket hidden">
 		<button id="discard-button">Discard</button>
 		<button id="save-button">Save</button>
@@ -86,9 +89,32 @@
 			<button id="right-button">→</button>
 		</div>
 	</div>
+	<!--end ticket history interface and controls-->
+	<!--ticket history template for use by HistoricalTicket.js-->
+	<template id="historical-ticket-template">
+	<style>
+		@import url('./assets/styles/pasttickets.css');
+		</style>
+		<div class="ticket-wrapper">
+		<div class="ticket-background">
+			<div class="ticket-weathered-background">
+			<svg style="display: none;">
+				<defs>
+				<filter id="weathered-edges" x="0" y="0" width="100%" height="100%">
+					<feTurbulence baseFrequency="0.04" numOctaves="5" seed="10" type="fractalNoise" result="turbulence" />
+					<feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R" yChannelSelector="G" />
+				</filter>
+				</defs>
+			</svg>
+			</div>
+		</div>
+		<div class="ticket-front-content"></div>
+		</div>
+	</template>
+	<!--end ticket history template-->
 	<script>
 		// offer 2d version after 20s, loaded inline for faster execution
-        setTimeout(() => {
+		setTimeout(() => {
 			document.querySelector('.long-loading-message').classList.remove('hidden');
 		}, 20000);
 	</script>

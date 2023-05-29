@@ -1,79 +1,68 @@
-/*
-Skinned build of FirstPersonControls for Three.js
-Removed position movement and constrained horizontal camera movement
-Original: https://github.com/mrdoob/three.js/blob/master/examples/jsm/controls/LockedControls.js
-*/
-
 import {
 	MathUtils,
-	Spherical,
 	Vector3,
 } from 'three'; // eslint-disable-line import/no-unresolved
 
+/**
+ * This controller allows the user to move their view around the screen using
+ * their mouse pointer. The absolute camera position is fixed. Both horizontal and
+ * vertical movement are constrained to predefined limits. Loosely based on code from
+ * https://github.com/mrdoob/three.js/blob/master/examples/jsm/controls/LockedControls.js
+ * @class LockedControls
+ * @property { Object } object - the 3D object that will be controlled, typically a camera
+ * @property { Object } domElement - the DOM element listening for mouse movement
+ * @property { Object } options - configuration settings for controls
+ * @property { Object } API - public API for controls
+ * @property { Object } state - cur state of controls including current pointer and view information
+ * @property { Object } targetPosition - the calculated target position to tend toward
+ */
 export default class LockedControls {
+	/**
+     * Initializes the controler with provided object and domElement, sets up event listeners,
+	 * and updates the controls with an initial delta.
+     * @param {Object} object - the 3D object to control.
+     * @param {Object} domElement - the DOM element to attach the controls to
+     */
 	constructor(object, domElement) {
+		this.options = {
+			lookSpeed: 0.001,
+			minLon: 0.51,
+			maxLon: 0.65,
+			minLat: 1.68,
+			maxLat: 1.88,
+		};
+
 		this.object = object;
 		this.domElement = domElement;
-
-		this.lookDirection = new Vector3();
-		this.spherical = new Spherical();
-		this.target = new Vector3();
-		this.targetPosition = new Vector3();
-
-		this.options = {
-			verticalMin: 1.67,
-			verticalMax: 1.87,
-			lookSpeed: 0.035,
-			minLon: 29,
-			maxLon: 37,
-		};
 
 		this.API = {
 			enabled: true,
 		};
 
 		this.state = {
-			autoSpeedFactor: 0.0,
+			autoSpeedFactor: 0,
 			pointerX: 0,
 			pointerY: 0,
 			viewHalfX: 0,
 			viewHalfY: 0,
-			lat: 0,
-			lon: 0,
+			lat: (this.options.minLat + this.options.maxLat) / 2,
+			lon: (this.options.minLon + this.options.maxLon) / 2,
 		};
 
-		this.domElement.addEventListener('pointerdown', this.onPointerDown.bind(this));
+		this.targetPosition = new Vector3();
+
 		this.domElement.addEventListener('pointermove', this.onPointerMove.bind(this));
 		window.addEventListener('resize', this.handleResize.bind(this));
 
 		this.handleResize();
-		this.setOrientation();
 		this.update(0.01);
 	}
 
-	setOrientation() {
-		this.lookDirection.set(0, 0, -1).applyQuaternion(this.object.quaternion);
-		this.spherical.setFromVector3(this.lookDirection);
-		this.state.lat = 90 - MathUtils.radToDeg(this.spherical.phi);
-		this.state.lon = MathUtils.radToDeg(this.spherical.theta);
-	}
-
-	handleResize() {
-		if (this.domElement === document) {
-			this.state.viewHalfX = window.innerWidth / 2;
-			this.state.viewHalfY = window.innerHeight / 2;
-		} else {
-			this.state.viewHalfX = this.domElement.offsetWidth / 2;
-			this.state.viewHalfY = this.domElement.offsetHeight / 2;
-		}
-	}
-
-	onPointerDown() {
-		if (this.domElement !== document) {
-			this.domElement.focus();
-		}
-	}
-
+	/**
+     * Event handler for the pointermove event. Updates the pointer state based on
+	 * the current mouse position
+     * @param { Event } event - the pointermove event passed in
+     */
 	onPointerMove(event) {
 		if (this.domElement === document) {
 			this.state.pointerX = event.pageX - this.state.viewHalfX;
@@ -84,31 +73,41 @@ export default class LockedControls {
 		}
 	}
 
-	lookAt(x, y, z) {
-		if (x.isVector3) {
-			this.target.copy(x);
+	/**
+     * Event handler for the resize event. Updates the view state based on the
+	 * current size of the domElement.
+	 * @param none
+     */
+	handleResize() {
+		if (this.domElement === document) {
+			this.state.viewHalfX = window.innerWidth / 2;
+			this.state.viewHalfY = window.innerHeight / 2;
 		} else {
-			this.target.set(x, y, z);
+			this.state.viewHalfX = this.domElement.offsetWidth / 2;
+			this.state.viewHalfY = this.domElement.offsetHeight / 2;
 		}
-		this.object.lookAt(this.target);
-		this.setOrientation(this);
-		return this;
 	}
 
+	/**
+     * Updates the controls. This should be called in an animation loop, and must be passed the
+	 * time delta since the last update. Updates the look direction and spherical coordinates
+	 * based on the current mouse position and look speed.
+     * @param { Double } delta - time delta since the last update
+     */
 	update(delta) {
 		if (!this.API.enabled) {
 			return;
 		}
+
 		const actualLookSpeed = delta * this.options.lookSpeed;
-		const verticalLookRatio = Math.PI / (this.options.verticalMax - this.options.verticalMin);
-		const originalLon = this.state.lon - this.state.pointerX * actualLookSpeed;
-		this.state.lon = MathUtils.clamp(originalLon, this.options.minLon, this.options.maxLon);
-		this.state.lat -= this.state.pointerY * actualLookSpeed * verticalLookRatio;
-		this.state.lat = Math.max(-85, Math.min(85, this.state.lat));
-		let phi = MathUtils.degToRad(90 - this.state.lat);
-		const theta = MathUtils.degToRad(this.state.lon);
-		phi = MathUtils.mapLinear(phi, 0, Math.PI, this.options.verticalMin, this.options.verticalMax);
-		this.targetPosition.setFromSphericalCoords(1, phi, theta).add(this.object.position);
+		this.state.lon -= this.state.pointerX * actualLookSpeed;
+		this.state.lat += this.state.pointerY * actualLookSpeed;
+
+		this.state.lon = MathUtils.clamp(this.state.lon, this.options.minLon, this.options.maxLon);
+		this.state.lat = MathUtils.clamp(this.state.lat, this.options.minLat, this.options.maxLat);
+
+		this.targetPosition.setFromSphericalCoords(1, this.state.lat, this.state.lon);
+		this.targetPosition.add(this.object.position);
 		this.object.lookAt(this.targetPosition);
 	}
 }
