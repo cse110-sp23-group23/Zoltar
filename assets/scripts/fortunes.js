@@ -68,7 +68,7 @@ export async function produceFortune(tryGPT = false, options = { message: '', ar
  * Replaces text on card in DOM with new fortune and new list of lucky numbers.
  * @param none
  */
-export function createFortuneOnTicket() {
+export async function createFortuneOnTicket() {
 	const options = { message: 'I am worried about final exams.', arr: data.fortunes };
 	produceFortune(true, options).then((response) => { state.currentMessage = response; }).then(
 		() => {

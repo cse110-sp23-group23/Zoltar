@@ -29,7 +29,7 @@ const options = {
 	},
 	shake: {
 		intensity: new Vector3(0.03, 0.03, 0.03),
-		durationMS: 1000,
+		minDurationMS: 1000,
 	},
 	flicker: {
 		startProbability: 0.005,
@@ -50,6 +50,7 @@ const options = {
 
 const state = {
 	currentShakeDuration: 0,
+	responseGenerated: true,
 	currentFlickerCount: 0,
 	slideCameraTowardDefault: false,
 	ticketFramesLeft: 0,
@@ -137,12 +138,11 @@ export function canTriggerEvent() {
 window.addEventListener('keydown', (event) => {
 	if (event.key === ' ' && canTriggerEvent()) {
 		state.ticketSpawned = true;
-		state.currentShakeDuration = options.shake.durationMS / 1000;
-		setTimeout(() => {
-			ticket.position.copy(options.ticketSlide.initialPosition);
-			scene.add(ticket);
-			state.ticketFramesLeft = options.ticketSlide.framesToEnd;
-		}, options.shake.durationMS);
+		state.currentShakeDuration = options.shake.minDurationMS / 1000;
+		state.responseGenerated = false;
+		createFortuneOnTicket().then(() => {
+			state.responseGenerated = true;
+		});
 	}
 });
 
@@ -162,7 +162,6 @@ scene.add(ambient);
  * @param none
  */
 function addCardToScene() {
-	createFortuneOnTicket();
 	toggleTicketOn();
 	scene.remove(ticket);
 	state.ticketSpawned = false;
@@ -194,12 +193,15 @@ manager.onLoad = () => { tellPageLoaded(controls); };
 function animate() {
 	const delta = clock.getDelta();
 
-	if (state.currentShakeDuration > 0) {
+	if (state.currentShakeDuration > 0 || !state.responseGenerated) { // if not done
 		state.shakeDeltaVec.random().subScalar(0.5).multiply(options.shake.intensity);
 		camera.position.add(state.shakeDeltaVec);
 		state.currentShakeDuration -= delta;
-		if (state.currentShakeDuration <= 0) {
-			state.slideCameraTowardDefault = true;
+		if (state.currentShakeDuration <= 0 && state.responseGenerated) { // do once when done
+			ticket.position.copy(options.ticketSlide.initialPosition);
+			state.ticketFramesLeft = options.ticketSlide.framesToEnd;
+			scene.add(ticket); // spawn ticket
+			state.slideCameraTowardDefault = true; // move back to original position
 		}
 	}
 
