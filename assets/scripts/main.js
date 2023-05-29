@@ -87,15 +87,9 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Load custom controls
+// Load custom controls and turn off by default
 const controls = new LockedControls(camera, renderer.domElement);
-controls.constrainVertical = true;
-controls.verticalMin = 1.67;
-controls.verticalMax = 1.87;
-controls.lookSpeed = 0.035;
-controls.minLon = 29;
-controls.maxLon = 37;
-controls.enabled = false;
+controls.API.enabled = true;
 
 // glTf 2.0 Loader
 loader.load('assets/models/fixedangle.glb', (gltf) => {
@@ -132,7 +126,7 @@ ticket.rotateY(0.57);
  * @return { Boolean }
  */
 export function canTriggerEvent() {
-	return !isTicketCurrentlyDisplayed() && controls.enabled && !state.ticketSpawned
+	return !isTicketCurrentlyDisplayed() && controls.API.enabled && !state.ticketSpawned
 		&& document.querySelector('.cover').classList.contains('hidden');
 } /* canTriggerEvent */
 
@@ -166,7 +160,7 @@ function addCardToScene() {
 	toggleTicketOn();
 	scene.remove(ticket);
 	state.ticketSpawned = false;
-	controls.enabled = false;
+	controls.API.enabled = false;
 }
 
 /**
@@ -261,7 +255,7 @@ function init() {
 	];
 	buttons.forEach((el) => {
 		el.addEventListener('click', () => {
-			controls.enabled = true;
+			controls.API.enabled = true;
 		});
 	});
 	animate();

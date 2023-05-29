@@ -10,135 +10,105 @@ import {
 	Vector3,
 } from 'three'; // eslint-disable-line import/no-unresolved
 
-const lookDirection = new Vector3();
-const spherical = new Spherical();
-const target = new Vector3();
-
-function contextmenu(event) {
-	event.preventDefault();
-}
-
 export default class LockedControls {
 	constructor(object, domElement) {
 		this.object = object;
 		this.domElement = domElement;
 
-		// API
-		this.enabled = true;
-		this.lookSpeed = 0.005;
-		this.lookVertical = true;
-		this.activeLook = true;
-		this.constrainVertical = false;
-		this.verticalMin = 0;
-		this.verticalMax = Math.PI;
-		this.mouseDragOn = false;
-		this.minLon = -90;
-		this.maxLon = 90;
+		this.lookDirection = new Vector3();
+		this.spherical = new Spherical();
+		this.target = new Vector3();
+		this.targetPosition = new Vector3();
 
-		// Internals
-		this.autoSpeedFactor = 0.0;
-		this.pointerX = 0;
-		this.pointerY = 0;
-		this.viewHalfX = 0;
-		this.viewHalfY = 0;
-
-		// Private variables
-		let lat = 0;
-		let lon = 0;
-
-		function setOrientation(controls) {
-			lookDirection.set(0, 0, -1).applyQuaternion(controls.object.quaternion);
-			spherical.setFromVector3(lookDirection);
-			lat = 90 - MathUtils.radToDeg(spherical.phi);
-			lon = MathUtils.radToDeg(spherical.theta);
-		}
-
-		this.handleResize = () => {
-			if (this.domElement === document) {
-				this.viewHalfX = window.innerWidth / 2;
-				this.viewHalfY = window.innerHeight / 2;
-			} else {
-				this.viewHalfX = this.domElement.offsetWidth / 2;
-				this.viewHalfY = this.domElement.offsetHeight / 2;
-			}
+		this.options = {
+			verticalMin: 1.67,
+			verticalMax: 1.87,
+			lookSpeed: 0.035,
+			minLon: 29,
+			maxLon: 37,
 		};
 
-		this.onPointerDown = () => {
-			if (this.domElement !== document) {
-				this.domElement.focus();
-			}
-			this.mouseDragOn = true;
+		this.API = {
+			enabled: true,
 		};
 
-		this.onPointerUp = () => {
-			this.mouseDragOn = false;
+		this.state = {
+			autoSpeedFactor: 0.0,
+			pointerX: 0,
+			pointerY: 0,
+			viewHalfX: 0,
+			viewHalfY: 0,
+			lat: 0,
+			lon: 0,
 		};
 
-		this.onPointerMove = (event) => {
-			if (this.domElement === document) {
-				this.pointerX = event.pageX - this.viewHalfX;
-				this.pointerY = event.pageY - this.viewHalfY;
-			} else {
-				this.pointerX = event.pageX - this.domElement.offsetLeft - this.viewHalfX;
-				this.pointerY = event.pageY - this.domElement.offsetTop - this.viewHalfY;
-			}
-		};
-
-		this.lookAt = (x, y, z) => {
-			if (x.isVector3) {
-				target.copy(x);
-			} else {
-				target.set(x, y, z);
-			}
-			this.object.lookAt(target);
-			setOrientation(this);
-			return this;
-		};
-
-		this.update = (() => {
-			const targetPosition = new Vector3();
-			return function update(delta) {
-				if (this.enabled === false) return;
-				let actualLookSpeed = delta * this.lookSpeed;
-				if (!this.activeLook) {
-					actualLookSpeed = 0;
-				}
-				let verticalLookRatio = 1;
-				if (this.constrainVertical) {
-					verticalLookRatio = Math.PI / (this.verticalMax - this.verticalMin);
-				}
-				lon = MathUtils.clamp(lon - this.pointerX * actualLookSpeed, this.minLon, this.maxLon);
-				if (this.lookVertical) lat -= this.pointerY * actualLookSpeed * verticalLookRatio;
-				lat = Math.max(-85, Math.min(85, lat));
-				let phi = MathUtils.degToRad(90 - lat);
-				const theta = MathUtils.degToRad(lon);
-				if (this.constrainVertical) {
-					phi = MathUtils.mapLinear(phi, 0, Math.PI, this.verticalMin, this.verticalMax);
-				}
-				targetPosition.setFromSphericalCoords(1, phi, theta).add(this.object.position);
-				this.object.lookAt(targetPosition);
-			};
-		})();
-
-		const onPointerMove = this.onPointerMove.bind(this);
-		const onPointerDown = this.onPointerDown.bind(this);
-		const onPointerUp = this.onPointerUp.bind(this);
-
-		this.domElement.addEventListener('contextmenu', contextmenu);
-		this.domElement.addEventListener('pointerdown', onPointerDown);
-		this.domElement.addEventListener('pointermove', onPointerMove);
-		this.domElement.addEventListener('pointerup', onPointerUp);
-		window.addEventListener('resize', this.handleResize);
-
-		this.dispose = () => {
-			this.domElement.removeEventListener('contextmenu', contextmenu);
-			this.domElement.removeEventListener('pointerdown', onPointerDown);
-			this.domElement.removeEventListener('pointermove', onPointerMove);
-			this.domElement.removeEventListener('pointerup', onPointerUp);
-			window.removeEventListener('resize', this.handleResize);
-		};
+		this.domElement.addEventListener('pointerdown', this.onPointerDown.bind(this));
+		this.domElement.addEventListener('pointermove', this.onPointerMove.bind(this));
+		window.addEventListener('resize', this.handleResize.bind(this));
 
 		this.handleResize();
-		setOrientation(this);
+		this.setOrientation();
+		this.update(0.01);
+	}
+
+	setOrientation() {
+		this.lookDirection.set(0, 0, -1).applyQuaternion(this.object.quaternion);
+		this.spherical.setFromVector3(this.lookDirection);
+		this.state.lat = 90 - MathUtils.radToDeg(this.spherical.phi);
+		this.state.lon = MathUtils.radToDeg(this.spherical.theta);
+	}
+
+	handleResize() {
+		if (this.domElement === document) {
+			this.state.viewHalfX = window.innerWidth / 2;
+			this.state.viewHalfY = window.innerHeight / 2;
+		} else {
+			this.state.viewHalfX = this.domElement.offsetWidth / 2;
+			this.state.viewHalfY = this.domElement.offsetHeight / 2;
+		}
+	}
+
+	onPointerDown() {
+		if (this.domElement !== document) {
+			this.domElement.focus();
+		}
+	}
+
+	onPointerMove(event) {
+		if (this.domElement === document) {
+			this.state.pointerX = event.pageX - this.state.viewHalfX;
+			this.state.pointerY = event.pageY - this.state.viewHalfY;
+		} else {
+			this.state.pointerX = event.pageX - this.domElement.offsetLeft - this.state.viewHalfX;
+			this.state.pointerY = event.pageY - this.domElement.offsetTop - this.state.viewHalfY;
+		}
+	}
+
+	lookAt(x, y, z) {
+		if (x.isVector3) {
+			this.target.copy(x);
+		} else {
+			this.target.set(x, y, z);
+		}
+		this.object.lookAt(this.target);
+		this.setOrientation(this);
+		return this;
+	}
+
+	update(delta) {
+		if (!this.API.enabled) {
+			return;
+		}
+		const actualLookSpeed = delta * this.options.lookSpeed;
+		const verticalLookRatio = Math.PI / (this.options.verticalMax - this.options.verticalMin);
+		const originalLon = this.state.lon - this.state.pointerX * actualLookSpeed;
+		this.state.lon = MathUtils.clamp(originalLon, this.options.minLon, this.options.maxLon);
+		this.state.lat -= this.state.pointerY * actualLookSpeed * verticalLookRatio;
+		this.state.lat = Math.max(-85, Math.min(85, this.state.lat));
+		let phi = MathUtils.degToRad(90 - this.state.lat);
+		const theta = MathUtils.degToRad(this.state.lon);
+		phi = MathUtils.mapLinear(phi, 0, Math.PI, this.options.verticalMin, this.options.verticalMax);
+		this.targetPosition.setFromSphericalCoords(1, phi, theta).add(this.object.position);
+		this.object.lookAt(this.targetPosition);
 	}
 }
