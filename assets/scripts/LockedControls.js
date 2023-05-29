@@ -14,7 +14,6 @@ import {
  * @property { Object } options - configuration settings for controls
  * @property { Object } API - public API for controls
  * @property { Object } state - cur state of controls including current pointer and view information
- * @property { Object } targetPosition - the calculated target position to tend toward
  */
 export default class LockedControls {
 	/**
@@ -47,9 +46,8 @@ export default class LockedControls {
 			viewHalfY: 0,
 			lat: (this.options.minLat + this.options.maxLat) / 2,
 			lon: (this.options.minLon + this.options.maxLon) / 2,
+			targetPosition: new Vector3(),
 		};
-
-		this.targetPosition = new Vector3();
 
 		this.domElement.addEventListener('pointermove', this.onPointerMove.bind(this));
 		window.addEventListener('resize', this.handleResize.bind(this));
@@ -106,8 +104,8 @@ export default class LockedControls {
 		this.state.lon = MathUtils.clamp(this.state.lon, this.options.minLon, this.options.maxLon);
 		this.state.lat = MathUtils.clamp(this.state.lat, this.options.minLat, this.options.maxLat);
 
-		this.targetPosition.setFromSphericalCoords(1, this.state.lat, this.state.lon);
-		this.targetPosition.add(this.object.position);
-		this.object.lookAt(this.targetPosition);
+		this.state.targetPosition.setFromSphericalCoords(1, this.state.lat, this.state.lon);
+		this.state.targetPosition.add(this.object.position);
+		this.object.lookAt(this.state.targetPosition);
 	}
 }
