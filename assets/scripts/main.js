@@ -133,7 +133,9 @@ scene.add(ambient);
  * @return { Boolean }
  */
 export function canTriggerEvent() {
-	return !isTicketCurrentlyDisplayed() && controls.API.enabled && !state.ticketSpawned
+	return !isTicketCurrentlyDisplayed()
+		&& controls.API.enabled
+		&& !state.ticketSpawned
 		&& document.querySelector('.cover').classList.contains('hidden');
 } /* canTriggerEvent */
 

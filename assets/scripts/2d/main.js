@@ -56,7 +56,6 @@ function produceFortune(arr) {
 	return arr[Math.floor(Math.random() * arr.length)].message;
 } /* produceFortune */
 
-
 /**
  * Assigns fortune and lucky numbers to the ticket
  * @param none
@@ -92,19 +91,12 @@ function ticketHandler(action) {
  * @param none
  */
 function toggleAudio() {
-	if (muteAudio) {
-		backgroundmp3.volume = 0.4;
-		thundermp3.volume = 0.5;
-		volumeOn.style.display = 'inline';
-		volumeOff.style.display = 'none';
-	} else {
-		backgroundmp3.volume = 0;
-		thundermp3.volume = 0;
-		volumeOn.style.display = 'none';
-		volumeOff.style.display = 'inline';
-	}
 	muteAudio = !muteAudio;
 	localStorage.setItem('MuteAudio', muteAudio);
+	backgroundmp3.volume = muteAudio ? 0 : 0.4;
+	thundermp3.volume = muteAudio ? 0 : 0.5;
+	volumeOn.style.display = muteAudio ? 'none' : 'inline';
+	volumeOff.style.display = muteAudio ? 'inline' : 'none';
 } /* toggleAudio */
 
 /**
@@ -144,10 +136,6 @@ document.addEventListener('keydown', (event) => {
 	}
 });
 
-volumeControl.addEventListener('click', () => {
-	toggleAudio();
-});
-
 /**
  * Gets List of responses from Json file
  * @param none
@@ -180,14 +168,19 @@ function init() {
 	setTimeout(() => {
 		splash.style.display = 'none';
 	}, LOADING_DELAY);
-	if (!(localStorage.getItem('MuteAudio'))) {
+
+	if (!localStorage.getItem('MuteAudio')) {
 		localStorage.setItem('MuteAudio', false);
 		muteAudio = false;
 	} else {
 		muteAudio = localStorage.getItem('MuteAudio');
 	}
+
 	(muteAudio ? volumeOff : volumeOn).style.display = 'inline';
+
 	getResponses();
 	getAudio();
+
+	volumeControl.addEventListener('click', toggleAudio);
 }
 document.addEventListener('DOMContentLoaded', init);
