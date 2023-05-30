@@ -25,7 +25,6 @@ import { createFortuneOnTicket } from './fortunes.js';
 const options = {
 	camera: {
 		defaultPosition: new Vector3(-4.2, 1.7, -3.5),
-		defaultLookAt: new Vector3(48.3, -16.1, 79.7),
 	},
 	shake: {
 		intensity: new Vector3(0.03, 0.03, 0.03),
@@ -38,13 +37,12 @@ const options = {
 		countFunc: () => (Math.floor(Math.random() * 2) + 2),
 	},
 	cameraSlide: {
-		speed: 0.05,
+		speed: 4,
 	},
 	ticketSlide: {
-		speed: 0.05,
+		speed: 4,
 		initialPosition: new Vector3(-1.82, -0.051, -0.45),
 		finalPosition: new Vector3(-1.945, -0.051, -0.65),
-		framesToEnd: 70,
 	},
 };
 
@@ -54,7 +52,6 @@ const state = {
 	shakeEndHappened: true,
 	currentFlickerCount: 0,
 	slideCameraTowardDefault: false,
-	ticketFramesLeft: 0,
 	ticketSpawned: false,
 	flickerOn: false,
 	flickerTime: 0,
@@ -79,7 +76,6 @@ const ambient = new AmbientLight(0xffffff, 0.03);
 
 // Load camera perspective
 camera.position.copy(options.camera.defaultPosition);
-camera.lookAt(options.camera.defaultLookAt);
 
 // Load renderer
 renderer.setClearColor(0x000000);
@@ -120,27 +116,6 @@ ticketMat.roughness = 1;
 const ticket = new Mesh(ticketGeo, ticketMat);
 ticket.rotateY(0.57);
 
-/**
- * Returns whether or not new event can be queued
- * @param none
- * @return { Boolean }
- */
-export function canTriggerEvent() {
-	return !isTicketCurrentlyDisplayed() && controls.API.enabled && !state.ticketSpawned
-		&& document.querySelector('.cover').classList.contains('hidden');
-} /* canTriggerEvent */
-
-window.addEventListener('keydown', (event) => {
-	if (event.key === ' ' && canTriggerEvent()) {
-		state.ticketSpawned = true;
-		state.currentShakeDuration = options.shake.minDurationMS / 1000;
-		state.responseGenerated = false;
-		createFortuneOnTicket().then(() => {
-			state.responseGenerated = true;
-		});
-	}
-});
-
 // Light placement
 spotLight.position.set(-8.4, 3.4, -7);
 spotLight.target.position.set(-2.5, 1, -0.3);
@@ -153,6 +128,16 @@ scene.add(spotLight);
 scene.add(ambient);
 
 /**
+ * Returns whether or not new event can be queued
+ * @param none
+ * @return { Boolean }
+ */
+export function canTriggerEvent() {
+	return !isTicketCurrentlyDisplayed() && controls.API.enabled && !state.ticketSpawned
+		&& document.querySelector('.cover').classList.contains('hidden');
+} /* canTriggerEvent */
+
+/**
  * Generates card and displays on screen
  * @param none
  */
@@ -161,7 +146,7 @@ function addCardToScene() {
 	scene.remove(ticket);
 	state.ticketSpawned = false;
 	controls.API.enabled = false;
-}
+} /* addCardToScene */
 
 /**
  * Shoots ray from camera and measures instersection with hitbox of
@@ -176,18 +161,40 @@ function shootRay(event) {
 	if (intersects.length > 0 && state.ticketSpawned) {
 		addCardToScene();
 	}
-}
-
-// When loaded, tell splash
-manager.onLoad = () => { tellPageLoaded(controls); };
+} /* shootRay */
 
 /**
- * Animation farm; generates each frame and calls self
+ * Decides and calls appropriate action for all keypresses heard in window
+ * @param { Event } event - keypress event passed by eventlistener
+ */
+function handleKeypress(event) {
+	if (event.key === ' ' && canTriggerEvent()) {
+		state.ticketSpawned = true;
+		state.currentShakeDuration = options.shake.minDurationMS / 1000;
+		state.responseGenerated = false;
+		createFortuneOnTicket().then(() => {
+			state.responseGenerated = true;
+		});
+	}
+} /* handleKeypress */
+
+/**
+ * Prevents damage from window resize to camera controls and viewport
  * @param none
  */
-function animate() {
-	const delta = clock.getDelta();
+function handleResize() {
+	const width = window.innerWidth;
+	const height = window.innerHeight;
+	renderer.setSize(width, height);
+	camera.aspect = width / height;
+	camera.updateProjectionMatrix();
+} /* handleResize */
 
+/**
+ * Generates difference from last frame in terms of camera shake
+ * @param { Double } delta - time since last frame generated
+ */
+function animateShakeFrame(delta) {
 	if (state.currentShakeDuration > 0 || !state.responseGenerated) { // if not done
 		state.shakeDeltaVec.random().subScalar(0.5).multiply(options.shake.intensity);
 		camera.position.add(state.shakeDeltaVec);
@@ -196,11 +203,16 @@ function animate() {
 	} else if (!state.shakeEndHappened) { // do once when done
 		state.shakeEndHappened = true;
 		ticket.position.copy(options.ticketSlide.initialPosition);
-		state.ticketFramesLeft = options.ticketSlide.framesToEnd;
 		scene.add(ticket); // spawn ticket
 		state.slideCameraTowardDefault = true; // move back to original position
 	}
+} /* animateShakeFrame */
 
+/**
+ * Generates difference from last frame in terms of background lights flickering
+ * @param { Double } delta - time since last frame generated
+ */
+function animateFlickerFrame(delta) {
 	state.flickerTime += delta;
 	if (state.currentFlickerCount === 0 && Math.random() < options.flicker.startProbability) {
 		state.currentFlickerCount = options.flicker.countFunc();
@@ -218,47 +230,73 @@ function animate() {
 			state.curFlickerOffInterval = options.flicker.timingFunc();
 		}
 	}
+} /* animateFlickerFrame */
 
-	if (state.slideCameraTowardDefault) {
-		if (camera.position.equals(options.camera.defaultPosition)) {
-			state.slideCameraTowardDefault = false;
-		}
-		const adjustment = options.camera.defaultPosition.clone().sub(camera.position)
-			.multiplyScalar(options.cameraSlide.speed);
-		camera.position.add(adjustment);
+/**
+ * Generates frame tending camera toward default position if state allows
+ * @param { Double } delta - time since last frame requested
+ */
+function conditionalSlideCameraFrame(delta) {
+	if (!state.slideCameraTowardDefault) {
+		return;
 	}
+	if (camera.position.equals(options.camera.defaultPosition)) {
+		state.slideCameraTowardDefault = false;
+	}
+	const adjustment = options.camera.defaultPosition.clone().sub(camera.position)
+		.multiplyScalar(options.cameraSlide.speed * delta);
+	camera.position.add(adjustment);
+} /* conditionalSlideCameraFrame */
 
-	if (state.ticketFramesLeft > 0) {
-		const adjustment = options.ticketSlide.finalPosition.clone().sub(ticket.position)
-			.multiplyScalar(options.ticketSlide.speed);
-		ticket.position.add(adjustment);
-		state.ticketFramesLeft -= 1;
+/**
+ * Generates difference from last frame in terms of ticket sliding out of dispenser
+ * @param { Double } delta - time since last frame generated
+ */
+function animateTicketSlideFrame(delta) {
+	if (ticket.position.distanceTo(options.ticketSlide.finalPosition) <= 0.01) {
+		return;
 	}
+	const adjustment = options.ticketSlide.finalPosition.clone().sub(ticket.position)
+		.multiplyScalar(options.ticketSlide.speed * delta);
+	ticket.position.add(adjustment);
+} /* animateTicketSlideFrame */
+
+/**
+ * Animation farm; generates each frame and calls self
+ * @param none
+ */
+function animate() {
+	const delta = clock.getDelta();
+
+	animateShakeFrame(delta);
+	animateFlickerFrame(delta);
+	animateTicketSlideFrame(delta);
+	conditionalSlideCameraFrame(delta);
+	controls.update(delta);
 
 	renderer.render(scene, camera);
 	requestAnimationFrame(animate);
-	controls.update(0.01);
-}
-
-window.addEventListener('resize', () => {
-	const width = window.innerWidth;
-	const height = window.innerHeight;
-	renderer.setSize(width, height);
-	camera.aspect = width / height;
-	camera.updateProjectionMatrix();
-});
+} /* animate */
 
 function init() {
 	const buttons = [
 		document.querySelector('#save-button'),
 		document.querySelector('#discard-button'),
 	];
+
 	buttons.forEach((el) => {
 		el.addEventListener('click', () => {
 			controls.API.enabled = true;
 		});
 	});
-	animate();
+
 	window.addEventListener('click', shootRay);
-}
+	window.addEventListener('keydown', handleKeypress);
+	window.addEventListener('resize', handleResize);
+
+	manager.onLoad = () => { tellPageLoaded(controls); };
+
+	animate();
+} /* init */
+
 document.addEventListener('DOMContentLoaded', init);

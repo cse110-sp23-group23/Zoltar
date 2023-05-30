@@ -27,5 +27,6 @@ function init() {
 			backgroundSource.buffer = buffer;
 			backgroundSource.loop = true;
 		});
-}
+} /* init */
+
 document.addEventListener('DOMContentLoaded', init);
