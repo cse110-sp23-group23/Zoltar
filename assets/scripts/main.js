@@ -209,19 +209,35 @@ function animateShakeFrame(delta) {
 } /* animateShakeFrame */
 
 /**
+ * Helper func to decide if lights should turn off
+ * @param none
+ * @return { Boolean }
+ */
+function shouldFlickerOff() {
+	return (state.flickerOn) && (state.flickerTime >= options.flicker.onInterval);
+} /* shouldFlickerOff */
+
+/**
+ * Helper func to decide if lights should turn back on
+ * @param none
+ * @return { Boolean }
+ */
+function shouldFlickerOn() {
+	return (!state.flickerOn) && (state.flickerTime >= state.curFlickerOffInterval);
+} /* shouldFlickerOn */
+
+/**
  * Generates difference from last frame in terms of background lights flickering
  * @param { Double } delta - time since last frame generated
  */
 function animateFlickerFrame(delta) {
 	state.flickerTime += delta;
-	const shouldFlickerOff = (state.flickerOn) && (state.flickerTime >= options.flicker.onInterval);
-	const shouldFlickerOn = (!state.flickerOn) && (state.flickerTime >= state.curFlickerOffInterval);
 	if (state.currentFlickerCount > 0) {
-		if (shouldFlickerOff) {
+		if (shouldFlickerOff()) {
 			scene.remove(ambient);
 			state.flickerOn = false;
 			state.flickerTime = 0;
-		} else if (shouldFlickerOn) {
+		} else if (shouldFlickerOn()) {
 			scene.add(ambient);
 			state.flickerOn = true;
 			state.flickerTime = 0;
