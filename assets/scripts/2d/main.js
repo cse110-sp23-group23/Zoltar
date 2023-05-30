@@ -1,8 +1,8 @@
-import { produceFortune, produceRandomNumbers } from '../fortunes.js';
+import { produceRandomNumbers } from '../fortunes.js';
 import { convertArrToReadableString } from '../ticket.js';
 
 const fortuneOutput = document.querySelector('#fortune-output');
-const ticket = document.querySelector('#ticket');
+const ticket = document.querySelector('#mainTicket');
 const zoltar = document.querySelector('#zoltar-image');
 const ticketX = document.getElementById('closeTicket');
 const fortuneNumber = document.querySelector('#fortune-number');
@@ -27,7 +27,7 @@ let disableZoltar = false;
  */
 function shakeZoltar() {
 	zoltar.classList.add('shake');
-}
+} /* shakeZoltar */
 
 /**
  * Slides ticket onto screen
@@ -35,7 +35,7 @@ function shakeZoltar() {
  */
 function displayTicket() {
 	ticket.classList.add('visible');
-}
+} /* displayTicket */
 
 /**
  * Removes ticket from screen and allows Zoltar to pressed again
@@ -45,7 +45,17 @@ function closeTicket() {
 	zoltar.classList.remove('shake');
 	ticket.classList.remove('visible');
 	disableZoltar = false;
-}
+} /* closeTicket */
+
+/**
+ * Generates a random fortune from JSON file
+ * @param { Array<Object> } array of fortune objects with .message field
+ * @return { String } random fortune
+ */
+function produceFortune(arr) {
+	return arr[Math.floor(Math.random() * arr.length)].message;
+} /* produceFortune */
+
 
 /**
  * Assigns fortune and lucky numbers to the ticket
@@ -54,7 +64,7 @@ function closeTicket() {
 function assignTicketContent() {
 	fortuneOutput.textContent = produceFortune(responses.fortunes);
 	fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(produceRandomNumbers(4, 1, 100))}`;
-}
+} /* assignTicketContent */
 
 /**
  * When called with OPEN, plays thunder, shakes Zoltar, and displays the ticket and disables
@@ -74,7 +84,7 @@ function ticketHandler(action) {
 	} else {
 		closeTicket();
 	}
-}
+} /* ticketHandler */
 
 /**
  * Toggles muteAudio and volume icons when called. Sets muteAudio to localStorage so that
@@ -95,7 +105,7 @@ function toggleAudio() {
 	}
 	muteAudio = !muteAudio;
 	localStorage.setItem('MuteAudio', muteAudio);
-}
+} /* toggleAudio */
 
 /**
  * Zoltar image event Listener.
@@ -146,7 +156,7 @@ async function getResponses() {
 	fetch('assets/json/responses.json')
 		.then((response) => response.json())
 		.then((json) => { responses = json; });
-}
+} /* getResponses */
 
 /**
  * Gets Background audio
@@ -164,7 +174,7 @@ function getAudio() {
 	}, LOADING_DELAY);
 	thundermp3 = new Audio('assets/audio/thunder2d.wav');
 	thundermp3.volume = muteAudio ? 0 : 0.5;
-}
+} /* getAudio */
 
 function init() {
 	setTimeout(() => {

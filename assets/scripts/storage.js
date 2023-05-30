@@ -18,7 +18,7 @@ function isHistoryOpen() {
  * @param none
  * @return { Array<Object> } list of tickets in object form
  */
-function getAllTickets() {
+export function getAllTickets() {
 	return JSON.parse(window.localStorage.getItem('tickets')) || [];
 } /* getAllTickets */
 

@@ -26,13 +26,12 @@
 
 	<section class="container">
 		<img id="zoltar-image" alt="Image of Zoltar" src="assets/images/zoltar.jpg">
-		<!-- <img id="wood-background" alt="wooden backdrop" src="assets/images/background.jpg"> -->
 	</section>
 
 
 
 
-	<section id="ticket" class="slide-in">
+	<section id="mainTicket" class="ticket slide-in">
 		<img loading="lazy" src="/assets/images/horizontalrule.png" class="top">
 		<span class="closeTicket" id="closeTicket">&times;</span>
 		<h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
@@ -47,8 +46,17 @@
 		<img id="volumeOff" loading="lazy" src="assets/images/2d/volume-off-icon.png" height="100%">
 	</section>
 
+	<section id="ticketHistoryTickets">
+		<p>ticket component test</p>
+		<!-- Tickets will be appended here-->
+	</section>
+	
+	<button id="ticketHistoryCircle">
+		<span id="ticketHistoryCount">0</span>
+	</button>
 
-	<script type="module" src="/assets/scripts/2d/main.js"></script>
+	<script type="module" src="./assets/scripts/2d/main.js"></script>
+	<script type="module" src="./assets/scripts/2d/ticketHistory.js"></script>
 </body>
 
 </html>
