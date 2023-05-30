@@ -1,6 +1,7 @@
 body {
     cursor: url('../images/customcursorpoint.png'), auto;
     background-color: #121212;
+    overflow: hidden;
 }
 
 .container {
@@ -22,21 +23,12 @@ body {
 
 }
 
-button {
-    z-index: 3;
-    position: absolute;
-    top: 0;
-}
 
 .ticket {
     height: 55vh;
     min-height: 600px;
     aspect-ratio: 1/1.5;
     z-index: 10;
-    position: fixed;
-
-    transform: translate(-50%, -50%);
-
     left: 50%;
     display: flex;
     flex-direction: column;
@@ -45,6 +37,16 @@ button {
     background-image: url('../images/2d/paper-texture.jpeg');
     background-size: cover;
     color: rgb(0, 0, 0);
+}
+
+.mainTicket {
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.savedTicket {
+    position: relative;
+    transform: translateY(-50%);
 }
 
 
@@ -157,9 +159,9 @@ img.shake {
 .volume-controls {
     z-index: 20;
     position: absolute;
-    top:0;
+    bottom: 0;
     margin: 2rem;
-    height: 10vh;
+    height: 5vh;
 }
 
 .volume-controls img {
@@ -169,6 +171,16 @@ img.shake {
 
 .volume-controls img:active{
     transform: scale(0.95);
+}
+
+
+.ticketHistoryBackground{
+    position: absolute;
+    top:0;
+    width: 100vw;
+    height: 100vh;
+	background-color: rgba(165, 42, 42, 0.228);
+	z-index: 10;
 }
 
 #ticketHistoryCircle {
@@ -183,10 +195,27 @@ img.shake {
 }
 
 #ticketHistoryTickets {
-    background-color: red;
-    height: 100px;
-    width: 100px;
+    gap: 20px;
+    height: 1px;
     position: absolute;
     top: 50%;
+    z-index: 1000;
+    display: flex;
+
 }
 
+.historyArrowButtons {
+	color: white;
+	z-index: 500;
+	display: flex;
+	position: absolute;
+	left: 50%;
+	bottom: 10%;
+	transform: translateX(-50%);
+}
+
+.ArrowButton {
+	background-color: yellow;
+	height: 50px;
+	width: 75px;
+}

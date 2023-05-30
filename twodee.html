@@ -17,6 +17,7 @@
 </head>
 
 <body>
+	<!-- Splash loading screen-->
 	<section id="splash-screen">
 		<div class="titles">
 			<h1 class="splash-title">ZOLTAR!</h1>
@@ -24,14 +25,13 @@
 		</div>
 	</section>
 
+	<!-- Mr Zoltar -->
 	<section class="container">
 		<img id="zoltar-image" alt="Image of Zoltar" src="assets/images/zoltar.jpg">
 	</section>
 
-
-
-
-	<section id="mainTicket" class="ticket slide-in">
+	<!-- Main ticket fortune when clicking on zoltar-->
+	<section id="mainTicket" class="mainTicket ticket slide-in">
 		<img loading="lazy" src="/assets/images/horizontalrule.png" class="top">
 		<span class="closeTicket" id="closeTicket">&times;</span>
 		<h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
@@ -41,19 +41,29 @@
 		<img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom">
 	</section>
 
+	<!-- volume controls -->
 	<section class="volume-controls">
 		<img id="volumeOn" loading="eager" src="assets/images/2d/volume-on-icon.png" height="100%">
 		<img id="volumeOff" loading="lazy" src="assets/images/2d/volume-off-icon.png" height="100%">
 	</section>
 
-	<section id="ticketHistoryTickets">
-		<p>ticket component test</p>
-		<!-- Tickets will be appended here-->
+
+	<!-- Ticket history interface and controls-->
+	<section>
+		<div class="ticketHistoryBackground" style="display: none">
+		</div>
+		<section id="ticketHistoryTickets">
+			<!-- Tickets will be appended here-->
+		</section>
+		<section class="historyArrowButtons" style="display: none">
+			<button class="left ArrowButton">←</button>
+			<span> 1 / 3 </span>
+			<button class="right ArrowButton">→</button>
+		</section>
+		<button id="ticketHistoryCircle">
+			<span id="ticketHistoryCount">0</span>
+		</button>
 	</section>
-	
-	<button id="ticketHistoryCircle">
-		<span id="ticketHistoryCount">0</span>
-	</button>
 
 	<script type="module" src="assets/scripts/2d/SavedTicket.js"></script>
 	<script type="module" src="assets/scripts/2d/ticketHistory.js"></script>
