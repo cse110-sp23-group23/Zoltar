@@ -15,10 +15,6 @@ const template = document.getElementById('historical-ticket-template');
  * @property { Object } ticketContent - the inner content of the ticket, namely fortune and numbers
  */
 class HistoricalTicket extends HTMLElement {
-	/**
-     * HistoricalTicket constructor. Initializes the element, attaches it to the
-	 * shadow dom, and sets up ticketContent for later calls
-     */
 	constructor() {
 		super();
 
@@ -28,10 +24,10 @@ class HistoricalTicket extends HTMLElement {
 	} /* constructor */
 
 	/**
-     * Setter for the content of the HistoricalTicket. Given an object with a 'currentMessage'
+	 * Setter for the content of the HistoricalTicket. Given an object with a 'currentMessage'
 	 * and 'currentNumbers' properties, updates the ticket content with appropriate information
-     * @param { Object } state - an object with the current message and numbers
-     */
+	 * @param { Object } state - an object with the current message and numbers
+	 */
 	set content(state) {
 		if (!state) {
 			return;

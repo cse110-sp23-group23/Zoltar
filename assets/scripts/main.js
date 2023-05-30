@@ -214,7 +214,7 @@ function animateShakeFrame(delta) {
  */
 function animateFlickerFrame(delta) {
 	state.flickerTime += delta;
-	if (state.currentFlickerCount === 0 && Math.random() < options.flicker.startProbability) {
+	if ((state.currentFlickerCount === 0) && (Math.random() < options.flicker.startProbability)) {
 		state.currentFlickerCount = options.flicker.countFunc();
 	}
 	if (state.currentFlickerCount > 0) {
@@ -236,7 +236,7 @@ function animateFlickerFrame(delta) {
  * Generates frame tending camera toward default position if state allows
  * @param { Double } delta - time since last frame requested
  */
-function conditionalSlideCameraFrame(delta) {
+function conditionalAnimateSlideCameraFrame(delta) {
 	if (!state.slideCameraTowardDefault) {
 		return;
 	}
@@ -246,7 +246,7 @@ function conditionalSlideCameraFrame(delta) {
 	const adjustment = options.camera.defaultPosition.clone().sub(camera.position)
 		.multiplyScalar(options.cameraSlide.speed * delta);
 	camera.position.add(adjustment);
-} /* conditionalSlideCameraFrame */
+} /* conditionalAnimateSlideCameraFrame */
 
 /**
  * Generates difference from last frame in terms of ticket sliding out of dispenser
@@ -271,7 +271,7 @@ function animate() {
 	animateShakeFrame(delta);
 	animateFlickerFrame(delta);
 	animateTicketSlideFrame(delta);
-	conditionalSlideCameraFrame(delta);
+	conditionalAnimateSlideCameraFrame(delta);
 	controls.update(delta);
 
 	renderer.render(scene, camera);

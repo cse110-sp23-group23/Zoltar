@@ -9,6 +9,8 @@ import {
  * vertical movement are constrained to predefined limits. Loosely based on code from
  * https://github.com/mrdoob/three.js/blob/master/examples/jsm/controls/LockedControls.js
  * @class LockedControls
+ * @param { Object } object - the 3D object to control.
+ * @param { Object } domElement - the DOM element to attach the controls to
  * @property { Object } object - the 3D object that will be controlled, typically a camera
  * @property { Object } domElement - the DOM element listening for mouse movement
  * @property { Object } options - configuration settings for controls
@@ -16,12 +18,6 @@ import {
  * @property { Object } state - cur state of controls including current pointer and view information
  */
 export default class LockedControls {
-	/**
-     * Initializes the controler with provided object and domElement, sets up event listeners,
-	 * initial options and state
-     * @param {Object} object - the 3D object to control.
-     * @param {Object} domElement - the DOM element to attach the controls to
-     */
 	constructor(object, domElement) {
 		this.options = {
 			lookSpeed: 0.001,
@@ -56,10 +52,10 @@ export default class LockedControls {
 	} /* constructor */
 
 	/**
-     * Event handler for the pointermove event. Updates the pointer state based on
+	 * Event handler for the pointermove event. Updates the pointer state based on
 	 * the current mouse position
-     * @param { Event } event - the pointermove event passed in
-     */
+	 * @param { Event } event - the pointermove event passed in
+	 */
 	onPointerMove(event) {
 		if (this.domElement === document) {
 			this.state.pointerX = event.pageX - this.state.viewHalfX;
@@ -71,10 +67,10 @@ export default class LockedControls {
 	} /* onPointerMove */
 
 	/**
-     * Event handler for the resize event. Updates the view state based on the
+	 * Event handler for the resize event. Updates the view state based on the
 	 * current size of the domElement.
 	 * @param none
-     */
+	 */
 	handleResize() {
 		if (this.domElement === document) {
 			this.state.viewHalfX = window.innerWidth / 2;
@@ -86,11 +82,11 @@ export default class LockedControls {
 	} /* handleResize */
 
 	/**
-     * Updates the controls. This should be called in an animation loop, and must be passed the
+	 * Updates the controls. This should be called in an animation loop, and must be passed the
 	 * time delta since the last update. Updates the look direction and spherical coordinates
 	 * based on the current mouse position and look speed.
-     * @param { Double } delta - time delta since the last update
-     */
+	 * @param { Double } delta - time delta since the last update
+	 */
 	update(delta) {
 		if (!this.API.enabled) {
 			return;
