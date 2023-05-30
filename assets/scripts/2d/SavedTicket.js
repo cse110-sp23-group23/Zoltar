@@ -4,7 +4,7 @@ class SavedTicket extends HTMLElement {
     constructor() {
         super();
 
-        const shadowRoot = this.attachShadow({ mode: 'open' });
+        const shadow = this.attachShadow({ mode: 'open' });
         let div = document.createElement(`div`);
         div.textContent = 'Why no show?';
 
