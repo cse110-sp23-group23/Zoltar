@@ -214,12 +214,14 @@ function animateShakeFrame(delta) {
  */
 function animateFlickerFrame(delta) {
 	state.flickerTime += delta;
+	const shouldFlickerOff = (state.flickerOn) && (state.flickerTime >= options.flicker.onInterval);
+	const shouldFlickerOn = (!state.flickerOn) && (state.flickerTime >= state.curFlickerOffInterval);
 	if (state.currentFlickerCount > 0) {
-		if ((state.flickerOn) && (state.flickerTime >= options.flicker.onInterval)) {
+		if (shouldFlickerOff) {
 			scene.remove(ambient);
 			state.flickerOn = false;
 			state.flickerTime = 0;
-		} else if ((!state.flickerOn) && (state.flickerTime >= state.curFlickerOffInterval)) {
+		} else if (shouldFlickerOn) {
 			scene.add(ambient);
 			state.flickerOn = true;
 			state.flickerTime = 0;
@@ -239,12 +241,12 @@ function conditionalAnimateSlideCameraFrame(delta) {
 	if (!state.slideCameraTowardDefault) {
 		return;
 	}
-	if (camera.position.equals(options.camera.defaultPosition)) {
-		state.slideCameraTowardDefault = false;
-	}
 	const adjustment = options.camera.defaultPosition.clone().sub(camera.position)
 		.multiplyScalar(options.cameraSlide.speed * delta);
 	camera.position.add(adjustment);
+	if (camera.position.equals(options.camera.defaultPosition)) {
+		state.slideCameraTowardDefault = false;
+	}
 } /* conditionalAnimateSlideCameraFrame */
 
 /**
