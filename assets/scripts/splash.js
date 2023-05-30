@@ -30,5 +30,6 @@ function init() {
 	splash = document.querySelector('#splash-screen');
 	loadedMessage = document.querySelector('.loaded-message');
 	longLoadingMessage = document.querySelector('.long-loading-message');
-}
+} /* init */
+
 document.addEventListener('DOMContentLoaded', init);

@@ -18,7 +18,7 @@ import {
 export default class LockedControls {
 	/**
      * Initializes the controler with provided object and domElement, sets up event listeners,
-	 * and updates the controls with an initial delta.
+	 * initial options and state
      * @param {Object} object - the 3D object to control.
      * @param {Object} domElement - the DOM element to attach the controls to
      */
@@ -53,8 +53,7 @@ export default class LockedControls {
 		window.addEventListener('resize', this.handleResize.bind(this));
 
 		this.handleResize();
-		this.update(0.01);
-	}
+	} /* constructor */
 
 	/**
      * Event handler for the pointermove event. Updates the pointer state based on
@@ -69,7 +68,7 @@ export default class LockedControls {
 			this.state.pointerX = event.pageX - this.domElement.offsetLeft - this.state.viewHalfX;
 			this.state.pointerY = event.pageY - this.domElement.offsetTop - this.state.viewHalfY;
 		}
-	}
+	} /* onPointerMove */
 
 	/**
      * Event handler for the resize event. Updates the view state based on the
@@ -84,7 +83,7 @@ export default class LockedControls {
 			this.state.viewHalfX = this.domElement.offsetWidth / 2;
 			this.state.viewHalfY = this.domElement.offsetHeight / 2;
 		}
-	}
+	} /* handleResize */
 
 	/**
      * Updates the controls. This should be called in an animation loop, and must be passed the
@@ -107,5 +106,5 @@ export default class LockedControls {
 		this.state.targetPosition.setFromSphericalCoords(1, this.state.lat, this.state.lon);
 		this.state.targetPosition.add(this.object.position);
 		this.object.lookAt(this.state.targetPosition);
-	}
-}
+	} /* update */
+} /* LockedControls */

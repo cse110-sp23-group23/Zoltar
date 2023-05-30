@@ -92,23 +92,30 @@
 	<!--end ticket history interface and controls-->
 	<!--ticket history template for use by HistoricalTicket.js-->
 	<template id="historical-ticket-template">
-	<style>
+		<style>
 		@import url('./assets/styles/pasttickets.css');
 		</style>
 		<div class="ticket-wrapper">
-		<div class="ticket-background">
-			<div class="ticket-weathered-background">
-			<svg style="display: none;">
-				<defs>
-				<filter id="weathered-edges" x="0" y="0" width="100%" height="100%">
-					<feTurbulence baseFrequency="0.04" numOctaves="5" seed="10" type="fractalNoise" result="turbulence" />
-					<feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R" yChannelSelector="G" />
-				</filter>
-				</defs>
-			</svg>
+			<div class="ticket-background">
+				<div class="ticket-weathered-background">
+				<svg style="display: none;">
+					<defs>
+					<filter id="weathered-edges" x="0" y="0" width="100%" height="100%">
+						<feTurbulence baseFrequency="0.04" numOctaves="5" seed="10" type="fractalNoise" result="turbulence" />
+						<feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R" yChannelSelector="G" />
+					</filter>
+					</defs>
+				</svg>
+				</div>
 			</div>
-		</div>
-		<div class="ticket-front-content"></div>
+			<div class="ticket-front-content">
+				<img src="assets/images/horizontalrule.png" class="rule top">
+				<p class="ticket-title">YOUR FORTUNE</p>
+				<img src="assets/images/header.png" class="ticket-header-image">
+				<p class="ticket-text"><slot name="fortune-content"></slot></p>
+				<p class="ticket-text">Your lucky numbers are <slot name="lucky-numbers"></slot>.</p>
+				<img src="assets/images/horizontalrule.png" class="rule bottom">
+			</div>
 		</div>
 	</template>
 	<!--end ticket history template-->

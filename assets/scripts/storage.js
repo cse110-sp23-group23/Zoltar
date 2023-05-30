@@ -108,7 +108,7 @@ export function clamp(value, lo, hi) {
  */
 function getNextSelected(curIndex, dir) {
 	return clamp(curIndex + dir, 0, currentCards.length - 1);
-}
+} /* getNextSelected */
 
 /**
  * Animates movement of cards either left or right
@@ -118,7 +118,7 @@ function slide(dir) {
 	state.currentlySelected = getNextSelected(state.currentlySelected, dir);
 	domContent.inputField.value = state.currentlySelected + 1;
 	translateCards();
-}
+} /* slide */
 
 /**
  * Fetch and react to user input from text field to move to corresponding card
@@ -178,5 +178,6 @@ function init() {
 	window.addEventListener('keydown', keyHandler);
 
 	updateCounts(getAllTickets().length);
-}
+} /* init */
+
 window.addEventListener('DOMContentLoaded', init);

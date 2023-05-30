@@ -82,5 +82,6 @@ function init() {
 	fetch('assets/json/responses.json')
 		.then((response) => response.json())
 		.then((json) => { data = json; });
-}
+} /* init */
+
 document.addEventListener('DOMContentLoaded', init);
