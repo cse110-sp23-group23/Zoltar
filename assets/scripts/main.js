@@ -214,21 +214,23 @@ function animateShakeFrame(delta) {
  */
 function animateFlickerFrame(delta) {
 	state.flickerTime += delta;
-	if ((state.currentFlickerCount === 0) && (Math.random() < options.flicker.startProbability)) {
-		state.currentFlickerCount = options.flicker.countFunc();
-	}
-	if (state.currentFlickerCount > 0) {
-		if (state.flickerOn && state.flickerTime >= options.flicker.onInterval) {
-			scene.remove(ambient);
-			state.flickerOn = false;
-			state.flickerTime = 0;
-		} else if (!state.flickerOn && state.flickerTime >= state.curFlickerOffInterval) {
-			scene.add(ambient);
-			state.flickerOn = true;
-			state.currentFlickerCount -= 1;
-			state.flickerTime = 0;
-			state.curFlickerOffInterval = options.flicker.timingFunc();
+	if (state.currentFlickerCount === 0) {
+		if (Math.random() < options.flicker.startProbability) {
+			state.currentFlickerCount = options.flicker.countFunc();
+		} else {
+			return;
 		}
+	}
+	if ((state.flickerOn) && (state.flickerTime >= options.flicker.onInterval)) {
+		scene.remove(ambient);
+		state.flickerOn = false;
+		state.flickerTime = 0;
+	} else if ((!state.flickerOn) && (state.flickerTime >= state.curFlickerOffInterval)) {
+		scene.add(ambient);
+		state.flickerOn = true;
+		state.flickerTime = 0;
+		state.currentFlickerCount -= 1;
+		state.curFlickerOffInterval = options.flicker.timingFunc();
 	}
 } /* animateFlickerFrame */
 
