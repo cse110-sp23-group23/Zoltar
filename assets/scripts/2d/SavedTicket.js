@@ -1,4 +1,4 @@
-import { convertArrToReadableString } from '../ticket.js';
+// import { convertArrToReadableString } from '../ticket.js';
 
 class SavedTicket extends HTMLElement {
 	constructor() {
@@ -41,14 +41,12 @@ class SavedTicket extends HTMLElement {
 	//         <h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
 	//         <img loading="lazy" src="assets/images/header.png" class="ticket-header-image">
 	//         <p class="fortune-text">${state.currentMessage}</p>
-	//         <p class="fortune-number">Your lucky numbers are ${convertArrToReadableString(state.currentNumbers)}</p>
+	//			<p class="fortune-number">
+	//				Your lucky numbers are ${convertArrToReadableString(state.currentNumbers)}
+	// 			</p>
 	//         <img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom">
 	//         `;
 	// }
 }
 
 customElements.define('saved-ticket', SavedTicket);
-
-export function test() {
-    return 'test';
-}
