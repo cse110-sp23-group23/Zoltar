@@ -182,23 +182,29 @@ canvas {
 	position: absolute;
 	z-index: 300;
 	bottom: 15vh;
+	display: flex;
+	align-items: center;
 }
 
 .ticket-history-controls button {
-	background-color: rgba(253, 219, 38, 0.95);
+	background: transparent;
 	border: none;
-	width: 5vw;
-	height: 2.5vw;
-	border-radius: 0.6vw;
 	margin: 0.5vw;
-	transition: background-color 200ms ease-in-out;
-	font-family: Carolingia, fantasy;
-	font-size: 1vw;
+	transition: filter 200ms ease-in-out;
+	padding: 0;
+	margin: 0 1vw 0 1vw;
+}
+
+.ticket-history-controls button img {
+	width: 5vw;
+	height: 3.3vw;
+	padding: 0;
+	margin: 0;
 }
 
 .ticket-history-controls button:hover {
 	cursor: url('../images/customcursorclick.png'), pointer;
-	background-color: rgba(213, 179, 0, 0.95);
+	filter: brightness(75%);
 }
 
 #ticket-history-input {
