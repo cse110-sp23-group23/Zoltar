@@ -1,18 +1,12 @@
 import { getAllTickets } from '../storage.js';
 
-const historyCircleButton = document.querySelector('#ticketHistoryCircle');
-const ticketHistoryCount = document.querySelector('#ticketHistoryCount');
-const ticketHistoryTickets = document.querySelector('#ticketHistoryTickets');
-const ticketHistoryBackground = document.querySelector('.ticketHistoryBackground');
-const arrowButtons = document.querySelector('.historyArrowButtons');
-const historyCloseButton = document.querySelector('#closeHistory');
-
 const OPEN = 1;
 const CLOSE = 0;
 
 let historyOnScreen = false;
 let count = 0;
 let currentCards = [];
+let domContent = {};
 
 /**
  * Position cards on screen relative to currently selected card
@@ -21,15 +15,15 @@ let currentCards = [];
  */
 function translateCards() {
 	currentCards.forEach((card, i) => {
-		const distance = i - 1;
+		const distance = i - 0;
 		const geoSumDistance = (distance < 0 ? -1 : 1) * 20 * (1 - 0.9 ** Math.abs(distance));
 		const scaleFactor = 0.9 ** Math.abs(distance);
 		const cardMod = card;
 		cardMod.style.transform = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
 	});
 
-	ticketHistoryTickets.style.left = '50%';
-	ticketHistoryTickets.style.transform = 'translateX(-50%)';
+	// ticketHistoryTickets.style.left = '50%';
+	// ticketHistoryTickets.style.transform = 'translateX(-50%)';
 }
 
 /**
@@ -38,7 +32,7 @@ function translateCards() {
  */
 function displayStorage() {
 	currentCards.forEach((card) => {
-		ticketHistoryTickets.append(card);
+		domContent.ticketHistoryTickets.append(card);
 	});
 
 	translateCards();
@@ -49,7 +43,10 @@ function displayStorage() {
  * @param {boolean} action OPEN to display, CLOSE to hide
  */
 function toggleItems(action) {
-	const items = [ticketHistoryBackground, arrowButtons, historyCloseButton];
+	const items = [
+		domContent.ticketHistoryBackground,
+		domContent.arrowButtons,
+		domContent.historyCloseButton];
 
 	items.forEach((tag) => {
 		const asset = tag;
@@ -61,7 +58,7 @@ function toggleItems(action) {
 	});
 
 	if (historyOnScreen) {
-		ticketHistoryTickets.innerHTML = '';
+		domContent.ticketHistoryTickets.innerHTML = '';
 		historyOnScreen = false;
 	}
 }
@@ -70,7 +67,7 @@ function toggleItems(action) {
  * Gets all the tickets from storage and displays them
  * STILL WORKING ON THIS -Marc
  */
-historyCircleButton.addEventListener('click', () => {
+function historyCircleButtonFunc() {
 	if (historyOnScreen) {
 		toggleItems(CLOSE);
 		return;
@@ -96,18 +93,23 @@ historyCircleButton.addEventListener('click', () => {
 	});
 	displayStorage();
 	historyOnScreen = true;
-});
-
-/**
- * Close button for history tickets popup
- */
-historyCloseButton.addEventListener('click', () => {
-	toggleItems(CLOSE);
-});
+}
 
 function init() {
+	domContent = {
+		historyCircleButton: document.querySelector('#ticketHistoryCircle'),
+		ticketHistoryCount: document.querySelector('#ticketHistoryCount'),
+		ticketHistoryTickets: document.querySelector('#ticketHistoryTickets'),
+		ticketHistoryBackground: document.querySelector('.ticketHistoryBackground'),
+		arrowButtons: document.querySelector('.historyArrowButtons'),
+		historyCloseButton: document.querySelector('#closeHistory'),
+	};
+
+	domContent.historyCircleButton.addEventListener('click', historyCircleButtonFunc());
+	domContent.historyCloseButton.addEventListener('click', toggleItems(CLOSE));
+
 	count = getAllTickets().length;
-	ticketHistoryCount.innerText = count;
+	domContent.ticketHistoryCount.innerText = count;
 }
 
 window.addEventListener('DOMContentLoaded', init);

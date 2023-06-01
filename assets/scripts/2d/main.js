@@ -1,32 +1,25 @@
 import { produceRandomNumbers, produceFortuneFromArr } from '../fortunes.js';
 import { convertArrToReadableString } from '../ticket.js';
 
-const fortuneOutput = document.querySelector('#fortune-output');
-const ticket = document.querySelector('#mainTicket');
-const zoltar = document.querySelector('#zoltar-image');
-const ticketX = document.getElementById('closeTicket');
-const fortuneNumber = document.querySelector('#fortune-number');
-const splash = document.querySelector('#splash-screen');
-const volumeControl = document.querySelector('.volume-controls');
-const volumeOn = document.querySelector('#volumeOn');
-const volumeOff = document.querySelector('#volumeOff');
-
 const LOADING_DELAY = 2000;
 const OPEN = 1;
 const CLOSE = 0;
+const AUDIO_LOW = 0.3;
 
+let domContent = {};
 let backgroundmp3;
 let thundermp3;
 let responses;
 let muteAudio;
 let disableZoltar = false;
+let muteBackgroundAudio = true;
 
 /**
  * Shakes Zoltar
  * @param none
  */
 function shakeZoltar() {
-	zoltar.classList.add('shake');
+	domContent.zoltar.classList.add('shake');
 } /* shakeZoltar */
 
 /**
@@ -34,7 +27,7 @@ function shakeZoltar() {
  * @param none
  */
 function displayTicket() {
-	ticket.classList.add('visible');
+	domContent.ticket.classList.add('visible');
 } /* displayTicket */
 
 /**
@@ -42,18 +35,28 @@ function displayTicket() {
  * @param none
  */
 function closeTicket() {
-	zoltar.classList.remove('shake');
-	ticket.classList.remove('visible');
+	domContent.zoltar.classList.remove('shake');
+	domContent.ticket.classList.remove('visible');
 	disableZoltar = false;
 } /* closeTicket */
+
+/**
+ * Gets List of responses from Json file
+ * @param none
+ */
+async function getResponses() {
+	fetch('assets/json/responses.json')
+		.then((response) => response.json())
+		.then((json) => { responses = json; });
+} /* getResponses */
 
 /**
  * Assigns fortune and lucky numbers to the ticket
  * @param none
  */
 function assignTicketContent() {
-	fortuneOutput.textContent = produceFortuneFromArr(responses.fortunes);
-	fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(produceRandomNumbers(4, 1, 100))}`;
+	domContent.fortuneOutput.textContent = produceFortuneFromArr(responses.fortunes);
+	domContent.fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(produceRandomNumbers(4, 1, 100))}`;
 } /* assignTicketContent */
 
 /**
@@ -64,7 +67,7 @@ function assignTicketContent() {
  */
 function ticketHandler(action) {
 	if (action) {
-		thundermp3.play();
+		if (thundermp3) thundermp3.play();
 		shakeZoltar();
 		assignTicketContent();
 		disableZoltar = true;
@@ -84,10 +87,11 @@ function ticketHandler(action) {
 function toggleAudio() {
 	muteAudio = !muteAudio;
 	localStorage.setItem('MuteAudio', muteAudio);
-	backgroundmp3.volume = muteAudio ? 0 : 0.4;
-	thundermp3.volume = muteAudio ? 0 : 0.5;
-	volumeOn.style.display = muteAudio ? 'none' : 'inline';
-	volumeOff.style.display = muteAudio ? 'inline' : 'none';
+	backgroundmp3.volume = muteAudio ? 0 : AUDIO_LOW;
+	thundermp3.volume = muteAudio ? 0 : AUDIO_LOW;
+
+	domContent.volumeOn.style.display = muteAudio ? 'none' : 'inline';
+	domContent.volumeOff.style.display = muteAudio ? 'inline' : 'none';
 } /* toggleAudio */
 
 /**
@@ -96,21 +100,13 @@ function toggleAudio() {
  * Thunder is played when Zoltar shakes, then a
  * ticket pops up.
  */
-zoltar.addEventListener('click', (e) => {
-	e.preventDefault();
+function zoltarHandler() {
 	if (disableZoltar) {
 		ticketHandler(CLOSE);
 	} else {
 		ticketHandler(OPEN);
 	}
-});
-
-/**
- * Closes the ticket through the X on the ticket
- */
-ticketX.addEventListener('click', () => {
-	ticketHandler(CLOSE);
-});
+}
 
 /**
  * Closes the ticket when 'esc' is pressed
@@ -128,16 +124,6 @@ document.addEventListener('keydown', (event) => {
 });
 
 /**
- * Gets List of responses from Json file
- * @param none
- */
-async function getResponses() {
-	fetch('assets/json/responses.json')
-		.then((response) => response.json())
-		.then((json) => { responses = json; });
-} /* getResponses */
-
-/**
  * Gets Background audio
  * Gets thunderAudio
  * @param none
@@ -146,18 +132,27 @@ function getAudio() {
 	backgroundmp3 = new Audio('assets/audio/background.wav');
 	backgroundmp3.loop = true;
 	backgroundmp3.muted = true;
-	backgroundmp3.volume = muteAudio ? 0 : 0.4;
-	setTimeout(() => {
-		backgroundmp3.muted = false;
-		backgroundmp3.play();	// caught (in promise) DOMException: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD
-	}, LOADING_DELAY);
+	backgroundmp3.volume = muteAudio ? 0 : AUDIO_LOW;
+
 	thundermp3 = new Audio('assets/audio/thunder2d.wav');
-	thundermp3.volume = muteAudio ? 0 : 0.5;
+	thundermp3.volume = muteAudio ? 0 : AUDIO_LOW;
 } /* getAudio */
 
 function init() {
+	domContent = {
+		fortuneOutput: document.querySelector('#fortune-output'),
+		ticket: document.querySelector('#mainTicket'),
+		zoltar: document.querySelector('#zoltar-image'),
+		ticketX: document.getElementById('closeTicket'),
+		fortuneNumber: document.querySelector('#fortune-number'),
+		splash: document.querySelector('#splash-screen'),
+		volumeControl: document.querySelector('.volume-controls'),
+		volumeOn: document.querySelector('#volumeOn'),
+		volumeOff: document.querySelector('#volumeOff'),
+	};
+
 	setTimeout(() => {
-		splash.style.display = 'none';
+		domContent.splash.style.display = 'none';
 	}, LOADING_DELAY);
 
 	if (!localStorage.getItem('MuteAudio')) {
@@ -167,11 +162,27 @@ function init() {
 		muteAudio = localStorage.getItem('MuteAudio');
 	}
 
-	(muteAudio ? volumeOff : volumeOn).style.display = 'inline';
+	(muteAudio ? domContent.volumeOff : domContent.volumeOn).style.display = 'inline';
 
 	getResponses();
 	getAudio();
 
-	volumeControl.addEventListener('click', toggleAudio);
+	domContent.volumeControl.addEventListener('click', toggleAudio);
+	domContent.zoltar.addEventListener('click', (e) => {
+		e.preventDefault();
+		zoltarHandler();
+	});
+
+	domContent.ticketX.addEventListener('click', (e) => {
+		e.preventDefault();
+		ticketHandler(CLOSE);
+	});
 }
 document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('click', () => {
+	if (muteBackgroundAudio) {
+		backgroundmp3.play();
+		backgroundmp3.muted = false;
+		muteBackgroundAudio = false;
+	}
+});

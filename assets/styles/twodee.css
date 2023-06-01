@@ -8,7 +8,7 @@
 body {
     cursor: url('../images/customcursorpoint.png'), auto;
     background-color: #121212;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .container {
