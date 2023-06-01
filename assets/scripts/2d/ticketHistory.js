@@ -5,6 +5,7 @@ const ticketHistoryCount = document.querySelector('#ticketHistoryCount');
 const ticketHistoryTickets = document.querySelector('#ticketHistoryTickets');
 const ticketHistoryBackground = document.querySelector('.ticketHistoryBackground');
 const arrowButtons = document.querySelector('.historyArrowButtons');
+const historyCloseButton = document.querySelector('#closeHistory');
 
 const OPEN = 1;
 const CLOSE = 0;
@@ -48,7 +49,7 @@ function displayStorage() {
  * @param {boolean} action OPEN to display, CLOSE to hide
  */
 function toggleItems(action) {
-	const items = [ticketHistoryBackground, arrowButtons];
+	const items = [ticketHistoryBackground, arrowButtons, historyCloseButton];
 
 	items.forEach((tag) => {
 		const asset = tag;
@@ -58,6 +59,11 @@ function toggleItems(action) {
 			asset.style.display = 'none';
 		}
 	});
+
+	if (historyOnScreen) {
+		ticketHistoryTickets.innerHTML = '';
+		historyOnScreen = false;
+	}
 }
 
 /**
@@ -66,8 +72,6 @@ function toggleItems(action) {
  */
 historyCircleButton.addEventListener('click', () => {
 	if (historyOnScreen) {
-		ticketHistoryTickets.innerHTML = '';
-		historyOnScreen = false;
 		toggleItems(CLOSE);
 		return;
 	}
@@ -92,6 +96,13 @@ historyCircleButton.addEventListener('click', () => {
 	});
 	displayStorage();
 	historyOnScreen = true;
+});
+
+/**
+ * Close button for history tickets popup
+ */
+historyCloseButton.addEventListener('click', () => {
+	toggleItems(CLOSE);
 });
 
 function init() {

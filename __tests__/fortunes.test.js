@@ -1,11 +1,15 @@
 import { produceFortuneFromArr, produceRandomNumbers } from '../assets/scripts/fortunes.js';
 
+/**
+ * Tests:
+ * 	- Return a nonempty string.
+ */
 describe('produceFortuneFromArr', () => {
 	test('should return a nonempty string', () => {
-		const result = produceFortuneFromArr([{ message: 'this is a message' }, { message: 'this is another' }]);
+		const result = produceFortuneFromArr([{ message: 'message 1' }, { message: 'message 2' }]);
 		expect(result).toBeTruthy(); // non-empty
 		expect(typeof result).toBe('string');
-		expect(['this is a message', 'this is another']).toContain(result);
+		expect(['message 1', 'message 2']).toContain(result);
 	});
 });
 

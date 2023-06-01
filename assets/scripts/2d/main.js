@@ -1,4 +1,4 @@
-import { produceRandomNumbers } from '../fortunes.js';
+import { produceRandomNumbers, produceFortuneFromArr } from '../fortunes.js';
 import { convertArrToReadableString } from '../ticket.js';
 
 const fortuneOutput = document.querySelector('#fortune-output');
@@ -48,20 +48,11 @@ function closeTicket() {
 } /* closeTicket */
 
 /**
- * Generates a random fortune from JSON file
- * @param { Array<Object> } array of fortune objects with .message field
- * @return { String } random fortune
- */
-function produceFortune(arr) {
-	return arr[Math.floor(Math.random() * arr.length)].message;
-} /* produceFortune */
-
-/**
  * Assigns fortune and lucky numbers to the ticket
  * @param none
  */
 function assignTicketContent() {
-	fortuneOutput.textContent = produceFortune(responses.fortunes);
+	fortuneOutput.textContent = produceFortuneFromArr(responses.fortunes);
 	fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(produceRandomNumbers(4, 1, 100))}`;
 } /* assignTicketContent */
 
