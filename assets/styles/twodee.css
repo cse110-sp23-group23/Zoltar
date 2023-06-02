@@ -237,11 +237,12 @@ body.shake {
 	background-color: yellow;
 	z-index: 100;
 	position: absolute;
-	width: 80px;
-	height: 80px;
-	border-radius: 50px;
-	top: 85%;
-	right: 30px;
+	width: 5vw;
+	height: 5vw;
+	border-radius: 5vw;
+	border: none;
+	bottom: 2vw;
+	right: 2vw;
 	font-size: 2rem;
 }
 
