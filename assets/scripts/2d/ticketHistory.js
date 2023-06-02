@@ -39,6 +39,14 @@ function displayStorage() {
 }
 
 /**
+ * Returns whether or not the tickets are on screen
+ * @returns boolean
+ */
+export function isHistoryOnScreen() {
+	return historyOnScreen;
+}
+
+/**
  * Toggles items display properties
  * @param {boolean} action OPEN to display, CLOSE to hide
  */
@@ -105,8 +113,15 @@ function init() {
 		historyCloseButton: document.querySelector('#closeHistory'),
 	};
 
-	domContent.historyCircleButton.addEventListener('click', historyCircleButtonFunc());
-	domContent.historyCloseButton.addEventListener('click', toggleItems(CLOSE));
+	domContent.historyCircleButton.addEventListener('click', (e) => {
+		e.preventDefault();
+		historyCircleButtonFunc();
+	});
+
+	domContent.historyCloseButton.addEventListener('click', (e) => {
+		e.preventDefault();
+		toggleItems(CLOSE);
+	});
 
 	count = getAllTickets().length;
 	domContent.ticketHistoryCount.innerText = count;

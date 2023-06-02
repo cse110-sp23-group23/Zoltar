@@ -27,7 +27,9 @@
 
 	<!-- Mr Zoltar -->
 	<section class="container">
-		<img id="zoltar-image" alt="Image of Zoltar" src="assets/images/zoltar.jpg">
+		<div class="vignette"></div>
+		<img id="zoltar-image" class="camera" data-speedx="0.13" data-speedy="0.25" data-rotation="0.7" alt="Image of Zoltar" src="assets/images/zoltar.jpg">
+		<img id="background-img" class="camera" data-speedx="0.1" data-speedy="0.2" data-rotation="0" alt="Background for Zoltar" src="assets/images/brick-background.jpeg">
 	</section>
 
 	<!-- Main ticket fortune when clicking on zoltar-->
@@ -69,6 +71,7 @@
 	<script type="module" src="assets/scripts/2d/SavedTicket.js"></script>
 	<script type="module" src="assets/scripts/2d/ticketHistory.js"></script>
 	<script type="module" src="assets/scripts/2d/main.js"></script>
+	<script type="module" src="assets/scripts/2d/camera.js"></script>
 </body>
 
 </html>

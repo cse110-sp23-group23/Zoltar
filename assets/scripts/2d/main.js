@@ -13,13 +13,17 @@ let responses;
 let muteAudio;
 let disableZoltar = false;
 let muteBackgroundAudio = true;
+let ticketOnScreen = false;
 
+export function isTicketOnScreen() {
+	return ticketOnScreen;
+}
 /**
- * Shakes Zoltar
+ * Shakes document body
  * @param none
  */
-function shakeZoltar() {
-	domContent.zoltar.classList.add('shake');
+function shakeScreen() {
+	domContent.body.classList.add('shake');
 } /* shakeZoltar */
 
 /**
@@ -35,7 +39,7 @@ function displayTicket() {
  * @param none
  */
 function closeTicket() {
-	domContent.zoltar.classList.remove('shake');
+	domContent.body.classList.remove('shake');
 	domContent.ticket.classList.remove('visible');
 	disableZoltar = false;
 } /* closeTicket */
@@ -68,14 +72,16 @@ function assignTicketContent() {
 function ticketHandler(action) {
 	if (action) {
 		if (thundermp3) thundermp3.play();
-		shakeZoltar();
+		shakeScreen();
 		assignTicketContent();
 		disableZoltar = true;
 		setTimeout(() => {
 			displayTicket();
 		}, 1300);
+		ticketOnScreen = true;
 	} else {
 		closeTicket();
+		ticketOnScreen = false;
 	}
 } /* ticketHandler */
 
@@ -140,6 +146,7 @@ function getAudio() {
 
 function init() {
 	domContent = {
+		body: document.querySelector('body'),
 		fortuneOutput: document.querySelector('#fortune-output'),
 		ticket: document.querySelector('#mainTicket'),
 		zoltar: document.querySelector('#zoltar-image'),
