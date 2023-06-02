@@ -28,8 +28,10 @@
 	<!-- Mr Zoltar -->
 	<section class="container">
 		<div class="vignette"></div>
-		<img id="zoltar-image" class="camera" data-speedx="0.13" data-speedy="0.25" data-rotation="0.7" alt="Image of Zoltar" src="assets/images/zoltar.jpg">
-		<img id="background-img" class="camera" data-speedx="0.1" data-speedy="0.2" data-rotation="0" alt="Background for Zoltar" src="assets/images/brick-background.jpeg">
+		<img id="zoltar-image" class="camera" data-speedx="0.13" data-speedy="0.25" data-rotation="0.7"
+			alt="Image of Zoltar" src="assets/images/zoltar.jpg">
+		<img id="background-img" class="camera" data-speedx="0.1" data-speedy="0.2" data-rotation="0"
+			alt="Background for Zoltar" src="assets/images/2d/2d-wood_planks.jpg">
 	</section>
 
 	<!-- Main ticket fortune when clicking on zoltar-->
@@ -41,6 +43,11 @@
 		<p id="fortune-output"></p>
 		<p id="fortune-number"></p>
 		<img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom">
+	</section>
+
+	<section id="storeTicketPrompt" style="display: none">
+		<button id="discardTicket" class="storeButton">Discard</button>
+		<button id="saveTicket" class="storeButton">Save</button>
 	</section>
 
 	<!-- volume controls -->
@@ -55,9 +62,12 @@
 		<span class="closeTicket" id="closeHistory" style="display: none">&times;</span>
 		<div class="ticketHistoryBackground" style="display: none">
 		</div>
-		<section id="ticketHistoryTickets">
-			<!-- Tickets will be appended here-->
-		</section>
+		<div class="historyWrapper">
+			<section id="ticketHistoryTickets">
+
+				<!-- Tickets will be appended here-->
+			</section>
+		</div>
 		<section class="historyArrowButtons" style="display: none">
 			<button class="left ArrowButton">←</button>
 			<span> 1 / 3 </span>

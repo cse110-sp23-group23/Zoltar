@@ -9,7 +9,10 @@ let rotateDegree = 0;
 
 // implement max movement so that there is no gap between top and bottom
 window.addEventListener('mousemove', (e) => {
-	if (isHistoryOnScreen() || isTicketOnScreen()) return;
+	if (isHistoryOnScreen() || isTicketOnScreen()) {
+		return;
+	}
+
 	xValue = e.clientX - window.innerWidth / 2;
 	yValue = e.clientY - window.innerHeight / 2;
 
