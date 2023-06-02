@@ -37,8 +37,9 @@ body {
 }
 
 #background-img {
-	height: 120vh;
-	top: 50%;
+	height: 150vh;
+	width: 150vw;
+	top: 50%;	 
 	left: 50%;
 	z-index: 1;
 	filter: brightness(50%);
@@ -258,11 +259,12 @@ body.shake {
 	background-color: yellow;
 	z-index: 100;
 	position: absolute;
-	width: 100px;
-	height: 100px;
-	border-radius: 50px;
-	top: 87%;
-	right: 30px;
+	width: 5vw;
+	height: 5vw;
+	border-radius: 5vw;
+	border: none;
+	bottom: 2vw;
+	right: 2vw;
 	font-size: 2rem;
 }
 
