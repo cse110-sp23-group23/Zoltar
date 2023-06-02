@@ -1,7 +1,7 @@
 import { produceRandomNumbers, produceFortuneFromArr } from '../fortunes.js';
 import { convertArrToReadableString } from '../ticket.js';
 
-const LOADING_DELAY = 2000;
+const LOADING_DELAY = 500;
 const OPEN = 1;
 const CLOSE = 0;
 const AUDIO_LOW = 0.3;
@@ -152,27 +152,29 @@ function init() {
 		zoltar: document.querySelector('#zoltar-image'),
 		ticketX: document.getElementById('closeTicket'),
 		fortuneNumber: document.querySelector('#fortune-number'),
-		splash: document.querySelector('#splash-screen'),
+		
 		volumeControl: document.querySelector('.volume-controls'),
 		volumeOn: document.querySelector('#volumeOn'),
 		volumeOff: document.querySelector('#volumeOff'),
+
+		splash: document.querySelector('#splash-screen'),
+		loadedMessage: document.querySelector('.loaded-message'),
 	};
 
-	setTimeout(() => {
-		domContent.splash.style.display = 'none';
-	}, LOADING_DELAY);
-
-	if (!localStorage.getItem('MuteAudio')) {
-		localStorage.setItem('MuteAudio', false);
-		muteAudio = false;
-	} else {
-		muteAudio = localStorage.getItem('MuteAudio');
+	const go = () => {
+		getAudio();
+		getResponses();
+		domContent.splash.classList.add('hidden');
+		window.removeEventListener('mousedown', go);
+		window.removeEventListener('keydown', go);
+		backgroundmp3.play();
+		domContent.volumeOn.style.display = 'inline';
 	}
-
-	(muteAudio ? domContent.volumeOff : domContent.volumeOn).style.display = 'inline';
-
-	getResponses();
-	getAudio();
+	window.addEventListener('mousedown', go);
+	window.addEventListener('keydown', go);
+	setTimeout(() => {
+		domContent.loadedMessage.innerText = '[ press anywhere to continue ]';
+	}, LOADING_DELAY);
 
 	domContent.volumeControl.addEventListener('click', toggleAudio);
 	domContent.zoltar.addEventListener('click', (e) => {
