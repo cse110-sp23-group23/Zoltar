@@ -16,10 +16,11 @@ let domContent = {};
 function translateCards() {
 	currentCards.forEach((card, i) => {
 		const distance = i - 0;
-		const geoSumDistance = (distance < 0 ? -1 : 1) * 20 * (1 - 0.9 ** Math.abs(distance));
+		const geoSumDistance = (distance < 0 ? -1 : 1) * 300 * (1 - 0.9 ** Math.abs(distance));
 		const scaleFactor = 0.9 ** Math.abs(distance);
 		const cardMod = card;
 		cardMod.style.transform = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
+		cardMod.style.left = `calc(${geoSumDistance}vw - 50%)`;
 	});
 
 	// ticketHistoryTickets.style.left = '50%';
