@@ -108,10 +108,11 @@ hitbox.rotateY(0.5);
 scene.add(hitbox);
 
 // Ticket
-const paperTexture = textureLoader.load('./assets/images/background-card-map.png');
+const backTicketImgs = [['king-map.png', 'king.png'], ['queen-map.png', 'queen.png'], 
+						['prince-map.png', 'prince.png'], ['woman-map.png', 'woman.png'],
+						['jester-map.png', 'jester.png']];
 const ticketGeo = new BoxGeometry(0.1, 0.005, 0.5);
 const ticketMat = new MeshLambertMaterial({ color: 0xE0C9A6 });
-ticketMat.map = paperTexture;
 ticketMat.roughness = 1;
 const ticket = new Mesh(ticketGeo, ticketMat);
 ticket.rotateY(0.57);
@@ -171,6 +172,10 @@ function shootRay(event) {
  */
 function handleKeypress(event) {
 	if (event.key === ' ' && canTriggerEvent()) {
+		const imgPair = backTicketImgs[Math.floor(Math.random() * backTicketImgs.length)];
+		const paperTexture = textureLoader.load(`./assets/images/background-card-${imgPair[0]}`);
+		ticketMat.map = paperTexture;
+		document.querySelector('.ticket-back-content').style.backgroundImage = `url('./assets/images/background-card-${imgPair[1]}')`;
 		state.ticketSpawned = true;
 		state.currentShakeDuration = options.shake.minDurationMS / 1000;
 		state.responseGenerated = false;
