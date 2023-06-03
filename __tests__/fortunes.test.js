@@ -2,7 +2,7 @@ import { chooseOptionFromArr, produceRandomNumbers } from '../assets/scripts/for
 
 /**
  * Tests:
- * 	- Return a nonempty string.
+ *  - Return a nonempty string.
  */
 describe('produceFortuneFromArr', () => {
 	test('should return a nonempty string', () => {
