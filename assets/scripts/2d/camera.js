@@ -7,8 +7,11 @@ let xValue = 0;
 let yValue = 0;
 let rotateDegree = 0;
 
-// implement max movement so that there is no gap between top and bottom
+/**
+ * Event Listener that creates a 3D like effect for the 2d Zoltar.
+ */
 window.addEventListener('mousemove', (e) => {
+	// Pauses Zoltar's movements if any asset if displayed on screen. Eg. ticket, history
 	if (isHistoryOnScreen() || isTicketOnScreen()) {
 		return;
 	}

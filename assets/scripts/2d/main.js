@@ -34,9 +34,13 @@ function displayTicket() {
 	domContent.ticket.classList.add('visible');
 } /* displayTicket */
 
+/**
+ * Displays the ticket prompt
+ * @param none
+ */
 function displayTicketPrompt() {
 	domContent.storeTicketPrompt.style.display = 'inline';
-}
+} /* displayTicketPrompt */
 
 /**
  * Removes ticket from screen and allows Zoltar to pressed again
@@ -48,18 +52,27 @@ function closeTicket() {
 	displayTicketPrompt();
 } /* closeTicket */
 
+/**
+ * Removes the ticket prompt
+ * @param none
+ */
 function removeTicketPrompt() {
 	domContent.storeTicketPrompt.style.display = 'none';
 	disableZoltar = false;
 	ticketOnScreen = false;
-}
+} /* removeTicketPrompt */
 
+/**
+ * Stores the ticket if called with the saveTicket Button, otherwise
+ * will just discard it (do nothing)
+ * @param {string} id Button id
+ */
 function storeButtonHandler(id) {
 	if (id === 'saveTicket') {
 		// TODO: ADD TICKET TO LOCAL STORAGE
 	}
 	removeTicketPrompt();
-}
+} /* storeButtonHandler */
 
 /**
  * Gets List of responses from Json file
@@ -122,6 +135,7 @@ function toggleAudio() {
  * Disabled when ticket is already displayed
  * Thunder is played when Zoltar shakes, then a
  * ticket pops up.
+ * @param none
  */
 function zoltarHandler() {
 	if (disableZoltar) {
@@ -129,7 +143,7 @@ function zoltarHandler() {
 	} else {
 		ticketHandler(OPEN);
 	}
-}
+} /* zoltarHandler */
 
 /**
  * Closes the ticket when 'esc' is pressed
@@ -152,15 +166,6 @@ document.addEventListener('keydown', (event) => {
  * @param none
  */
 function getAudio() {
-	// if (!localStorage.getItem('MuteAudio')) {
-	// 	localStorage.setItem('MuteAudio', false);
-	// 	muteAudio = false;
-	// } else {
-	// 	muteAudio = localStorage.getItem('MuteAudio');
-	// }
-
-	// (muteAudio ? domContent.volumeOff : domContent.volumeOn).style.display = 'inline';
-
 	backgroundmp3 = new Audio('assets/audio/background.wav');
 	backgroundmp3.loop = true;
 	backgroundmp3.muted = true;
@@ -170,8 +175,13 @@ function getAudio() {
 	thundermp3.volume = muteAudio ? 0 : AUDIO_LOW;
 } /* getAudio */
 
-function createStoreButtonListener(array) {
-	array.forEach((button) => {
+/**
+ * Creates an event listener or to save or discard ticket so that
+ * init does not exceed 25 lines.
+ * @param {array} array store, delete button
+ */
+function createStoreButtonListener(but) {
+	but.forEach((button) => {
 		button.addEventListener('click', (e) => {
 			e.preventDefault();
 			storeButtonHandler(button.id);
@@ -180,6 +190,20 @@ function createStoreButtonListener(array) {
 		});
 	});
 }
+
+/**
+ * Initiates audio when user clicks on splash screen
+ * @param none
+ */
+function go() {
+	getAudio();
+	getResponses();
+	backgroundmp3.play();
+	domContent.splash.classList.add('hidden');
+	window.removeEventListener('mousedown', go);
+	window.removeEventListener('keydown', go);
+	domContent.volumeOn.style.display = 'inline';
+} /* go */
 
 function init() {
 	domContent = {
@@ -197,22 +221,9 @@ function init() {
 		storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
 		storeButton: document.querySelectorAll('.storeButton'),
 	};
-
-	const go = () => {
-		getAudio();
-		getResponses();
-		backgroundmp3.play();
-		domContent.splash.classList.add('hidden');
-		window.removeEventListener('mousedown', go);
-		window.removeEventListener('keydown', go);
-		domContent.volumeOn.style.display = 'inline';
-	};
-	window.addEventListener('mousedown', go);
+	window.addEventListener('mousedown' || 'keydown', go);
 	window.addEventListener('keydown', go);
-	setTimeout(() => {
-		domContent.loadedMessage.innerText = '[ press anywhere to continue ]';
-	}, LOADING_DELAY);
-
+	setTimeout(() => { domContent.loadedMessage.innerText = '[ press anywhere to continue ]'; }, LOADING_DELAY);
 	domContent.volumeControl.addEventListener('click', toggleAudio);
 	domContent.zoltar.addEventListener('click', zoltarHandler);
 	domContent.ticketX.addEventListener('click', () => { ticketHandler(CLOSE); });

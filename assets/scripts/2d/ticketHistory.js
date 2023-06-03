@@ -26,8 +26,8 @@ function translateCards() {
 	});
 }
 /**
- * displays the saved tickets.
- * STILL WORKING ON THIS -Marc
+ * Displays the tickets from local storage
+ * @param none
  */
 function displayStorage() {
 	currentCards.forEach((card) => {
@@ -35,21 +35,25 @@ function displayStorage() {
 	});
 
 	translateCards();
-}
+} /* displayStorage */
+
+/**
+ * Updates the counter between the arrow buttons on the ticket history screen
+ * @param {number} position card position
+ */
 
 function updateCounterSpan(position) {
 	domContent.currentCardPosition.innerText = `${position + 1} / ${count}`;
-}
-
+} /* updateCounterSpan */
 /**
  * Slides the Cards left or right
- * @param {int} dir -1 or 1
+ * @param {number} dir -1 or 1
  */
 function slide(dir) {
 	selectedCard = clamp(selectedCard + dir, 0, currentCards.length - 1);
 	translateCards();
 	updateCounterSpan(selectedCard);
-}
+} /* slide */
 
 /**
  * Returns whether or not the tickets are on screen
@@ -57,7 +61,7 @@ function slide(dir) {
  */
 export function isHistoryOnScreen() {
 	return historyOnScreen;
-}
+} /* isHistoryOnScreen */
 
 /**
  * Toggles items display properties
@@ -82,11 +86,12 @@ function toggleItems(action) {
 		domContent.ticketHistoryTickets.innerHTML = '';
 		historyOnScreen = false;
 	}
-}
+} /* toggleItems */
 
 /**
  * Gets all the tickets from storage and displays them
  * STILL WORKING ON THIS -Marc
+ * @param none
  */
 function historyCircleButtonFunc() {
 	if (historyOnScreen) {
@@ -101,14 +106,12 @@ function historyCircleButtonFunc() {
 	if (allTickets.length === 0) {
 		return;
 	}
-
 	allTickets.forEach((ticket) => {
 		const card = document.createElement('saved-ticket');
 		const state = {
 			currentMessage: ticket.currentMessage,
 			currentNumbers: ticket.currentNumbers,
 		};
-
 		card.content = state;
 		currentCards.push(card);
 	});
