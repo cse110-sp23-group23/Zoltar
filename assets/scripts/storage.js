@@ -5,13 +5,37 @@ const state = {
 };
 
 /**
+ * Clamps value between high and low value, inclusive
+ * @param { Integer } value number to be clamped
+ * @param { Integer } lo lowest allowed value
+ * @param { Integer } hi highest allowed value
+ * @return { Integer }
+ */
+export function clamp(value, lo, hi) {
+	if (value < lo) {
+		return lo;
+	}
+	return value > hi ? hi : value;
+} /* clamp */
+
+/**
  * Returns if history is currently displayed
  * @param none
  * @return { Boolean }
  */
 function isHistoryOpen() {
 	return !domContent.historyWrapper.classList.contains('hidden');
-}
+} /* isHistoryOpen */
+
+/**
+ * Hide history from screen, close cover, and reset environment
+ * @param none
+ */
+function exitHistory() {
+	domContent.cover.classList.add('hidden');
+	domContent.historyWrapper.classList.add('hidden');
+	domContent.circleButton.classList.remove('hidden');
+} /* exitHistory */
 
 /**
  * Fetches and returns array of ticket objects
@@ -23,11 +47,19 @@ export function getAllTickets() {
 } /* getAllTickets */
 
 /**
- * Prints new count of tickets to the screen
- * @param { Integer } count number of tickets to show
+ * Prints new count of tickets to the screen and edits ticket selector values
+ * @param { Integer } count (optional) number of tickets to show
  */
 function updateCounts(count) {
-	domContent.ticketCounter.innerText = count;
+	domContent.inputCounter.innerText = currentCards.length;
+	let dispCount;
+	if (count === undefined) {
+		dispCount = currentCards.length;
+	} else {
+		dispCount = count;
+	}
+	domContent.ticketCounter.innerText = dispCount;
+	domContent.inputField.value = state.currentlySelected + 1;
 } /* updateCounts */
 
 /**
@@ -47,6 +79,14 @@ export function saveState(ticketState) {
 } /* saveState */
 
 /**
+ * Saves all current tickets in user history to local storage
+ * @param { Array<State> } currentStates array of all states to save
+ */
+function saveAllStates(currentStates) {
+	window.localStorage.setItem('tickets', JSON.stringify(currentStates));
+} /* saveAllStates */
+
+/**
  * Positions cards on screen relative to currently selected card
  * @param none
  */
@@ -61,6 +101,54 @@ function translateCards() {
 } /* translateCards */
 
 /**
+ * Deletes a specified card from history and local storage
+ * @param { Object<Card> } card card to remove from storage
+ */
+export function deleteCard(card) {
+	const index = currentCards.indexOf(card);
+	if (index === -1) {
+		return;
+	}
+	domContent.ticketHistory.removeChild(card);
+	currentCards.splice(index, 1);
+	const newStates = getAllTickets();
+	newStates.splice(index, 1);
+	saveAllStates(newStates);
+	if (currentCards.length === 0) {
+		state.currentlySelected = 0;
+	} else {
+		state.currentlySelected = clamp(state.currentlySelected, 0, currentCards.length - 1);
+	}
+	updateCounts();
+	translateCards();
+	if (currentCards.length === 0) {
+		exitHistory();
+	}
+} /* deleteCard */
+
+/**
+ * Adds a hover event listener to every ticket to display popup buttons
+ * @param none
+ */
+function registerHoverListeners() {
+	currentCards.forEach((card) => {
+		card.addEventListener('mouseover', card.showCardButtonOverlay);
+		card.addEventListener('mouseout', card.hideCardButtonOverlay);
+	});
+} /* registerHoverListeners */
+
+/**
+ * Removes all listeners registered by registerHoverListeners()
+ * @param none
+ */
+function unregisterHoverListeners() {
+	currentCards.forEach((card) => {
+		card.removeEventListener('mouseover', card.showCardButtonOverlay);
+		card.removeEventListener('mouseout', card.hideCardButtonOverlay);
+	});
+} /* unregisterHoverListeners */
+
+/**
  * Fetches and displays list of saved tickets
  * @param none
  */
@@ -73,6 +161,7 @@ function displayStorage() {
 	domContent.historyWrapper.classList.remove('hidden');
 	domContent.circleButton.classList.add('hidden');
 	if (currentCards.length !== allTickets.length) {
+		unregisterHoverListeners();
 		currentCards = [];
 		allTickets.forEach((ticket) => {
 			const card = document.createElement('historical-ticket');
@@ -83,22 +172,9 @@ function displayStorage() {
 	}
 	currentCards[state.currentlySelected].selected = true;
 	domContent.inputCounter.innerText = currentCards.length;
+	registerHoverListeners();
 	translateCards();
 } /* displayStorage */
-
-/**
- * Clamps value between high and low value, inclusive
- * @param { Integer } value number to be clamped
- * @param { Integer } lo lowest allowed value
- * @param { Integer } hi highest allowed value
- * @return { Integer }
- */
-export function clamp(value, lo, hi) {
-	if (value < lo) {
-		return lo;
-	}
-	return value > hi ? hi : value;
-} /* clamp */
 
 /**
  * Returns index offset by value of dir, clamped to ends of array
@@ -130,16 +206,6 @@ function updateSliderFromInput() {
 	state.currentlySelected = input.value - 1;
 	translateCards();
 } /* updateSliderFromInput */
-
-/**
- * Hide history from screen, close cover, and reset environment
- * @param none
- */
-function exitHistory() {
-	domContent.cover.classList.add('hidden');
-	domContent.historyWrapper.classList.add('hidden');
-	domContent.circleButton.classList.remove('hidden');
-} /* exitHistory */
 
 /**
  * Determines and takes appropriate action during keypress, attached to

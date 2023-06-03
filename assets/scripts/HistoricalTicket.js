@@ -1,4 +1,5 @@
 import { convertArrToReadableString } from './ticket.js';
+import { deleteCard } from './storage.js';
 
 /**
  * Location of template for ticket structure to use
@@ -20,6 +21,9 @@ class HistoricalTicket extends HTMLElement {
 		this.attachShadow({ mode: 'open' });
 		this.shadowRoot.appendChild(template.content.cloneNode(true));
 		this.headerImage = this.shadowRoot.querySelector('.ticket-header-image');
+		this.overlay = this.shadowRoot.querySelector('.ticket-flip-overlay');
+		this.discardButton = this.shadowRoot.querySelector('.discard-history-button');
+		this.discardButton.addEventListener('click', () => { deleteCard(this); });
 	} /* constructor */
 
 	/**
@@ -45,6 +49,14 @@ class HistoricalTicket extends HTMLElement {
 
 		this.headerImage.src = `assets/images/image-bank-front/header-${state.currentImageFront}.png`;
 	} /* set content */
+
+	showCardButtonOverlay() {
+		this.overlay.classList.remove('hidden');
+	}
+
+	hideCardButtonOverlay() {
+		this.overlay.classList.add('hidden');
+	}
 } /* HistoricalTicket */
 
 // use as '<historical-ticket></historical-ticket>'
