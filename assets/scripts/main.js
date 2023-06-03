@@ -225,6 +225,18 @@ function animateShakeFrame(delta) {
 } /* animateShakeFrame */
 
 /**
+ *
+ * @param {*} objectPos
+ * @param {*} targetPos
+ * @param {*} speed
+ * @param {*} delta
+ * @returns { Vector3 } - representation of intermediate distance on coord plane
+ */
+function calcMidDistance(objectPos, targetPos, speed, delta) {
+	return targetPos.clone().sub(objectPos).multiplyScalar(speed * delta);
+} /* calcMidDistance */
+
+/**
  * Helper func to decide if lights should turn off
  * @param none
  * @return { Boolean }
@@ -273,8 +285,12 @@ function conditionalAnimateSlideCameraFrame(delta) {
 	if (!state.slideCameraTowardDefault) {
 		return;
 	}
-	const cameraAdjustment = options.camera.defaultPosition.clone().sub(camera.position)
-		.multiplyScalar(options.cameraSlide.speed * delta);
+	const cameraAdjustment = calcMidDistance(
+		camera.position,
+		options.camera.defaultPosition,
+		options.cameraSlide.speed,
+		delta,
+	);
 	camera.position.add(cameraAdjustment);
 	if (camera.position.equals(options.camera.defaultPosition)) {
 		state.slideCameraTowardDefault = false;
@@ -289,8 +305,12 @@ function animateTicketSlideFrame(delta) {
 	if (ticket.position.distanceTo(options.ticketSlide.finalPosition) <= 0.01) {
 		return;
 	}
-	const ticketAdjustment = options.ticketSlide.finalPosition.clone().sub(ticket.position)
-		.multiplyScalar(options.ticketSlide.speed * delta);
+	const ticketAdjustment = calcMidDistance(
+		ticket.position,
+		options.ticketSlide.finalPosition,
+		options.ticketSlide.speed,
+		delta,
+	);
 	ticket.position.add(ticketAdjustment);
 } /* animateTicketSlideFrame */
 
