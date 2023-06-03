@@ -204,10 +204,10 @@ function init() {
 	const go = () => {
 		getAudio();
 		getResponses();
+		backgroundmp3.play();
 		domContent.splash.classList.add('hidden');
 		window.removeEventListener('mousedown', go);
 		window.removeEventListener('keydown', go);
-		backgroundmp3.play();
 		domContent.volumeOn.style.display = 'inline';
 	};
 	window.addEventListener('mousedown', go);
