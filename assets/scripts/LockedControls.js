@@ -21,10 +21,10 @@ export default class LockedControls {
 	constructor(object, domElement) {
 		this.options = {
 			lookSpeed: 0.001,
-			minLon: 0.51,
-			maxLon: 0.65,
-			minLat: 1.68,
-			maxLat: 1.88,
+			lonMin: 0.51,
+			lonMax: 0.65,
+			latMin: 1.68,
+			latMax: 1.88,
 		};
 
 		this.object = object;
@@ -40,8 +40,8 @@ export default class LockedControls {
 			pointerY: 0,
 			viewHalfX: 0,
 			viewHalfY: 0,
-			lat: (this.options.minLat + this.options.maxLat) / 2,
-			lon: (this.options.minLon + this.options.maxLon) / 2,
+			lat: (this.options.latMin + this.options.latMax) / 2,
+			lon: (this.options.lonMin + this.options.lonMax) / 2,
 			targetPosition: new Vector3(),
 		};
 
@@ -82,6 +82,14 @@ export default class LockedControls {
 	} /* handleResize */
 
 	/**
+	 * Helper function clamp either lon or lat to min and max bounds specified in this.options
+	 * @param { String } type - either 'lon' or 'lat'; which to clamp
+	 */
+	helperClampLonLat(type) {
+		this.state[type] = MathUtils.clamp(this.state[type], this.options[`${type}Min`], this.options[`${type}Max`]);
+	} /* clampLonLat */
+
+	/**
 	 * Updates the controls. This should be called in an animation loop, and must be passed the
 	 * time delta since the last update. Updates the look direction and spherical coordinates
 	 * based on the current mouse position and look speed.
@@ -96,8 +104,8 @@ export default class LockedControls {
 		this.state.lon -= this.state.pointerX * actualLookSpeed;
 		this.state.lat += this.state.pointerY * actualLookSpeed;
 
-		this.state.lon = MathUtils.clamp(this.state.lon, this.options.minLon, this.options.maxLon);
-		this.state.lat = MathUtils.clamp(this.state.lat, this.options.minLat, this.options.maxLat);
+		this.helperClampLonLat('lon');
+		this.helperClampLonLat('lat');
 
 		this.state.targetPosition.setFromSphericalCoords(1, this.state.lat, this.state.lon);
 		this.state.targetPosition.add(this.object.position);
