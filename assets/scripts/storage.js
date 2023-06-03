@@ -127,26 +127,16 @@ export function deleteCard(card) {
 } /* deleteCard */
 
 /**
- * Adds a hover event listener to every ticket to display popup buttons
- * @param none
+ * Helper function to register or unregister hover listeners
+ * @param { Array<Cards> } cards - array of card elements
+ * @param { String } action - 'add' or 'remove' to specify the operation
  */
-function registerHoverListeners() {
-	currentCards.forEach((card) => {
-		card.addEventListener('mouseover', card.showCardButtonOverlay);
-		card.addEventListener('mouseout', card.hideCardButtonOverlay);
+function handleHoverListeners(cards, action) {
+	cards.forEach((card) => {
+		card[`${action}EventListener`]('mouseover', card.showCardButtonOverlay);
+		card[`${action}EventListener`]('mouseout', card.hideCardButtonOverlay);
 	});
-} /* registerHoverListeners */
-
-/**
- * Removes all listeners registered by registerHoverListeners()
- * @param none
- */
-function unregisterHoverListeners() {
-	currentCards.forEach((card) => {
-		card.removeEventListener('mouseover', card.showCardButtonOverlay);
-		card.removeEventListener('mouseout', card.hideCardButtonOverlay);
-	});
-} /* unregisterHoverListeners */
+} /* handleHoverListeners */
 
 /**
  * Fetches and displays list of saved tickets
@@ -161,7 +151,7 @@ function displayStorage() {
 	domContent.historyWrapper.classList.remove('hidden');
 	domContent.circleButton.classList.add('hidden');
 	if (currentCards.length !== allTickets.length) {
-		unregisterHoverListeners();
+		handleHoverListeners(currentCards, 'remove');
 		currentCards = [];
 		allTickets.forEach((ticket) => {
 			const card = document.createElement('historical-ticket');
@@ -172,7 +162,7 @@ function displayStorage() {
 	}
 	currentCards[state.currentlySelected].selected = true;
 	domContent.inputCounter.innerText = currentCards.length;
-	registerHoverListeners();
+	handleHoverListeners(currentCards, 'add');
 	translateCards();
 } /* displayStorage */
 
