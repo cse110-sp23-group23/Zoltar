@@ -83,13 +83,18 @@ export async function createFortuneOnTicket(options) {
 	updateTicket();
 } /* createFortuneOnTicket */
 
-function init() {
-	fetch('assets/json/responses.json')
-		.then((responses) => responses.json())
-		.then((json) => { responseBank = json; });
-	fetch('assets/json/images.json')
-		.then((images) => images.json())
-		.then((json) => { imageBank = json; });
+/**
+ * Loads array from external json file into javascript array
+ * @param { String } url location of json file
+ * @param { Array<Object> } destination array to put contents into
+ */
+async function loadJsonArr(url) {
+	return fetch(url).then((responses) => responses.json());
+} /* loadJson */
+
+async function init() {
+	responseBank = await loadJsonArr('../assets/json/responses.json');
+	imageBank = await loadJsonArr('../assets/json/images.json');
 } /* init */
 
 document.addEventListener('DOMContentLoaded', init);
