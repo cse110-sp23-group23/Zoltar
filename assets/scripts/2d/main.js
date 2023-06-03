@@ -195,7 +195,6 @@ function init() {
 		volumeControl: document.querySelector('.volume-controls'),
 		volumeOn: document.querySelector('#volumeOn'),
 		volumeOff: document.querySelector('#volumeOff'),
-
 		splash: document.querySelector('#splash-screen'),
 		loadedMessage: document.querySelector('.loaded-message'),
     	storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
@@ -210,7 +209,7 @@ function init() {
 		window.removeEventListener('keydown', go);
 		backgroundmp3.play();
 		domContent.volumeOn.style.display = 'inline';
-	}
+	};
 	window.addEventListener('mousedown', go);
 	window.addEventListener('keydown', go);
 	setTimeout(() => {
