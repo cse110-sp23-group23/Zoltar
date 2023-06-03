@@ -45,7 +45,6 @@ function closeTicket() {
 	domContent.body.classList.remove('shake');
 	domContent.ticket.classList.remove('visible');
 	displayTicketPrompt();
-	disableZoltar = false;
 } /* closeTicket */
 
 function removeTicketPrompt() {
@@ -55,12 +54,10 @@ function removeTicketPrompt() {
 }
 
 function storeButtonHandler(id) {
-	// add individual button functionality.
 	if (id === 'saveTicket') {
-		removeTicketPrompt();
-	} else {
-		removeTicketPrompt();
+		// TODO: ADD TICKET TO LOCAL STORAGE
 	}
+	removeTicketPrompt();
 }
 
 /**
@@ -98,7 +95,7 @@ function ticketHandler(action) {
 			displayTicket();
 		}, 1300);
 		ticketOnScreen = true;
-	} else {
+	} else if (ticketOnScreen) {
 		displayTicketPrompt();
 		closeTicket();
 	}
@@ -203,10 +200,7 @@ function init() {
 	getAudio();
 	domContent.volumeControl.addEventListener('click', toggleAudio);
 	domContent.zoltar.addEventListener('click', zoltarHandler);
-	domContent.ticketX.addEventListener('click', (e) => {
-		e.preventDefault();
-		ticketHandler(CLOSE);
-	});
+	domContent.ticketX.addEventListener('click', () => { ticketHandler(CLOSE); });
 	createStoreButtonListener(domContent.storeButton);
 }
 

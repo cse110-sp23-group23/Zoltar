@@ -24,7 +24,7 @@ window.addEventListener('mousemove', (e) => {
 		const { rotation } = element.dataset;
 
 		// eslint-disable-next-line no-param-reassign
-		element.style.transform = `translateX(calc(-50% + ${xValue * speedx}px)) translateY(calc(-50% + ${yValue * speedy}px)) rotateY(${rotateDegree * rotation}deg)`;
+		element.style.transform = `translateX(calc(-50% + ${-xValue * speedx}px)) translateY(calc(-50% + ${-yValue * speedy}px)) rotateY(${rotateDegree * rotation}deg)`;
 	});
 });
 

@@ -50,6 +50,14 @@ class SavedTicket2D extends HTMLElement {
 	        <img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom">
 	        `;
 	}
+
+	set position(pos) {
+		this.shadowRoot.querySelector('section').style.transform = `${pos}`;
+	}
+
+	set zIndex(int) {
+		this.shadowRoot.querySelector('section').style.zIndex = `${int}`;
+	}
 }
 
 customElements.define('saved-ticket', SavedTicket2D);

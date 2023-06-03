@@ -1,32 +1,30 @@
-import { getAllTickets } from '../storage.js';
+import { getAllTickets, clamp } from '../storage.js';
 
 const OPEN = 1;
 const CLOSE = 0;
+const TOP_INDEX = 900;
 
 let historyOnScreen = false;
 let count = 0;
 let currentCards = [];
 let domContent = {};
+let selectedCard = 0;
 
 /**
  * Position cards on screen relative to currently selected card
  * @param none
- * STILL WORKING ON THIS -Marc
  */
 function translateCards() {
 	currentCards.forEach((card, i) => {
-		const distance = i - 0;
+		const distance = i - selectedCard;
 		const geoSumDistance = (distance < 0 ? -1 : 1) * 300 * (1 - 0.9 ** Math.abs(distance));
 		const scaleFactor = 0.9 ** Math.abs(distance);
 		const cardMod = card;
-		cardMod.style.transform = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
-		cardMod.style.left = `calc(${geoSumDistance}vw - 50%)`;
+
+		cardMod.position = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
+		cardMod.zIndex = TOP_INDEX - Math.abs(distance);
 	});
-
-	// ticketHistoryTickets.style.left = '50%';
-	// ticketHistoryTickets.style.transform = 'translateX(-50%)';
 }
-
 /**
  * displays the saved tickets.
  * STILL WORKING ON THIS -Marc
@@ -37,6 +35,20 @@ function displayStorage() {
 	});
 
 	translateCards();
+}
+
+function updateCounterSpan(position) {
+	domContent.currentCardPosition.innerText = `${position + 1} / ${count}`;
+}
+
+/**
+ * Slides the Cards left or right
+ * @param {int} dir -1 or 1
+ */
+function slide(dir) {
+	selectedCard = clamp(selectedCard + dir, 0, currentCards.length - 1);
+	translateCards();
+	updateCounterSpan(selectedCard);
 }
 
 /**
@@ -112,20 +124,19 @@ function init() {
 		ticketHistoryBackground: document.querySelector('.ticketHistoryBackground'),
 		arrowButtons: document.querySelector('.historyArrowButtons'),
 		historyCloseButton: document.querySelector('#closeHistory'),
+		leftButton: document.querySelector('.left'),
+		rightButton: document.querySelector('.right'),
+		currentCardPosition: document.querySelector('#currentCardPosition'),
 	};
 
-	domContent.historyCircleButton.addEventListener('click', (e) => {
-		e.preventDefault();
-		historyCircleButtonFunc();
-	});
-
-	domContent.historyCloseButton.addEventListener('click', (e) => {
-		e.preventDefault();
-		toggleItems(CLOSE);
-	});
+	domContent.historyCircleButton.addEventListener('click', historyCircleButtonFunc);
+	domContent.historyCloseButton.addEventListener('click', () => { toggleItems(CLOSE); });
+	domContent.leftButton.addEventListener('click', () => { slide(-1); });
+	domContent.rightButton.addEventListener('click', () => { slide(1); });
 
 	count = getAllTickets().length;
 	domContent.ticketHistoryCount.innerText = count;
+	updateCounterSpan(0);
 }
 
 window.addEventListener('DOMContentLoaded', init);
