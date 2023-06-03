@@ -197,7 +197,7 @@ function init() {
 		volumeOff: document.querySelector('#volumeOff'),
 		splash: document.querySelector('#splash-screen'),
 		loadedMessage: document.querySelector('.loaded-message'),
-    	storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
+		storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
 		storeButton: document.querySelectorAll('.storeButton'),
 	};
 
