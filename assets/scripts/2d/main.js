@@ -34,6 +34,10 @@ function displayTicket() {
 	domContent.ticket.classList.add('visible');
 } /* displayTicket */
 
+function displayTicketPrompt() {
+	domContent.storeTicketPrompt.style.display = 'inline';
+}
+
 /**
  * Removes ticket from screen and allows Zoltar to pressed again
  * @param none
@@ -41,8 +45,24 @@ function displayTicket() {
 function closeTicket() {
 	domContent.body.classList.remove('shake');
 	domContent.ticket.classList.remove('visible');
+	displayTicketPrompt();
 	disableZoltar = false;
 } /* closeTicket */
+
+function removeTicketPrompt() {
+	domContent.storeTicketPrompt.style.display = 'none';
+	disableZoltar = false;
+	ticketOnScreen = false;
+}
+
+function storeButtonHandler(id) {
+	// add individual button functionality.
+	if (id === 'saveTicket') {
+		removeTicketPrompt();
+	} else {
+		removeTicketPrompt();
+	}
+}
 
 /**
  * Gets List of responses from Json file
@@ -80,8 +100,8 @@ function ticketHandler(action) {
 		}, 1300);
 		ticketOnScreen = true;
 	} else {
+		displayTicketPrompt();
 		closeTicket();
-		ticketOnScreen = false;
 	}
 } /* ticketHandler */
 
@@ -135,6 +155,15 @@ document.addEventListener('keydown', (event) => {
  * @param none
  */
 function getAudio() {
+	if (!localStorage.getItem('MuteAudio')) {
+		localStorage.setItem('MuteAudio', false);
+		muteAudio = false;
+	} else {
+		muteAudio = localStorage.getItem('MuteAudio');
+	}
+
+	(muteAudio ? domContent.volumeOff : domContent.volumeOn).style.display = 'inline';
+
 	backgroundmp3 = new Audio('assets/audio/background.wav');
 	backgroundmp3.loop = true;
 	backgroundmp3.muted = true;
@@ -143,6 +172,17 @@ function getAudio() {
 	thundermp3 = new Audio('assets/audio/thunder2d.wav');
 	thundermp3.volume = muteAudio ? 0 : AUDIO_LOW;
 } /* getAudio */
+
+function createStoreButtonListener(array) {
+	array.forEach((button) => {
+		button.addEventListener('click', (e) => {
+			e.preventDefault();
+			storeButtonHandler(button.id);
+			removeTicketPrompt();
+			ticketOnScreen = false;
+		});
+	});
+}
 
 function init() {
 	domContent = {
@@ -159,6 +199,8 @@ function init() {
 
 		splash: document.querySelector('#splash-screen'),
 		loadedMessage: document.querySelector('.loaded-message'),
+    storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
+		storeButton: document.querySelectorAll('.storeButton'),
 	};
 
 	const go = () => {
@@ -177,16 +219,14 @@ function init() {
 	}, LOADING_DELAY);
 
 	domContent.volumeControl.addEventListener('click', toggleAudio);
-	domContent.zoltar.addEventListener('click', (e) => {
-		e.preventDefault();
-		zoltarHandler();
-	});
-
+	domContent.zoltar.addEventListener('click', zoltarHandler);
 	domContent.ticketX.addEventListener('click', (e) => {
 		e.preventDefault();
 		ticketHandler(CLOSE);
 	});
+	createStoreButtonListener(domContent.storeButton);
 }
+
 document.addEventListener('DOMContentLoaded', init);
 document.addEventListener('click', () => {
 	if (muteBackgroundAudio) {

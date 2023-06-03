@@ -43,6 +43,11 @@
 		<img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom">
 	</section>
 
+	<section id="storeTicketPrompt" style="display: none">
+		<button id="discardTicket" class="storeButton">Discard</button>
+		<button id="saveTicket" class="storeButton">Save</button>
+	</section>
+
 	<!-- volume controls -->
 	<section class="volume-controls">
 		<img id="volumeOn" loading="eager" src="assets/images/2d/volume-on-icon.png" height="100%">
@@ -55,9 +60,12 @@
 		<span class="closeTicket" id="closeHistory" style="display: none">&times;</span>
 		<div class="ticketHistoryBackground" style="display: none">
 		</div>
-		<section id="ticketHistoryTickets">
-			<!-- Tickets will be appended here-->
-		</section>
+		<div class="historyWrapper">
+			<section id="ticketHistoryTickets">
+
+				<!-- Tickets will be appended here-->
+			</section>
+		</div>
 		<section class="historyArrowButtons" style="display: none">
 			<button class="left ArrowButton">←</button>
 			<span> 1 / 3 </span>
