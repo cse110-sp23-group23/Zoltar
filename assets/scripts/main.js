@@ -44,6 +44,9 @@ const options = {
 		initialPosition: new Vector3(-1.82, -0.051, -0.45),
 		finalPosition: new Vector3(-1.945, -0.051, -0.65),
 	},
+	ticketMat: {
+		urlPrefix: 'assets/images/image-bank-back/background-card-',
+	},
 };
 
 const state = {
@@ -108,9 +111,6 @@ hitbox.rotateY(0.5);
 scene.add(hitbox);
 
 // Ticket
-const backTicketImgs = [['king-map.png', 'king.png'], ['queen-map.png', 'queen.png'], 
-						['prince-map.png', 'prince.png'], ['woman-map.png', 'woman.png'],
-						['jester-map.png', 'jester.png']];
 const ticketGeo = new BoxGeometry(0.1, 0.005, 0.5);
 const ticketMat = new MeshLambertMaterial({ color: 0xE0C9A6 });
 ticketMat.roughness = 1;
@@ -152,6 +152,15 @@ function addCardToScene() {
 } /* addCardToScene */
 
 /**
+ * Sets ticket texture to image at appropriate url for input
+ * @param { String } nameOfImage name of image in format of prefix-name structure
+ */
+export function setTicketMapToImage(nameOfImage) {
+	const mapTexture = textureLoader.load(`${options.ticketMat.urlPrefix}${nameOfImage}-map.png`);
+	ticketMat.map = mapTexture;
+}
+
+/**
  * Shoots ray from camera and measures instersection with hitbox of
  * ticket; if hit, displays cards
  * @param { Object } event event listener action
@@ -172,16 +181,16 @@ function shootRay(event) {
  */
 function handleKeypress(event) {
 	if (event.key === ' ' && canTriggerEvent()) {
-		const imgPair = backTicketImgs[Math.floor(Math.random() * backTicketImgs.length)];
-		const paperTexture = textureLoader.load(`./assets/images/background-card-${imgPair[0]}`);
-		ticketMat.map = paperTexture;
-		document.querySelector('.ticket-back-content').style.backgroundImage = `url('./assets/images/background-card-${imgPair[1]}')`;
 		state.ticketSpawned = true;
 		state.currentShakeDuration = options.shake.minDurationMS / 1000;
 		state.responseGenerated = false;
-		createFortuneOnTicket().then(() => {
-			state.responseGenerated = true;
-		});
+		const paramOptions = {
+			callback: (ticketState) => {
+				state.responseGenerated = true;
+				setTicketMapToImage(ticketState.currentImageBack);
+			},
+		};
+		createFortuneOnTicket(paramOptions);
 	}
 } /* handleKeypress */
 

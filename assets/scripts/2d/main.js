@@ -1,6 +1,7 @@
-import { produceRandomNumbers, produceFortuneFromArr } from '../fortunes.js';
+import { produceRandomNumbers, chooseOptionFromArr } from '../fortunes.js';
 import { convertArrToReadableString } from '../ticket.js';
 
+const LOADING_DELAY = 500;
 const OPEN = 1;
 const CLOSE = 0;
 const AUDIO_LOW = 0.3;
@@ -75,7 +76,7 @@ async function getResponses() {
  * @param none
  */
 function assignTicketContent() {
-	domContent.fortuneOutput.textContent = produceFortuneFromArr(responses.fortunes);
+	domContent.fortuneOutput.textContent = chooseOptionFromArr(responses.fortunes).message;
 	domContent.fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(produceRandomNumbers(4, 1, 100))}`;
 } /* assignTicketContent */
 
@@ -151,14 +152,14 @@ document.addEventListener('keydown', (event) => {
  * @param none
  */
 function getAudio() {
-	if (!localStorage.getItem('MuteAudio')) {
-		localStorage.setItem('MuteAudio', false);
-		muteAudio = false;
-	} else {
-		muteAudio = localStorage.getItem('MuteAudio');
-	}
+	// if (!localStorage.getItem('MuteAudio')) {
+	// 	localStorage.setItem('MuteAudio', false);
+	// 	muteAudio = false;
+	// } else {
+	// 	muteAudio = localStorage.getItem('MuteAudio');
+	// }
 
-	(muteAudio ? domContent.volumeOff : domContent.volumeOn).style.display = 'inline';
+	// (muteAudio ? domContent.volumeOff : domContent.volumeOn).style.display = 'inline';
 
 	backgroundmp3 = new Audio('assets/audio/background.wav');
 	backgroundmp3.loop = true;
@@ -188,16 +189,30 @@ function init() {
 		zoltar: document.querySelector('#zoltar-image'),
 		ticketX: document.getElementById('closeTicket'),
 		fortuneNumber: document.querySelector('#fortune-number'),
-		splash: document.querySelector('#splash-screen'),
 		volumeControl: document.querySelector('.volume-controls'),
 		volumeOn: document.querySelector('#volumeOn'),
 		volumeOff: document.querySelector('#volumeOff'),
+		splash: document.querySelector('#splash-screen'),
+		loadedMessage: document.querySelector('.loaded-message'),
 		storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
 		storeButton: document.querySelectorAll('.storeButton'),
 	};
-	domContent.splash.style.display = 'none';
-	getResponses();
-	getAudio();
+
+	const go = () => {
+		getAudio();
+		getResponses();
+		backgroundmp3.play();
+		domContent.splash.classList.add('hidden');
+		window.removeEventListener('mousedown', go);
+		window.removeEventListener('keydown', go);
+		domContent.volumeOn.style.display = 'inline';
+	};
+	window.addEventListener('mousedown', go);
+	window.addEventListener('keydown', go);
+	setTimeout(() => {
+		domContent.loadedMessage.innerText = '[ press anywhere to continue ]';
+	}, LOADING_DELAY);
+
 	domContent.volumeControl.addEventListener('click', toggleAudio);
 	domContent.zoltar.addEventListener('click', zoltarHandler);
 	domContent.ticketX.addEventListener('click', () => { ticketHandler(CLOSE); });
