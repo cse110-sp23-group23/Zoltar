@@ -273,9 +273,9 @@ function conditionalAnimateSlideCameraFrame(delta) {
 	if (!state.slideCameraTowardDefault) {
 		return;
 	}
-	const adjustment = options.camera.defaultPosition.clone().sub(camera.position)
+	const cameraAdjustment = options.camera.defaultPosition.clone().sub(camera.position)
 		.multiplyScalar(options.cameraSlide.speed * delta);
-	camera.position.add(adjustment);
+	camera.position.add(cameraAdjustment);
 	if (camera.position.equals(options.camera.defaultPosition)) {
 		state.slideCameraTowardDefault = false;
 	}
@@ -289,9 +289,9 @@ function animateTicketSlideFrame(delta) {
 	if (ticket.position.distanceTo(options.ticketSlide.finalPosition) <= 0.01) {
 		return;
 	}
-	const adjustment = options.ticketSlide.finalPosition.clone().sub(ticket.position)
+	const ticketAdjustment = options.ticketSlide.finalPosition.clone().sub(ticket.position)
 		.multiplyScalar(options.ticketSlide.speed * delta);
-	ticket.position.add(adjustment);
+	ticket.position.add(ticketAdjustment);
 } /* animateTicketSlideFrame */
 
 /**
