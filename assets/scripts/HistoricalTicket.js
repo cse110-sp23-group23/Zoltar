@@ -12,7 +12,6 @@ const template = document.getElementById('historical-ticket-template');
  * can be set to control displayed fortune and lucky numbers.
  * @class HistoricalTicket
  * @extends HTMLElement
- * @property { Object } ticketContent - the inner content of the ticket, namely fortune and numbers
  */
 class HistoricalTicket extends HTMLElement {
 	constructor() {
@@ -20,7 +19,7 @@ class HistoricalTicket extends HTMLElement {
 
 		this.attachShadow({ mode: 'open' });
 		this.shadowRoot.appendChild(template.content.cloneNode(true));
-		this.ticketContent = this.shadowRoot.querySelector('.ticket-front-content');
+		this.headerImage = this.shadowRoot.querySelector('.ticket-header-image');
 	} /* constructor */
 
 	/**
@@ -43,6 +42,8 @@ class HistoricalTicket extends HTMLElement {
 
 		fortuneSlot.replaceChildren(fortuneContentNode);
 		numbersSlot.replaceChildren(luckyNumbersNode);
+
+		this.headerImage.src = `assets/images/image-bank-front/header-${state.currentImageFront}.png`;
 	} /* set content */
 } /* HistoricalTicket */
 

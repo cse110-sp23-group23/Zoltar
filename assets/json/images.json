@@ -1,0 +1,13 @@
+{
+	"back": [
+		"king",
+		"prince",
+		"queen",
+		"woman",
+		"jester"
+	],
+	"front": [
+		"classic",
+		"drinking"
+	]
+}

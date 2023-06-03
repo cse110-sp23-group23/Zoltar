@@ -51,17 +51,19 @@
 			</div>
 			<!--end SVG-->
 		</div>
-		<div class="ticket-back-content"></div>
+		<div class="ticket-back-content">
+			<img src="assets/images/image-bank-back/background-card-king.png" class="ticket-back-image" alt="medieval image on back of card" draggable="false">
+		</div>
 		<div class="ticket-front-content flipped">
-			<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule">
+			<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule" draggable="false">
 			<button id="close-ticket" type="button">
-				<img src="assets/images/close.png" alt="exit button">
+				<img src="assets/images/close.png" alt="exit button" draggable="false">
 			</button>
 			<p class="ticket-title">YOUR FORTUNE</p>
-			<img src="assets/images/header.png" class="ticket-header-image" alt="header decorative image">
+			<img src="assets/images/image-bank-front/header-classic.png" class="ticket-header-image" alt="header decorative image" draggable="false">
 			<p class="ticket-text" id="fortune-content">Zoltar foresees a fateful encounter with a one-eyed, bow-tied llama, revealing an ancient guacamole recipe. This divine discovery shall bring world peace and avocado enlightenment. Trust the llama's wisdom.</p>
 			<p class="ticket-text">Your lucky numbers are <span id="ticket-lucky-numbers">12, 14, 37, and 72</span>.</p>
-			<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule">
+			<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule" draggable="false">
 		</div>
 	</div>	
 	<!--end main ticket-->
@@ -75,21 +77,21 @@
 	</button>
 	<div class="history-wrapper hidden">
 		<button id="close-history" type="button">
-			<img src="assets/images/close.png" alt="exit button">
+			<img src="assets/images/close.png" alt="exit button" draggable="false">
 		</button>
 		<div class="ticket-history">
 			
 		</div>
 		<div class="ticket-history-controls">
 			<button id="left-button">
-				<img src="assets/images/left-arrow.png" alt="left control arrow">
+				<img src="assets/images/left-arrow.png" alt="left control arrow" draggable="false">
 			</button>
 			<input type="number" id="ticket-history-input" max="99" min="1" value="1">
 			<label class="ticket-history-label" for="ticket-history-input">
 				/ <span id="ticket-history-total">0</span>
 			</label>
 			<button id="right-button">
-				<img src="assets/images/right-arrow.png" alt="right control arrow">
+				<img src="assets/images/right-arrow.png" alt="right control arrow" draggable="false">
 			</button>
 		</div>
 	</div>
@@ -113,12 +115,12 @@
 				</div>
 			</div>
 			<div class="ticket-front-content">
-				<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule">
+				<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule" draggable="false">
 				<p class="ticket-title">YOUR FORTUNE</p>
-				<img src="assets/images/header.png" class="ticket-header-image" alt="header decorative image">
+				<img src="assets/images/header.png" class="ticket-header-image" alt="header decorative image" draggable="false">
 				<p class="ticket-text"><slot name="fortune-content"></slot></p>
 				<p class="ticket-text">Your lucky numbers are <slot name="lucky-numbers"></slot>.</p>
-				<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule">
+				<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule" draggable="false">
 			</div>
 		</div>
 	</template>

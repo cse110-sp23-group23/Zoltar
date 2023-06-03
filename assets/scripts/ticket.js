@@ -1,6 +1,8 @@
 import { saveState } from './storage.js';
 
 const ANIMATION_LENGTH_MS = 500;
+const IMAGE_BANK_PREFIX_BACK = 'assets/images/image-bank-back/background-card-';
+const IMAGE_BANK_PREFIX_FRONT = 'assets/images/image-bank-front/header-';
 
 let ticket = {};
 let buttons = {};
@@ -8,6 +10,8 @@ let buttons = {};
 export const state = {
 	currentMessage: '',
 	currentNumbers: [],
+	currentImageBack: '',
+	currentImageFront: '',
 };
 
 /**
@@ -104,6 +108,8 @@ export function convertArrToReadableString(arr) {
 export function updateTicket() {
 	ticket.text.innerText = state.currentMessage;
 	ticket.numbers.innerText = convertArrToReadableString(state.currentNumbers);
+	ticket.backgroundImage.src = `${IMAGE_BANK_PREFIX_BACK}${state.currentImageBack}.png`;
+	ticket.frontImage.src = `${IMAGE_BANK_PREFIX_FRONT}${state.currentImageFront}.png`;
 } /* update */
 
 // hide ticket when user hits escape and card currently shown
@@ -118,6 +124,8 @@ function init() {
 	ticket = {
 		main: document.querySelector('.ticket-wrapper'),
 		background: document.querySelector('.ticket-background'),
+		backgroundImage: document.querySelector('.ticket-back-image'),
+		frontImage: document.querySelector('.ticket-header-image'),
 		front: document.querySelector('.ticket-front-content'),
 		back: document.querySelector('.ticket-back-content'),
 		buttonRemove: document.querySelector('#close-ticket'),
