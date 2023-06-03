@@ -52,11 +52,13 @@ body {
 	transition: transform 0.5s, top 0.5s;
 }
 
-.ticket-background {
-	padding: 0;
+.ticket-back-image {
+	width: 100%;
+	height: 100%;
 }
 
 .ticket-back-content, .ticket-front-content, .ticket-background {
+	padding:0 ;
 	position: absolute;
 	top: 0;
 	left: 0;

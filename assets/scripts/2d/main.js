@@ -1,4 +1,4 @@
-import { produceRandomNumbers, produceFortuneFromArr } from '../fortunes.js';
+import { produceRandomNumbers, chooseOptionFromArr } from '../fortunes.js';
 import { convertArrToReadableString } from '../ticket.js';
 
 const OPEN = 1;
@@ -78,7 +78,7 @@ async function getResponses() {
  * @param none
  */
 function assignTicketContent() {
-	domContent.fortuneOutput.textContent = produceFortuneFromArr(responses.fortunes);
+	domContent.fortuneOutput.textContent = chooseOptionFromArr(responses.fortunes).message;
 	domContent.fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(produceRandomNumbers(4, 1, 100))}`;
 } /* assignTicketContent */
 
