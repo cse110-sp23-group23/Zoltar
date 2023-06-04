@@ -15,6 +15,15 @@ body {
     cursor: url('../images/customcursorclick.png'), pointer;
 }
 
+#eight-ball-image {
+    z-index: 4;
+    position: absolute;
+    margin-left: -320px;
+    margin-bottom: -480px;
+    scale: 30%;
+    cursor: url('../images/eightballcursor.png'), pointer;
+}
+
 #wood-background {
     position: absolute;
     z-index: 1;

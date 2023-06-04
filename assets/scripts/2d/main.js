@@ -4,6 +4,7 @@ import { convertArrToReadableString } from '../ticket.js';
 const fortuneOutput = document.querySelector('#fortune-output');
 const ticket = document.querySelector('#ticket');
 const zoltar = document.querySelector('#zoltar-image');
+const eightball = document.querySelector('#eight-ball-image');
 const ticketX = document.getElementById('closeTicket');
 const fortuneNumber = document.querySelector('#fortune-number');
 const splash = document.querySelector('#splash-screen');
@@ -136,6 +137,13 @@ document.addEventListener('keydown', (event) => {
 
 volumeControl.addEventListener('click', () => {
 	toggleAudio();
+});
+
+/**
+ * Clicking on the 8-ball goes to 8-ball project
+ */
+eightball.addEventListener('click', () => {
+	window.location = ('https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/');
 });
 
 /**
