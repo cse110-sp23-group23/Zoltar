@@ -28,6 +28,14 @@ body {
 	pointer-events: none;
 }
 
+#zoltar-face {
+	pointer-events: none;
+	z-index: 3;
+	top: 32%;
+	left: 51%;
+	height: 32vh;
+}
+
 #zoltar-image {
 	height: 140vh;
 	top: 55%;
@@ -79,6 +87,10 @@ body {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+}
+
+.mainTicket:hover {
+	transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
 }
 
 .savedTicket {
@@ -172,6 +184,7 @@ body.shake {
 	animation: shake 0.5s;
 	animation-iteration-count: 2;
 }
+
 
 @keyframes fadeIn {
 	0% {

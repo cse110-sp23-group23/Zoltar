@@ -5,11 +5,13 @@ const LOADING_DELAY = 500;
 const OPEN = 1;
 const CLOSE = 0;
 const AUDIO_LOW = 0.3;
+const IMAGE_FRONT = 'assets/images/image-bank-front/header-';
 
 let domContent = {};
 let backgroundmp3;
 let thundermp3;
 let responses;
+let frontImages;
 let muteAudio;
 let disableZoltar = false;
 let muteBackgroundAudio = true;
@@ -85,10 +87,20 @@ async function getResponses() {
 } /* getResponses */
 
 /**
+ * Gets list of images from Json file
+ */
+async function getImages() {
+	fetch('assets/json/images.json')
+		.then((response) => response.json())
+		.then((json) => { frontImages = json.front; });
+} /* getImages */
+
+/**
  * Assigns fortune and lucky numbers to the ticket
  * @param none
  */
 function assignTicketContent() {
+	domContent.ticketImage.src = `${IMAGE_FRONT}${chooseOptionFromArr(frontImages)}.png`;
 	domContent.fortuneOutput.textContent = chooseOptionFromArr(responses.fortunes).message;
 	domContent.fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(produceRandomNumbers(4, 1, 100))}`;
 } /* assignTicketContent */
@@ -198,6 +210,7 @@ function createStoreButtonListener(but) {
 function go() {
 	getAudio();
 	getResponses();
+	getImages();
 	backgroundmp3.play();
 	domContent.splash.classList.add('hidden');
 	window.removeEventListener('mousedown', go);
@@ -220,6 +233,7 @@ function init() {
 		loadedMessage: document.querySelector('.loaded-message'),
 		storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
 		storeButton: document.querySelectorAll('.storeButton'),
+		ticketImage: document.querySelector('.ticket-header-image'),
 	};
 	window.addEventListener('mousedown' || 'keydown', go);
 	window.addEventListener('keydown', go);
