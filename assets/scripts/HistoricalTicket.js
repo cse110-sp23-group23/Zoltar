@@ -1,5 +1,6 @@
 import { convertArrToReadableString } from './ticket.js';
 import { deleteCard } from './storage.js';
+import { toggleClassToArr } from './util.js';
 
 /**
  * Location of template for ticket structure to use
@@ -76,25 +77,18 @@ class HistoricalTicket extends HTMLElement {
 
 	/**
 	 * Makes overlay containing discard and flip buttons visible to user
-	 * @param none
+	 * @param { Event } event - event from eventListener trigger
 	 */
-	showCardButtonOverlay() {
+	handleButtonOverlay(event) {
 		if (this.flipped) {
 			return;
 		}
-		this.dom.overlay.classList.remove('hidden');
+		if (event.type === 'mouseover') {
+			this.dom.overlay.classList.remove('hidden');
+		} else if (event.type === 'mouseout') {
+			this.dom.overlay.classList.add('hidden');
+		}
 	} /* showCardButtonOverlay */
-
-	/**
-	 * Hides overlay containing discard and flip buttons
-	 * @param none
-	 */
-	hideCardButtonOverlay() {
-		if (this.flipped) {
-			return;
-		}
-		this.dom.overlay.classList.add('hidden');
-	} /* hideCardButtonOverlay */
 
 	/**
 	 * Flips card, toggling between front and back
@@ -105,9 +99,7 @@ class HistoricalTicket extends HTMLElement {
 			this.addTransitionEffects.bind(this)();
 			this.animations = true;
 		}
-		[this.dom.background, this.dom.backContent, this.dom.frontContent].forEach((el) => {
-			el.classList.toggle('flipped');
-		});
+		toggleClassToArr([this.dom.background, this.dom.backContent, this.dom.frontContent], 'flipped');
 		this.dom.wrapper.classList.toggle('ticket-hoverable');
 		this.flipped = !this.flipped;
 	} /* flipCardToBack */
@@ -117,9 +109,7 @@ class HistoricalTicket extends HTMLElement {
 	 * @param none
 	 */
 	addTransitionEffects() {
-		[this.dom.frontContent, this.dom.backContent, this.dom.background].forEach((el) => {
-			el.classList.toggle('transition-flip');
-		});
+		toggleClassToArr([this.dom.frontContent, this.dom.backContent, this.dom.background], 'transition-flip');
 	} /* addTransitionEffects */
 } /* HistoricalTicket */
 

@@ -1,3 +1,5 @@
+import { toggleClassToArr } from './util.js';
+
 let domContent = {};
 let currentCards = [];
 const state = {
@@ -32,9 +34,7 @@ function historyIsOpen() {
  * @param none
  */
 function exitHistory() {
-	domContent.cover.classList.add('hidden');
-	domContent.historyWrapper.classList.add('hidden');
-	domContent.circleButton.classList.remove('hidden');
+	toggleClassToArr([domContent.cover, domContent.historyWrapper, domContent.circleButton], 'hidden');
 } /* exitHistory */
 
 /**
@@ -133,8 +133,8 @@ export function deleteCard(card) {
  */
 function handleHoverListeners(cards, action) {
 	cards.forEach((card) => {
-		card[`${action}EventListener`]('mouseover', card.showCardButtonOverlay);
-		card[`${action}EventListener`]('mouseout', card.hideCardButtonOverlay);
+		card[`${action}EventListener`]('mouseover', card.handleButtonOverlay);
+		card[`${action}EventListener`]('mouseout', card.handleButtonOverlay);
 	});
 } /* handleHoverListeners */
 
