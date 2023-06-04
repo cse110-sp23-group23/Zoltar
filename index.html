@@ -86,7 +86,7 @@
 			<button id="left-button">
 				<img src="assets/images/left-arrow.png" alt="left control arrow" draggable="false">
 			</button>
-			<input type="number" id="ticket-history-input" max="99" min="1" value="1">
+			<input type="text" id="ticket-history-input" value="1">
 			<label class="ticket-history-label" for="ticket-history-input">
 				/ <span id="ticket-history-total">0</span>
 			</label>
@@ -104,7 +104,7 @@
 			</style>
 		</head>
 		<div class="ticket-wrapper">
-			<div class="ticket-background">
+			<div class="ticket-background flipped">
 				<div class="ticket-weathered-background">
 				<svg style="display: none;">
 					<defs>
@@ -115,6 +115,9 @@
 					</defs>
 				</svg>
 				</div>
+			</div>
+			<div class="ticket-back-content flipped">
+				<img src="assets/images/image-bank-back/background-card-king.png" class="ticket-back-image" alt="medieval image on back of card" draggable="false">
 			</div>
 			<div class="ticket-front-content">
 				<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule" draggable="false">

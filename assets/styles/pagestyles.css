@@ -217,7 +217,6 @@ canvas {
 	border-radius: 0.4vw;
 	transition: background-color 200ms ease-in-out;
 	font-size: 1vw;
-	padding-left: 0.6vw;
 }
 
 #ticket-history-input:hover {
@@ -260,4 +259,5 @@ historical-ticket {
 	height: 35vw;
 	width: 25vw;
 	transition: transform 500ms linear;
+	perspective: 65vw;
 }
