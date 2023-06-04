@@ -1,4 +1,5 @@
 import { saveState } from './storage.js';
+import { toggleClassToArr } from './util.js';
 
 const ANIMATION_LENGTH_MS = 500;
 const IMAGE_BANK_PREFIX_BACK = 'assets/images/image-bank-back/background-card-';
@@ -42,9 +43,7 @@ function toggleTicketOff() {
 	buttons.main.classList.remove('hidden');
 	buttons.cover.classList.remove('hidden');
 	setTimeout(() => {
-		ticket.background.classList.remove('flipped');
-		ticket.front.classList.add('flipped');
-		ticket.back.classList.remove('flipped');
+		toggleClassToArr([ticket.background, ticket.front, ticket.back], 'flipped');
 	}, ANIMATION_LENGTH_MS);
 } /* toggleTicketOff */
 
@@ -69,9 +68,7 @@ function flipTicket() {
 		return;
 	}
 	ticket.main.classList.remove('ticket-hoverable');
-	ticket.background.classList.add('flipped');
-	ticket.front.classList.toggle('flipped');
-	ticket.back.classList.toggle('flipped');
+	toggleClassToArr([ticket.background, ticket.front, ticket.back], 'flipped');
 } /* flipTicket */
 
 /**
@@ -79,9 +76,7 @@ function flipTicket() {
  * @param { Integer } index representing button clicked; 0 for discard, 1 for save
  */
 function hideSavePrompt(index) {
-	buttons.main.classList.add('hidden');
-	buttons.cover.classList.add('hidden');
-	ticket.ticketCount.classList.remove('hidden');
+	toggleClassToArr([buttons.main, buttons.cover, ticket.ticketCount], 'hidden');
 	if (index === 1) {
 		saveState(state);
 	}

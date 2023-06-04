@@ -68,6 +68,23 @@ body {
 	transform: translate(-50%, -50%);
 }
 
+#eight-ball-image {
+    z-index: 4;
+    position: absolute;
+    margin-left: 31%;
+    margin-top: 37%;
+    /* margin-left: 580px;
+    margin-bottom: 700px; */
+    scale: 40%;
+    opacity: 0%;
+    cursor: url('../images/eightballcursor.png'), pointer;
+
+}
+
+#eight-ball-image:hover {
+    opacity: 100%;
+}
+
 #wood-background {
 	position: absolute;
 	z-index: 1;

@@ -58,7 +58,7 @@ body {
 }
 
 .ticket-back-content, .ticket-front-content, .ticket-background {
-	padding:0 ;
+	padding: 0;
 	position: absolute;
 	top: 0;
 	left: 0;

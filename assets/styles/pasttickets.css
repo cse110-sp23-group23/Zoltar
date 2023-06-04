@@ -19,25 +19,43 @@
 	opacity: 0;
 }
 
+.flipped {
+	transform: rotate3d(0, 1, 0, 180deg);
+}
+
+.flipped::before {
+    transform: rotateX(-90deg);
+}
+
 .ticket-wrapper {
 	position: absolute;
 	z-index: 99;
 	width: 25vw;
 	height: 35vw; 
-	transition: transform 0.5s, top 0.5s;
+	transition: transform 0.5s;
 }
 
-.ticket-background {
+.ticket-back-image {
+	width: 100%;
+	height: 100%;
+}
+
+.ticket-back-content, .ticket-front-content {
+	backface-visibility: hidden;
+}
+
+.ticket-front-content, .ticket-back-content, .ticket-background {
 	padding: 0;
-}
-
-.ticket-front-content, .ticket-background {
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	transition: transform 0.5s, box-shadow 0.2s ease-in;
+	transition: box-shadow 0.2s ease-in;
+}
+
+.transition-flip {
+	transition: transform 0.5s;
 }
 
 .ticket-title {
@@ -54,6 +72,15 @@
 	color: #333;
 	text-align: center;
 	line-height: 1.5;
+}
+
+.ticket-hoverable:hover {
+	cursor: url('../images/customcursorclick.png'), pointer;
+	transform: rotate3d(-1, -1, -0.1, -15deg);
+}
+
+.ticket-hoverable:hover .ticket-background {
+	box-shadow: inset -20vw 30vw 35vw rgba(255, 217, 0, 0.12);
 }
 
 .ticket-text {

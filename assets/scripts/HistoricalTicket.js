@@ -1,5 +1,6 @@
 import { convertArrToReadableString } from './ticket.js';
 import { deleteCard } from './storage.js';
+import { toggleClassToArr } from './util.js';
 
 /**
  * Location of template for ticket structure to use
@@ -18,12 +19,17 @@ class HistoricalTicket extends HTMLElement {
 	constructor() {
 		super();
 
+		this.flipped = false;
+		this.animations = false; // prevent initial load flip animations
+
 		this.attachShadow({ mode: 'open' });
 		this.shadowRoot.appendChild(template.content.cloneNode(true));
-		this.headerImage = this.shadowRoot.querySelector('.ticket-header-image');
-		this.overlay = this.shadowRoot.querySelector('.ticket-flip-overlay');
-		this.discardButton = this.shadowRoot.querySelector('.discard-history-button');
-		this.discardButton.addEventListener('click', () => { deleteCard(this); });
+
+		this.dom = this.fetchElementsFromDOM();
+
+		this.dom.backContent.addEventListener('click', this.flipCard.bind(this));
+		this.dom.flipButton.addEventListener('click', this.flipCard.bind(this));
+		this.dom.discardButton.addEventListener('click', () => { deleteCard(this); });
 	} /* constructor */
 
 	/**
@@ -47,16 +53,64 @@ class HistoricalTicket extends HTMLElement {
 		fortuneSlot.replaceChildren(fortuneContentNode);
 		numbersSlot.replaceChildren(luckyNumbersNode);
 
-		this.headerImage.src = `assets/images/image-bank-front/header-${state.currentImageFront}.png`;
+		this.dom.headerImage.src = `assets/images/image-bank-front/header-${state.currentImageFront}.png`;
+		this.dom.backImage.src = `assets/images/image-bank-back/background-card-${state.currentImageBack}.png`;
 	} /* set content */
 
-	showCardButtonOverlay() {
-		this.overlay.classList.remove('hidden');
-	}
+	/**
+	 * Finds necessary HTML elements in shadow root and puts into this.dom object
+	 * @param none
+	 */
+	fetchElementsFromDOM() {
+		return {
+			headerImage: this.shadowRoot.querySelector('.ticket-header-image'),
+			backImage: this.shadowRoot.querySelector('.ticket-back-image'),
+			overlay: this.shadowRoot.querySelector('.ticket-flip-overlay'),
+			backContent: this.shadowRoot.querySelector('.ticket-back-content'),
+			frontContent: this.shadowRoot.querySelector('.ticket-front-content'),
+			background: this.shadowRoot.querySelector('.ticket-background'),
+			wrapper: this.shadowRoot.querySelector('.ticket-wrapper'),
+			discardButton: this.shadowRoot.querySelector('.discard-history-button'),
+			flipButton: this.shadowRoot.querySelector('.flip-history-button'),
+		};
+	} /* fetchElemenetsFromDOM */
 
-	hideCardButtonOverlay() {
-		this.overlay.classList.add('hidden');
-	}
+	/**
+	 * Makes overlay containing discard and flip buttons visible to user
+	 * @param { Event } event - event from eventListener trigger
+	 */
+	handleButtonOverlay(event) {
+		if (this.flipped) {
+			return;
+		}
+		if (event.type === 'mouseover') {
+			this.dom.overlay.classList.remove('hidden');
+		} else if (event.type === 'mouseout') {
+			this.dom.overlay.classList.add('hidden');
+		}
+	} /* showCardButtonOverlay */
+
+	/**
+	 * Flips card, toggling between front and back
+	 * @param none
+	 */
+	flipCard() {
+		if (!this.animations) { // fires once per element for lifetime
+			this.addTransitionEffects.bind(this)();
+			this.animations = true;
+		}
+		toggleClassToArr([this.dom.background, this.dom.backContent, this.dom.frontContent], 'flipped');
+		this.dom.wrapper.classList.toggle('ticket-hoverable');
+		this.flipped = !this.flipped;
+	} /* flipCardToBack */
+
+	/**
+	 * Adds transitions to card for animation of flip (necessary to avoid transition during setup)
+	 * @param none
+	 */
+	addTransitionEffects() {
+		toggleClassToArr([this.dom.frontContent, this.dom.backContent, this.dom.background], 'transition-flip');
+	} /* addTransitionEffects */
 } /* HistoricalTicket */
 
 // use as '<historical-ticket></historical-ticket>'

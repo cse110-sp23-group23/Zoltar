@@ -1,3 +1,5 @@
+import { toggleClassToArr } from './util.js';
+
 let domContent = {};
 let currentCards = [];
 const state = {
@@ -23,18 +25,16 @@ export function clamp(value, lo, hi) {
  * @param none
  * @return { Boolean }
  */
-function isHistoryOpen() {
+function historyIsOpen() {
 	return !domContent.historyWrapper.classList.contains('hidden');
-} /* isHistoryOpen */
+} /* historyIsOpen */
 
 /**
  * Hide history from screen, close cover, and reset environment
  * @param none
  */
 function exitHistory() {
-	domContent.cover.classList.add('hidden');
-	domContent.historyWrapper.classList.add('hidden');
-	domContent.circleButton.classList.remove('hidden');
+	toggleClassToArr([domContent.cover, domContent.historyWrapper, domContent.circleButton], 'hidden');
 } /* exitHistory */
 
 /**
@@ -133,8 +133,8 @@ export function deleteCard(card) {
  */
 function handleHoverListeners(cards, action) {
 	cards.forEach((card) => {
-		card[`${action}EventListener`]('mouseover', card.showCardButtonOverlay);
-		card[`${action}EventListener`]('mouseout', card.hideCardButtonOverlay);
+		card[`${action}EventListener`]('mouseover', card.handleButtonOverlay);
+		card[`${action}EventListener`]('mouseout', card.handleButtonOverlay);
 	});
 } /* handleHoverListeners */
 
@@ -187,13 +187,27 @@ function slide(dir) {
 } /* slide */
 
 /**
+ * Checks if input string is a number within bounds, clamps otherwise
+ * @param { String } str - string to validate as string
+ * @param { Number } fallback - if str cant cast to number, falls back to this value
+ * @return { Number } - new validated and clamped value
+ */
+function validateNumInput(str, fallback) {
+	const castNum = +str;
+	if (Number.isNaN(castNum)) {
+		return fallback;
+	}
+	return clamp(castNum, 1, currentCards.length);
+} /* validateNumInput */
+
+/**
  * Fetch and react to user input from text field to move to corresponding card
  * @param none
  */
 function updateSliderFromInput() {
-	const input = domContent.inputField;
-	input.value = clamp(input.value, 1, currentCards.length);
-	state.currentlySelected = input.value - 1;
+	const input = validateNumInput(domContent.inputField.value, state.currentlySelected + 1);
+	domContent.inputField.value = input;
+	state.currentlySelected = input - 1;
 	translateCards();
 } /* updateSliderFromInput */
 
@@ -203,11 +217,14 @@ function updateSliderFromInput() {
  * @param { Event } event - event object passed in
  */
 function keyHandler(event) {
-	if (event.key === 'ArrowLeft' || event.key === 'a') {
+	if (!historyIsOpen()) {
+		return;
+	}
+	if (event.key === 'ArrowLeft') {
 		slide(-1);
-	} else if (event.key === 'ArrowRight' || event.key === 'd') {
+	} else if (event.key === 'ArrowRight') {
 		slide(1);
-	} else if (event.key === 'Escape' && isHistoryOpen()) {
+	} else if (event.key === 'Escape') {
 		exitHistory();
 	}
 } /* keyHandler */
