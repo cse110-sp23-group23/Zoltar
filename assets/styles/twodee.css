@@ -28,12 +28,20 @@ body {
 	pointer-events: none;
 }
 
-#zoltar-face {
+#zoltar-body {
 	pointer-events: none;
 	z-index: 3;
-	top: 32%;
-	left: 51%;
-	height: 32vh;
+	top: 55%;
+	left: 50%;
+	height: 140vh;
+}
+
+#zoltar-left-hand {
+	pointer-events: none;
+	z-index: 4;
+	top: 55%;
+	left: 50%;
+	height: 140vh;
 }
 
 #zoltar-image {
