@@ -12,7 +12,7 @@ const volumeControl = document.querySelector('.volume-controls');
 const volumeOn = document.querySelector('#volumeOn');
 const volumeOff = document.querySelector('#volumeOff');
 
-const LOADING_DELAY = 2000;
+// const LOADING_DELAY = 2000;
 const LOADING_DELAY = 500;
 const OPEN = 1;
 const CLOSE = 0;
@@ -194,16 +194,6 @@ volumeControl.addEventListener('click', () => {
 eightball.addEventListener('click', () => {
 	window.location = ('https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/');
 });
-
-/**
- * Gets List of responses from Json file
- * @param none
- */
-async function getResponses() {
-	fetch('assets/json/responses.json')
-		.then((response) => response.json())
-		.then((json) => { responses = json; });
-}
 
 /**
  * Gets Background audio

@@ -63,10 +63,18 @@ body {
 #eight-ball-image {
     z-index: 4;
     position: absolute;
-    margin-left: -320px;
-    margin-bottom: -480px;
-    scale: 30%;
+    margin-left: 31%;
+    margin-top: 37%;
+    /* margin-left: 580px;
+    margin-bottom: 700px; */
+    scale: 40%;
+    opacity: 0%;
     cursor: url('../images/eightballcursor.png'), pointer;
+
+}
+
+#eight-ball-image:hover {
+    opacity: 100%;
 }
 
 #wood-background {
