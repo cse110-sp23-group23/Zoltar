@@ -1,16 +1,16 @@
 import { produceRandomNumbers, chooseOptionFromArr } from '../fortunes.js';
 import { convertArrToReadableString } from '../ticket.js';
 
-const fortuneOutput = document.querySelector('#fortune-output');
-const ticket = document.querySelector('#ticket');
-const zoltar = document.querySelector('#zoltar-image');
+// const fortuneOutput = document.querySelector('#fortune-output');
+// const ticket = document.querySelector('#ticket');
+// const zoltar = document.querySelector('#zoltar-image');
+// const ticketX = document.getElementById('closeTicket');
+// const fortuneNumber = document.querySelector('#fortune-number');
+// const splash = document.querySelector('#splash-screen');
+// const volumeOn = document.querySelector('#volumeOn');
+// const volumeOff = document.querySelector('#volumeOff');
 const eightball = document.querySelector('#eight-ball-image');
-const ticketX = document.getElementById('closeTicket');
-const fortuneNumber = document.querySelector('#fortune-number');
-const splash = document.querySelector('#splash-screen');
 const volumeControl = document.querySelector('.volume-controls');
-const volumeOn = document.querySelector('#volumeOn');
-const volumeOff = document.querySelector('#volumeOff');
 
 // const LOADING_DELAY = 2000;
 const LOADING_DELAY = 500;
