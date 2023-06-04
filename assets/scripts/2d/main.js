@@ -1,4 +1,4 @@
-import { produceFortune, produceRandomNumbers } from '../fortunes.js';
+import { produceRandomNumbers, chooseOptionFromArr } from '../fortunes.js';
 import { convertArrToReadableString } from '../ticket.js';
 
 const fortuneOutput = document.querySelector('#fortune-output');
@@ -13,49 +13,109 @@ const volumeOn = document.querySelector('#volumeOn');
 const volumeOff = document.querySelector('#volumeOff');
 
 const LOADING_DELAY = 2000;
+const LOADING_DELAY = 500;
 const OPEN = 1;
 const CLOSE = 0;
+const AUDIO_LOW = 0.3;
+const IMAGE_FRONT = 'assets/images/image-bank-front/header-';
 
+let domContent = {};
 let backgroundmp3;
 let thundermp3;
 let responses;
+let frontImages;
 let muteAudio;
 let disableZoltar = false;
+let muteBackgroundAudio = true;
+let ticketOnScreen = false;
 
+export function isTicketOnScreen() {
+	return ticketOnScreen;
+}
 /**
- * Shakes Zoltar
+ * Shakes document body
  * @param none
  */
-function shakeZoltar() {
-	zoltar.classList.add('shake');
-}
+function shakeScreen() {
+	domContent.body.classList.add('shake');
+} /* shakeZoltar */
 
 /**
  * Slides ticket onto screen
  * @param none
  */
 function displayTicket() {
-	ticket.classList.add('visible');
-}
+	domContent.ticket.classList.add('visible');
+} /* displayTicket */
+
+/**
+ * Displays the ticket prompt
+ * @param none
+ */
+function displayTicketPrompt() {
+	domContent.storeTicketPrompt.style.display = 'inline';
+} /* displayTicketPrompt */
 
 /**
  * Removes ticket from screen and allows Zoltar to pressed again
  * @param none
  */
 function closeTicket() {
-	zoltar.classList.remove('shake');
-	ticket.classList.remove('visible');
+	domContent.body.classList.remove('shake');
+	domContent.ticket.classList.remove('visible');
+	displayTicketPrompt();
+} /* closeTicket */
+
+/**
+ * Removes the ticket prompt
+ * @param none
+ */
+function removeTicketPrompt() {
+	domContent.storeTicketPrompt.style.display = 'none';
 	disableZoltar = false;
-}
+	ticketOnScreen = false;
+} /* removeTicketPrompt */
+
+/**
+ * Stores the ticket if called with the saveTicket Button, otherwise
+ * will just discard it (do nothing)
+ * @param {string} id Button id
+ */
+function storeButtonHandler(id) {
+	if (id === 'saveTicket') {
+		// TODO: ADD TICKET TO LOCAL STORAGE
+	}
+	removeTicketPrompt();
+} /* storeButtonHandler */
+
+/**
+ * Gets List of responses from Json file
+ * @param none
+ */
+async function getResponses() {
+	fetch('assets/json/responses.json')
+		.then((response) => response.json())
+		.then((json) => { responses = json; });
+} /* getResponses */
+
+/**
+ * Gets list of images from Json file
+ */
+async function getImages() {
+	fetch('assets/json/images.json')
+		.then((response) => response.json())
+		.then((json) => { frontImages = json.front; });
+} /* getImages */
 
 /**
  * Assigns fortune and lucky numbers to the ticket
  * @param none
  */
 function assignTicketContent() {
-	fortuneOutput.textContent = produceFortune(responses.fortunes);
-	fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(produceRandomNumbers(4, 1, 100))}`;
-}
+	domContent.ticketImage.src = `${IMAGE_FRONT}${chooseOptionFromArr(frontImages)}.png`;
+	domContent.fortuneOutput.textContent = chooseOptionFromArr(responses.fortunes).message;
+	domContent.fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(produceRandomNumbers(4, 1, 100))}`;
+} /* assignTicketContent */
 
 /**
  * When called with OPEN, plays thunder, shakes Zoltar, and displays the ticket and disables
@@ -65,17 +125,19 @@ function assignTicketContent() {
  */
 function ticketHandler(action) {
 	if (action) {
-		thundermp3.play();
-		shakeZoltar();
+		if (thundermp3) thundermp3.play();
+		shakeScreen();
 		assignTicketContent();
 		disableZoltar = true;
 		setTimeout(() => {
 			displayTicket();
 		}, 1300);
-	} else {
+		ticketOnScreen = true;
+	} else if (ticketOnScreen) {
+		displayTicketPrompt();
 		closeTicket();
 	}
-}
+} /* ticketHandler */
 
 /**
  * Toggles muteAudio and volume icons when called. Sets muteAudio to localStorage so that
@@ -83,42 +145,29 @@ function ticketHandler(action) {
  * @param none
  */
 function toggleAudio() {
-	if (muteAudio) {
-		backgroundmp3.volume = 0.4;
-		thundermp3.volume = 0.5;
-		volumeOn.style.display = 'inline';
-		volumeOff.style.display = 'none';
-	} else {
-		backgroundmp3.volume = 0;
-		thundermp3.volume = 0;
-		volumeOn.style.display = 'none';
-		volumeOff.style.display = 'inline';
-	}
 	muteAudio = !muteAudio;
 	localStorage.setItem('MuteAudio', muteAudio);
-}
+	backgroundmp3.volume = muteAudio ? 0 : AUDIO_LOW;
+	thundermp3.volume = muteAudio ? 0 : AUDIO_LOW;
+
+	domContent.volumeOn.style.display = muteAudio ? 'none' : 'inline';
+	domContent.volumeOff.style.display = muteAudio ? 'inline' : 'none';
+} /* toggleAudio */
 
 /**
  * Zoltar image event Listener.
  * Disabled when ticket is already displayed
  * Thunder is played when Zoltar shakes, then a
  * ticket pops up.
+ * @param none
  */
-zoltar.addEventListener('click', (e) => {
-	e.preventDefault();
+function zoltarHandler() {
 	if (disableZoltar) {
 		ticketHandler(CLOSE);
 	} else {
 		ticketHandler(OPEN);
 	}
-});
-
-/**
- * Closes the ticket through the X on the ticket
- */
-ticketX.addEventListener('click', () => {
-	ticketHandler(CLOSE);
-});
+} /* zoltarHandler */
 
 /**
  * Closes the ticket when 'esc' is pressed
@@ -165,27 +214,74 @@ function getAudio() {
 	backgroundmp3 = new Audio('assets/audio/background.wav');
 	backgroundmp3.loop = true;
 	backgroundmp3.muted = true;
-	backgroundmp3.volume = muteAudio ? 0 : 0.4;
-	setTimeout(() => {
-		backgroundmp3.muted = false;
-		backgroundmp3.play();	// caught (in promise) DOMException: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD
-	}, LOADING_DELAY);
+	backgroundmp3.volume = muteAudio ? 0 : AUDIO_LOW;
+
 	thundermp3 = new Audio('assets/audio/thunder2d.wav');
-	thundermp3.volume = muteAudio ? 0 : 0.5;
+	thundermp3.volume = muteAudio ? 0 : AUDIO_LOW;
+} /* getAudio */
+
+/**
+ * Creates an event listener or to save or discard ticket so that
+ * init does not exceed 25 lines.
+ * @param {array} array store, delete button
+ */
+function createStoreButtonListener(but) {
+	but.forEach((button) => {
+		button.addEventListener('click', (e) => {
+			e.preventDefault();
+			storeButtonHandler(button.id);
+			removeTicketPrompt();
+			ticketOnScreen = false;
+		});
+	});
 }
 
-function init() {
-	setTimeout(() => {
-		splash.style.display = 'none';
-	}, LOADING_DELAY);
-	if (!(localStorage.getItem('MuteAudio'))) {
-		localStorage.setItem('MuteAudio', false);
-		muteAudio = false;
-	} else {
-		muteAudio = localStorage.getItem('MuteAudio');
-	}
-	(muteAudio ? volumeOff : volumeOn).style.display = 'inline';
-	getResponses();
+/**
+ * Initiates audio when user clicks on splash screen
+ * @param none
+ */
+function go() {
 	getAudio();
+	getResponses();
+	getImages();
+	backgroundmp3.play();
+	domContent.splash.classList.add('hidden');
+	window.removeEventListener('mousedown', go);
+	window.removeEventListener('keydown', go);
+	domContent.volumeOn.style.display = 'inline';
+} /* go */
+
+function init() {
+	domContent = {
+		body: document.querySelector('body'),
+		fortuneOutput: document.querySelector('#fortune-output'),
+		ticket: document.querySelector('#mainTicket'),
+		zoltar: document.querySelector('#zoltar-image'),
+		ticketX: document.getElementById('closeTicket'),
+		fortuneNumber: document.querySelector('#fortune-number'),
+		volumeControl: document.querySelector('.volume-controls'),
+		volumeOn: document.querySelector('#volumeOn'),
+		volumeOff: document.querySelector('#volumeOff'),
+		splash: document.querySelector('#splash-screen'),
+		loadedMessage: document.querySelector('.loaded-message'),
+		storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
+		storeButton: document.querySelectorAll('.storeButton'),
+		ticketImage: document.querySelector('.ticket-header-image'),
+	};
+	window.addEventListener('mousedown' || 'keydown', go);
+	window.addEventListener('keydown', go);
+	setTimeout(() => { domContent.loadedMessage.innerText = '[ press anywhere to continue ]'; }, LOADING_DELAY);
+	domContent.volumeControl.addEventListener('click', toggleAudio);
+	domContent.zoltar.addEventListener('click', zoltarHandler);
+	domContent.ticketX.addEventListener('click', () => { ticketHandler(CLOSE); });
+	createStoreButtonListener(domContent.storeButton);
 }
+
 document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('click', () => {
+	if (muteBackgroundAudio) {
+		backgroundmp3.play();
+		backgroundmp3.muted = false;
+		muteBackgroundAudio = false;
+	}
+});

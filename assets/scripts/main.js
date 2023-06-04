@@ -44,6 +44,9 @@ const options = {
 		initialPosition: new Vector3(-1.82, -0.051, -0.45),
 		finalPosition: new Vector3(-1.945, -0.051, -0.65),
 	},
+	ticketMat: {
+		urlPrefix: 'assets/images/image-bank-back/background-card-',
+	},
 };
 
 const state = {
@@ -108,10 +111,8 @@ hitbox.rotateY(0.5);
 scene.add(hitbox);
 
 // Ticket
-const paperTexture = textureLoader.load('./assets/images/background-card-map.png');
 const ticketGeo = new BoxGeometry(0.1, 0.005, 0.5);
 const ticketMat = new MeshLambertMaterial({ color: 0xE0C9A6 });
-ticketMat.map = paperTexture;
 ticketMat.roughness = 1;
 const ticket = new Mesh(ticketGeo, ticketMat);
 ticket.rotateY(0.57);
@@ -133,7 +134,9 @@ scene.add(ambient);
  * @return { Boolean }
  */
 export function canTriggerEvent() {
-	return !isTicketCurrentlyDisplayed() && controls.API.enabled && !state.ticketSpawned
+	return !isTicketCurrentlyDisplayed()
+		&& controls.API.enabled
+		&& !state.ticketSpawned
 		&& document.querySelector('.cover').classList.contains('hidden');
 } /* canTriggerEvent */
 
@@ -147,6 +150,15 @@ function addCardToScene() {
 	state.ticketSpawned = false;
 	controls.API.enabled = false;
 } /* addCardToScene */
+
+/**
+ * Sets ticket texture to image at appropriate url for input
+ * @param { String } nameOfImage name of image in format of prefix-name structure
+ */
+export function setTicketMapToImage(nameOfImage) {
+	const mapTexture = textureLoader.load(`${options.ticketMat.urlPrefix}${nameOfImage}-map.png`);
+	ticketMat.map = mapTexture;
+}
 
 /**
  * Shoots ray from camera and measures instersection with hitbox of
@@ -172,9 +184,13 @@ function handleKeypress(event) {
 		state.ticketSpawned = true;
 		state.currentShakeDuration = options.shake.minDurationMS / 1000;
 		state.responseGenerated = false;
-		createFortuneOnTicket().then(() => {
-			state.responseGenerated = true;
-		});
+		const paramOptions = {
+			callback: (ticketState) => {
+				state.responseGenerated = true;
+				setTicketMapToImage(ticketState.currentImageBack);
+			},
+		};
+		createFortuneOnTicket(paramOptions);
 	}
 } /* handleKeypress */
 
@@ -209,26 +225,55 @@ function animateShakeFrame(delta) {
 } /* animateShakeFrame */
 
 /**
+ * Helper to calculate a 'step' in the direction of targetPos from objectPos in 3 dimensions
+ * @param {*} objectPos - vector representing cur position in 3d space
+ * @param {*} targetPos - vector representing target position in 3d spcae
+ * @param {*} speed - scalar representing proportion of distance to travel
+ * @param {*} delta - time since last call
+ * @returns { Vector3 } - representation of intermediate distance on coord plane
+ */
+function calcMidDistance(objectPos, targetPos, speed, delta) {
+	return targetPos.clone().sub(objectPos).multiplyScalar(speed * delta);
+} /* calcMidDistance */
+
+/**
+ * Helper func to decide if lights should turn off
+ * @param none
+ * @return { Boolean }
+ */
+function shouldFlickerOff() {
+	return (state.flickerOn) && (state.flickerTime >= options.flicker.onInterval);
+} /* shouldFlickerOff */
+
+/**
+ * Helper func to decide if lights should turn back on
+ * @param none
+ * @return { Boolean }
+ */
+function shouldFlickerOn() {
+	return (!state.flickerOn) && (state.flickerTime >= state.curFlickerOffInterval);
+} /* shouldFlickerOn */
+
+/**
  * Generates difference from last frame in terms of background lights flickering
  * @param { Double } delta - time since last frame generated
  */
 function animateFlickerFrame(delta) {
 	state.flickerTime += delta;
-	if (state.currentFlickerCount === 0 && Math.random() < options.flicker.startProbability) {
-		state.currentFlickerCount = options.flicker.countFunc();
-	}
 	if (state.currentFlickerCount > 0) {
-		if (state.flickerOn && state.flickerTime >= options.flicker.onInterval) {
+		if (shouldFlickerOff()) {
 			scene.remove(ambient);
 			state.flickerOn = false;
 			state.flickerTime = 0;
-		} else if (!state.flickerOn && state.flickerTime >= state.curFlickerOffInterval) {
+		} else if (shouldFlickerOn()) {
 			scene.add(ambient);
 			state.flickerOn = true;
-			state.currentFlickerCount -= 1;
 			state.flickerTime = 0;
+			state.currentFlickerCount -= 1;
 			state.curFlickerOffInterval = options.flicker.timingFunc();
 		}
+	} else if (Math.random() < options.flicker.startProbability) {
+		state.currentFlickerCount = options.flicker.countFunc();
 	}
 } /* animateFlickerFrame */
 
@@ -236,17 +281,21 @@ function animateFlickerFrame(delta) {
  * Generates frame tending camera toward default position if state allows
  * @param { Double } delta - time since last frame requested
  */
-function conditionalSlideCameraFrame(delta) {
+function conditionalAnimateSlideCameraFrame(delta) {
 	if (!state.slideCameraTowardDefault) {
 		return;
 	}
+	const cameraAdjustment = calcMidDistance(
+		camera.position,
+		options.camera.defaultPosition,
+		options.cameraSlide.speed,
+		delta,
+	);
+	camera.position.add(cameraAdjustment);
 	if (camera.position.equals(options.camera.defaultPosition)) {
 		state.slideCameraTowardDefault = false;
 	}
-	const adjustment = options.camera.defaultPosition.clone().sub(camera.position)
-		.multiplyScalar(options.cameraSlide.speed * delta);
-	camera.position.add(adjustment);
-} /* conditionalSlideCameraFrame */
+} /* conditionalAnimateSlideCameraFrame */
 
 /**
  * Generates difference from last frame in terms of ticket sliding out of dispenser
@@ -256,9 +305,13 @@ function animateTicketSlideFrame(delta) {
 	if (ticket.position.distanceTo(options.ticketSlide.finalPosition) <= 0.01) {
 		return;
 	}
-	const adjustment = options.ticketSlide.finalPosition.clone().sub(ticket.position)
-		.multiplyScalar(options.ticketSlide.speed * delta);
-	ticket.position.add(adjustment);
+	const ticketAdjustment = calcMidDistance(
+		ticket.position,
+		options.ticketSlide.finalPosition,
+		options.ticketSlide.speed,
+		delta,
+	);
+	ticket.position.add(ticketAdjustment);
 } /* animateTicketSlideFrame */
 
 /**
@@ -271,7 +324,7 @@ function animate() {
 	animateShakeFrame(delta);
 	animateFlickerFrame(delta);
 	animateTicketSlideFrame(delta);
-	conditionalSlideCameraFrame(delta);
+	conditionalAnimateSlideCameraFrame(delta);
 	controls.update(delta);
 
 	renderer.render(scene, camera);

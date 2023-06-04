@@ -1,4 +1,5 @@
 import { convertArrToReadableString } from './ticket.js';
+import { deleteCard } from './storage.js';
 
 /**
  * Location of template for ticket structure to use
@@ -12,26 +13,24 @@ const template = document.getElementById('historical-ticket-template');
  * can be set to control displayed fortune and lucky numbers.
  * @class HistoricalTicket
  * @extends HTMLElement
- * @property { Object } ticketContent - the inner content of the ticket, namely fortune and numbers
  */
 class HistoricalTicket extends HTMLElement {
-	/**
-     * HistoricalTicket constructor. Initializes the element, attaches it to the
-	 * shadow dom, and sets up ticketContent for later calls
-     */
 	constructor() {
 		super();
 
 		this.attachShadow({ mode: 'open' });
 		this.shadowRoot.appendChild(template.content.cloneNode(true));
-		this.ticketContent = this.shadowRoot.querySelector('.ticket-front-content');
+		this.headerImage = this.shadowRoot.querySelector('.ticket-header-image');
+		this.overlay = this.shadowRoot.querySelector('.ticket-flip-overlay');
+		this.discardButton = this.shadowRoot.querySelector('.discard-history-button');
+		this.discardButton.addEventListener('click', () => { deleteCard(this); });
 	} /* constructor */
 
 	/**
-     * Setter for the content of the HistoricalTicket. Given an object with a 'currentMessage'
+	 * Setter for the content of the HistoricalTicket. Given an object with a 'currentMessage'
 	 * and 'currentNumbers' properties, updates the ticket content with appropriate information
-     * @param { Object } state - an object with the current message and numbers
-     */
+	 * @param { Object } state - an object with the current message and numbers
+	 */
 	set content(state) {
 		if (!state) {
 			return;
@@ -47,7 +46,17 @@ class HistoricalTicket extends HTMLElement {
 
 		fortuneSlot.replaceChildren(fortuneContentNode);
 		numbersSlot.replaceChildren(luckyNumbersNode);
+
+		this.headerImage.src = `assets/images/image-bank-front/header-${state.currentImageFront}.png`;
 	} /* set content */
+
+	showCardButtonOverlay() {
+		this.overlay.classList.remove('hidden');
+	}
+
+	hideCardButtonOverlay() {
+		this.overlay.classList.add('hidden');
+	}
 } /* HistoricalTicket */
 
 // use as '<historical-ticket></historical-ticket>'

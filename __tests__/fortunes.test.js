@@ -1,11 +1,15 @@
-import { produceFortuneFromArr, produceRandomNumbers } from '../assets/scripts/fortunes.js';
+import { chooseOptionFromArr, produceRandomNumbers } from '../assets/scripts/fortunes.js';
 
+/**
+ * Tests:
+ *  - Return a nonempty string.
+ */
 describe('produceFortuneFromArr', () => {
 	test('should return a nonempty string', () => {
-		const result = produceFortuneFromArr([{ message: 'this is a message' }, { message: 'this is another' }]);
+		const result = chooseOptionFromArr(['item1', 'item2', 'item3']);
 		expect(result).toBeTruthy(); // non-empty
 		expect(typeof result).toBe('string');
-		expect(['this is a message', 'this is another']).toContain(result);
+		expect(['item1', 'item2', 'item3']).toContain(result);
 	});
 });
 

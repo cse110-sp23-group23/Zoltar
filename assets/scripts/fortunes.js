@@ -3,16 +3,17 @@ import { state, updateTicket } from './ticket.js';
 const ENDPOINT_URL = 'https://zoltar-gpt-api-team-23.netlify.app/.netlify/functions/gptendpoint';
 const ENABLE_GPT_FLAG = false;
 
-let data;
+let responseBank = [];
+let imageBank = [];
 
 /**
- * Generates a random fortune from JSON file
- * @param { Array<Object> } array of fortune objects with .message field
- * @return { String } random fortune
+ * Chooses a random item from an arrary
+ * @param { Array<Object> } array of objects to choose from
+ * @return { String } randomly chosen object
  */
-export function produceFortuneFromArr(arr) {
-	return arr[Math.floor(Math.random() * arr.length)].message;
-} /* produceFortuneFromArr */
+export function chooseOptionFromArr(arr) {
+	return arr[Math.floor(Math.random() * arr.length)];
+} /* chooseOptionFromArr */
 
 /**
  * Generates an array of n distinct integers spaced between low and high.
@@ -44,7 +45,7 @@ function produceFortuneFromGPT(message) {
 	const url = `${ENDPOINT_URL}?prompt=${encodeURIComponent(message)}`;
 	return fetch(url)
 		.then((response) => response.json())
-		.catch(() => produceFortuneFromArr(data.fortunes)); // fallback if problem
+		.catch(() => chooseOptionFromArr(responseBank.fortunes)).message; // fallback if problem
 } /* produceFortuneFromGPT */
 
 /**
@@ -54,7 +55,7 @@ function produceFortuneFromGPT(message) {
  * @param { String } message (optional) user input to pass to APi
  * @return { String }
  */
-export async function produceFortune(tryGPT = false, options = { message: '', arr: data.fortunes }) {
+export async function produceFortune(tryGPT = false, options = { message: '', arr: responseBank.fortunes }) {
 	if (tryGPT && ENABLE_GPT_FLAG) {
 		try {
 			return await produceFortuneFromGPT(options.message);
@@ -62,26 +63,38 @@ export async function produceFortune(tryGPT = false, options = { message: '', ar
 			// fall through
 		}
 	}
-	return produceFortuneFromArr(options.arr);
+	return chooseOptionFromArr(options.arr).message;
 } /* produceFortune */
 
 /**
  * Replaces text on card in DOM with new fortune and new list of lucky numbers.
  * @async
- * @param none
+ * @param { Object } options optional 'callback' field to be called with ticket state
  */
-export async function createFortuneOnTicket() {
-	const options = { message: 'I am worried about final exams.', arr: data.fortunes };
-	const response = await produceFortune(true, options);
-	state.currentMessage = response;
+export async function createFortuneOnTicket(options) {
+	const paramOptions = { message: 'I am worried about final exams.', arr: responseBank.fortunes };
+	state.currentMessage = await produceFortune(true, paramOptions);
 	state.currentNumbers = produceRandomNumbers(4, 1, 100);
+	state.currentImageBack = chooseOptionFromArr(imageBank.back);
+	state.currentImageFront = chooseOptionFromArr(imageBank.front);
+	if (options.callback) {
+		options.callback(state);
+	}
 	updateTicket();
 } /* createFortuneOnTicket */
 
-function init() {
-	fetch('assets/json/responses.json')
-		.then((response) => response.json())
-		.then((json) => { data = json; });
+/**
+ * Loads array from external json file into javascript array
+ * @param { String } url location of json file
+ * @param { Array<Object> } destination array to put contents into
+ */
+async function loadJsonArr(url) {
+	return fetch(url).then((responses) => responses.json());
+} /* loadJson */
+
+async function init() {
+	responseBank = await loadJsonArr('../assets/json/responses.json');
+	imageBank = await loadJsonArr('../assets/json/images.json');
 } /* init */
 
 document.addEventListener('DOMContentLoaded', init);
