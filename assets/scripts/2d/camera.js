@@ -13,7 +13,7 @@ let frame = 0;
  */
 window.addEventListener('mousemove', (e) => {
 	// Pauses Zoltar's movements if any asset if displayed on screen. Eg. ticket, history
-	frame++;
+	frame += 1;
 	if (frame % 2 === 0) return;
 	if (isHistoryOnScreen() || isTicketOnScreen()) return;
 
