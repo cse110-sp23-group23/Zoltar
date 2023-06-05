@@ -1,6 +1,8 @@
 import { produceRandomNumbers } from '../fortunes.js';
-import { convertArrToReadableString } from '../ticket.js';
+import { convertArrToReadableString, state } from '../ticket.js';
 import { chooseOptionFromArr } from '../util.js';
+import { saveState } from '../storage.js';
+import { updateticketHistoryCount } from './ticketHistory.js';
 
 // const LOADING_DELAY = 2000;
 const LOADING_DELAY = 500;
@@ -14,10 +16,13 @@ let backgroundmp3;
 let thundermp3;
 let responses;
 let frontImages;
+let backImages;
 let muteAudio;
 let disableZoltar = false;
 let muteBackgroundAudio = true;
 let ticketOnScreen = false;
+let luckyNumbers;
+
 
 export function isTicketOnScreen() {
 	return ticketOnScreen;
@@ -72,10 +77,10 @@ function removeTicketPrompt() {
  * @param {string} id Button id
  */
 function storeButtonHandler(id) {
-	if (id === 'saveTicket') {
-		// TODO: ADD TICKET TO LOCAL STORAGE
-	}
 	removeTicketPrompt();
+	if (id === 'saveTicket') {
+		if (saveState(state, '2d')) updateticketHistoryCount();
+	}
 } /* storeButtonHandler */
 
 /**
@@ -94,7 +99,10 @@ async function getResponses() {
 async function getImages() {
 	fetch('assets/json/images.json')
 		.then((response) => response.json())
-		.then((json) => { frontImages = json.front; });
+		.then((json) => {
+			frontImages = json.front;
+			backImages = json.back
+		});
 } /* getImages */
 
 /**
@@ -102,9 +110,13 @@ async function getImages() {
  * @param none
  */
 function assignTicketContent() {
-	domContent.ticketImage.src = `${IMAGE_FRONT}${chooseOptionFromArr(frontImages)}.png`;
-	domContent.fortuneOutput.textContent = chooseOptionFromArr(responses.fortunes).message;
-	domContent.fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(produceRandomNumbers(4, 1, 100))}`;
+	state.currentImageBack = chooseOptionFromArr(backImages);
+	state.currentImageFront = chooseOptionFromArr(frontImages);
+	state.currentMessage = chooseOptionFromArr(responses.fortunes).message;
+	state.currentNumbers = produceRandomNumbers(4, 1, 100);
+	domContent.ticketImage.src = `${IMAGE_FRONT}${state.currentImageFront}.png`;
+	domContent.fortuneOutput.textContent = state.currentMessage;
+	domContent.fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(state.currentNumbers)}`;
 } /* assignTicketContent */
 
 /**
@@ -254,7 +266,6 @@ function init() {
 		storeButton: document.querySelectorAll('.storeButton'),
 		ticketImage: document.querySelector('.ticket-header-image'),
 		eightball: document.querySelector('#eight-ball-image'),
-
 	};
 	createEventListeners();
 	setTimeout(() => { domContent.loadedMessage.innerText = '[ press anywhere to continue ]'; }, LOADING_DELAY);

@@ -53,14 +53,14 @@ function updateCounts(count) {
  * @param { Object } ticket state of ticket
  * @return { boolean } success status; false if too many tickets
  */
-export function saveState(ticketState) {
+export function saveState(ticketState, caller) {
 	const storageContent = getAllTickets();
 	if (storageContent.length >= 99) {
 		return false;
 	}
 	storageContent.push(ticketState);
 	window.localStorage.setItem('tickets', JSON.stringify(storageContent));
-	updateCounts(storageContent.length);
+	if (caller !== '2d') updateCounts(storageContent.length);
 	return true;
 } /* saveState */
 

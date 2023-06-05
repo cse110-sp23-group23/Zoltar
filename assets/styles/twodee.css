@@ -49,7 +49,7 @@ body {
 }
 
 #eight-ball-image:hover {
-	opacity: 100%;
+	opacity: 80%;
 }
 
 
@@ -326,6 +326,7 @@ body.shake {
 	bottom: 2vw;
 	right: 2vw;
 	font-size: 2rem;
+	cursor: url('../images/customcursorclick.png'), pointer;
 }
 
 .historyArrowButtons {

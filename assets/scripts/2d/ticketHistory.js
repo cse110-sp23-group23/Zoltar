@@ -42,10 +42,10 @@ function displayStorage() {
  * Updates the counter between the arrow buttons on the ticket history screen
  * @param {number} position card position
  */
-
 function updateCounterSpan(position) {
 	domContent.currentCardPosition.innerText = `${position + 1} / ${count}`;
 } /* updateCounterSpan */
+
 /**
  * Slides the Cards left or right
  * @param {number} dir -1 or 1
@@ -63,6 +63,11 @@ function slide(dir) {
 export function isHistoryOnScreen() {
 	return historyOnScreen;
 } /* isHistoryOnScreen */
+
+export function updateticketHistoryCount() {
+	count = getAllTickets().length;
+	domContent.ticketHistoryCount.innerText = count;
+}
 
 /**
  * Toggles items display properties
@@ -139,8 +144,7 @@ function init() {
 	domContent.leftButton.addEventListener('click', () => { slide(-1); });
 	domContent.rightButton.addEventListener('click', () => { slide(1); });
 
-	count = getAllTickets().length;
-	domContent.ticketHistoryCount.innerText = count;
+	updateticketHistoryCount();
 	updateCounterSpan(0);
 }
 
