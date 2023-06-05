@@ -1,391 +1,404 @@
 @font-face {
-    font-family: Cinzel;
-    src: url('../fonts/CinzelDecorative-Regular.ttf');
+	font-family: Cinzel;
+	src: url('../fonts/CinzelDecorative-Regular.ttf');
 }
 
+/* ------------------------------------------Main Body------------------------------------------ */
 body {
-    cursor: url('../images/customcursorpoint.png'), auto;
-    background-color: #121212;
-    overflow: hidden;
-}
-
-.container {
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+	cursor: url('../images/customcursorpoint.png'), auto;
+	overflow: hidden;
 }
 
 .vignette {
-    position: absolute;
-    z-index: 99;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.9));
-    pointer-events: none;
-}
-
-#eightBallContainer {
-    opacity: 100%;
-    z-index: 7;
-    height: 140vh;
-    width: calc(2/3 * 140vh);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    cursor: url('../images/customcursorclick.png'), pointer;
-}
-
-#eight-ball-image {
-    z-index: 7;
-    position: relative;
-    height: 14%;
-    left: 25.5%;
-    top: 80%;
-    opacity: 10%;
-    transform: translate(-50%, -50%);
-    transition: 0.7s;
-}
-
-#eight-ball-image:hover {
-    opacity: 80%;
-    animation: shake-center-aligned 0.2s;
-    animation-iteration-count: 1;
-    animation-delay: 0.5s;
-}
-
-.zoltar-image {
-    pointer-events: none;
-    top: 55%;
-    left: 50%;
-    height: 140vh;
-}
-
-#zoltar-body {
-    z-index: 3;
-}
-
-#zoltar-roof {
-    z-index: 5;
-}
-
-#zoltar-frame {
-    z-index: 6;
-}
-
-#zoltar-lamp {
-    z-index: 4;
-}
-
-#zoltar-title {
-    z-index: 4;
-}
-
-#zoltar-hands {
-    z-index: 4;
-}
-
-#zoltar-box {
-    z-index: 2;
-}
-
-#background-img {
-    height: 150vh;
-    width: 150vw;
-    top: 50%;
-    left: 50%;
-    z-index: 1;
-    filter: brightness(50%);
-    pointer-events: none;
+	position: absolute;
+	z-index: 99;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.9));
+	pointer-events: none;
 }
 
 .camera {
-    position: absolute;
-    transition: 0.45s cubic-bezier(0.2, 0.49, 0.32, 0.99);
-    transform: translate(-50%, -50%);
-}
-
-#wood-background {
-    position: absolute;
-    z-index: 1;
-}
-
-.ticket {
-    height: 55vh;
-    min-height: 600px;
-    aspect-ratio: 1/1.5;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    background-image: url('../images/2d/paper-texture.webp');
-    background-size: cover;
-    color: rgb(0, 0, 0);
-    border-radius: 20px;
-}
-
-.mainTicket {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.mainTicket:hover {
-    transform: translate(-50%, -50%) rotateX(7deg) rotateY(7deg);
-}
-
-.savedTicket {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.5s;
-}
-
-#ticketHistoryTickets {
-    position: relative;
-    transform: translateY(-50%);
-    top: 50vh;
-    width: 100%;
-    height: 35vw;
-    z-index: 250;
-    transition: transform 0.3s ease-out;
-}
-
-.historyWrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    pointer-events: none;
-}
-
-.ticket h1 {
-    z-index: 2;
-    font-size: 2rem;
-    line-height: 1rem;
-    margin: 0;
-}
-
-.ticket p {
-    text-align: justify;
-    margin: 0.25rem 1.5rem;
-    justify-self: center;
-    font-family: Bodoni, monospace;
-    font-weight: 500;
-    font-size: 1.1rem;
-}
-
-.closeTicket {
-    cursor: pointer;
-    position: absolute;
-    transition: 0.2s;
-    cursor: url('../images/customcursorclick.png'), pointer;
-}
-
-#closeTicket {
-    font-size: 2em;
-    z-index: 10;
-    color: #220505;
-    left: 15px;
-    top: 5px;
-}
-
-#closeHistory {
-    font-size: 4em;
-    z-index: 500;
-    color: white;
-    left: 15px;
-    top: 0px;
-}
-
-#closeTicket:hover {
-    color: white;
-}
-
-#closeHistory:hover {
-    color: red;
-}
-
-.slide-in {
-    transition: 0.5s;
-    top: 160%;
-}
-
-.visible {
-    top: 50%;
-}
-
-.fade-in-text {
-    animation: fadeIn 4s;
+	position: absolute;
+	transition: 0.45s cubic-bezier(0.2, 0.49, 0.32, 0.99);
+	transform: translate(-50%, -50%);
 }
 
 body.shake {
-    animation: shake 0.5s;
-    animation-iteration-count: 2;
+	animation: shake 0.5s;
+	animation-iteration-count: 2;
 }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+.clickable {
+	cursor: url('../images/customcursorclick.png'), pointer;
 }
 
-@keyframes shake {
-    0% {
-        transform: translate(1px, 1px) rotate(0deg);
-    }
-    10% {
-        transform: translate(-1px, -2px) rotate(-1deg);
-    }
-    20% {
-        transform: translate(-3px, 0px) rotate(1deg);
-    }
-    30% {
-        transform: translate(3px, 2px) rotate(0deg);
-    }
-    40% {
-        transform: translate(1px, -1px) rotate(1deg);
-    }
-    50% {
-        transform: translate(-1px, 2px) rotate(-1deg);
-    }
-    60% {
-        transform: translate(-3px, 1px) rotate(0deg);
-    }
-    70% {
-        transform: translate(3px, 1px) rotate(-1deg);
-    }
-    80% {
-        transform: translate(-1px, -1px) rotate(1deg);
-    }
-    90% {
-        transform: translate(1px, 2px) rotate(0deg);
-    }
-    100% {
-        transform: translate(1px, -2px) rotate(-1deg);
-    }
+
+/* ------------------------------------------Mr Zoltar------------------------------------------ */
+
+.zoltarContainer {
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
 }
 
-@keyframes shake-center-aligned {
-    0% {
-        transform: translate(calc(-50% + 1px), calc(-50% + 1px)) rotate(0deg);
-    }
-    10% {
-        transform: translate(calc(-50% - 1.5px), calc(-50% - 2.5px)) rotate(-1deg);
-    }
-    20% {
-        transform: translate(calc(-50% - 6px), calc(-50% + 0px)) rotate(1deg);
-    }
-    30% {
-        transform: translate(calc(-50% + 6px), calc(-50% + 3px)) rotate(0deg);
-    }
-    40% {
-        transform: translate(calc(-50% + 1px), calc(-50% - 1px)) rotate(1deg);
-    }
-    50% {
-        transform: translate(calc(-50% - 1.5px), calc(-50% + 2.5px)) rotate(-1deg);
-    }
-    60% {
-        transform: translate(calc(-50% - 6px), calc(-50% + 1px)) rotate(0deg);
-    }
-    70% {
-        transform: translate(calc(-50% + 6px), calc(-50% + 1px)) rotate(-1deg);
-    }
-    80% {
-        transform: translate(calc(-50% - 1px), calc(-50% - 1px)) rotate(1deg);
-    }
-    90% {
-        transform: translate(calc(-50% + 1.5px), calc(-50% + 2.5px)) rotate(0deg);
-    }
-    100% {
-        transform: translate(calc(-50% + 1px), calc(-50% - 2.5px)) rotate(-1deg);
-    }
+#eightBallContainer {
+	opacity: 100%;
+	z-index: 7;
+	height: 140vh;
+	width: calc(2/3 * 140vh);
+	position: absolute;
+	left: 50%;
+	top: 50%;
 }
 
-.volume-controls {
-    z-index: 100;
-    position: absolute;
-    bottom: 0;
-    margin: 2rem;
-    height: 5vh;
+#eight-ball-image {
+	z-index: 7;
+	position: relative;
+	height: 14%;
+	left: 25.5%;
+	top: 80%;
+	opacity: 10%;
+	transform: translate(-50%, -50%);
+	transition: 0.7s;
 }
 
-.volume-controls img {
-    filter: invert(1);
-    display: none;
+#eight-ball-image:hover {
+	opacity: 80%;
+	animation: shake-center-aligned 0.2s;
+	animation-iteration-count: 1;
+	animation-delay: 0.5s;
 }
 
-.volume-controls img:active {
-    transform: scale(0.95);
+.zoltar-image {
+	pointer-events: none;
+	top: 55%;
+	left: 50%;
+	height: 140vh;
+}
+
+#zoltar-body {
+	z-index: 3;
+}
+
+#zoltar-roof {
+	z-index: 5;
+}
+
+#zoltar-frame {
+	z-index: 6;
+}
+
+#zoltar-lamp {
+	z-index: 4;
+}
+
+#zoltar-title {
+	z-index: 4;
+}
+
+#zoltar-hands {
+	z-index: 4;
+}
+
+#zoltar-box {
+	z-index: 2;
+}
+
+#background-img {
+	height: 150vh;
+	width: 150vw;
+	top: 50%;
+	z-index: 1;
+	filter: brightness(50%);
+}
+
+/* -----------------------------------------Main Ticket----------------------------------------- */
+
+.ticket {
+	height: 55vh;
+	min-height: 600px;
+	aspect-ratio: 1/1.5;
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	background-image: url('../images/2d/paper-texture.webp');
+	background-size: cover;
+	color: rgb(0, 0, 0);
+	border-radius: 20px;
+}
+
+.mainTicket {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.mainTicket:hover {
+	transform: translate(-50%, -50%) rotateX(7deg) rotateY(7deg);
+}
+
+.ticket h1 {
+	z-index: 2;
+	font-size: 2rem;
+	line-height: 1rem;
+	margin: 0;
+}
+
+.ticket p {
+	text-align: justify;
+	margin: 0.25rem 1.5rem;
+	justify-self: center;
+	font-family: Bodoni, monospace;
+	font-weight: 500;
+	font-size: 1.1rem;
+}
+
+.closeTicket {
+	position: absolute;
+	transition: 0.2s;
+}
+
+#closeTicket {
+	font-size: 2em;
+	z-index: 10;
+	color: #220505;
+	left: 15px;
+	top: 5px;
+}
+
+#closeTicket:hover {
+	color: red;
+}
+
+.slide-in {
+	transition: 0.5s;
+	top: 160%;
+}
+
+.visible {
+	top: 50%;
+}
+
+/* ----------------------------------------Ticket History--------------------------------------- */
+.savedTicket {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	transition: transform 0.5s;
+}
+
+#ticketHistoryTickets {
+	position: relative;
+	transform: translateY(-50%);
+	top: 50vh;
+	width: 100%;
+	height: 35vw;
+	z-index: 250;
+	transition: transform 0.3s ease-out;
+}
+
+.historyWrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	pointer-events: none;
 }
 
 .ticketHistoryBackground {
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(118, 118, 118, 0.228);
-    z-index: 10;
-}
-
-#ticketHistoryCircle {
-    position: absolute;
-    bottom: 2vw;
-    right: 2vw;
-    background-color: yellow;
-    width: 5vw;
-    height: 5vw;
-    border-radius: 5vw;
-    text-align: center;
-    border: none;
-    font-size: 2vw;
-    font-family: Cinzel, fantasy;
-    z-index: 100;
-    cursor: url('../images/customcursorclick.png'), pointer;
+	position: absolute;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(118, 118, 118, 0.228);
+	z-index: 10;
 }
 
 .historyArrowButtons {
-    font-family: Cinzel, fantasy;
-    color: white;
-    z-index: 500;
-    display: flex;
-    position: absolute;
-    left: 50%;
-    bottom: 10%;
-    transform: translateX(-50%);
+	font-family: Cinzel, fantasy;
+	color: white;
+	z-index: 500;
+	display: flex;
+	position: absolute;
+	left: 50%;
+	bottom: 10%;
+	transform: translateX(-50%);
 }
 
 .ArrowButton {
-    height: 50px;
-    width: 75px;
+	height: 50px;
+	width: 75px;
+}
+
+/* ------------------------------------------Border UI------------------------------------------ */
+
+/* -------------Ticket History UI------------- */
+#ticketHistoryCircle {
+	position: absolute;
+	bottom: 2vw;
+	right: 2vw;
+	background-color: yellow;
+	width: 5vw;
+	height: 5vw;
+	border-radius: 5vw;
+	text-align: center;
+	border: none;
+	font-size: 2vw;
+	font-family: Cinzel, fantasy;
+	z-index: 100;
+}
+
+#closeHistory {
+	font-size: 4em;
+	z-index: 500;
+	color: white;
+	left: 15px;
+	top: 0px;
+}
+
+#closeHistory:hover {
+	color: red;
 }
 
 #storeTicketPrompt {
-    position: absolute;
-    z-index: 9;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
+	position: absolute;
+	z-index: 9;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
 }
 
 .storeButton {
-    font-family: Cinzel, fantasy;
-    height: 7vh;
-    width: 15vw;
-    border-radius: 10px;
-    margin-left: 20px;
+	font-family: Cinzel, fantasy;
+	height: 7vh;
+	width: 15vw;
+	border-radius: 10px;
+	margin-left: 20px;
 }
 
 #saveTicket {
-    background-color: yellow;
+	background-color: yellow;
+}
+
+/* --------------Volume Control UI------------- */
+
+.volume-controls {
+	z-index: 100;
+	position: absolute;
+	bottom: 0;
+	margin: 2rem;
+	height: 5vh;
+}
+
+.volume-controls img {
+	filter: invert(1);
+	display: none;
+}
+
+.volume-controls img:active {
+	transform: scale(0.95);
+}
+
+/* ------------------------------------------Animations----------------------------------------- */
+
+@keyframes shake {
+	0% {
+		transform: translate(1px, 1px) rotate(0deg);
+	}
+
+	10% {
+		transform: translate(-1px, -2px) rotate(-1deg);
+	}
+
+	20% {
+		transform: translate(-3px, 0px) rotate(1deg);
+	}
+
+	30% {
+		transform: translate(3px, 2px) rotate(0deg);
+	}
+
+	40% {
+		transform: translate(1px, -1px) rotate(1deg);
+	}
+
+	50% {
+		transform: translate(-1px, 2px) rotate(-1deg);
+	}
+
+	60% {
+		transform: translate(-3px, 1px) rotate(0deg);
+	}
+
+	70% {
+		transform: translate(3px, 1px) rotate(-1deg);
+	}
+
+	80% {
+		transform: translate(-1px, -1px) rotate(1deg);
+	}
+
+	90% {
+		transform: translate(1px, 2px) rotate(0deg);
+	}
+
+	100% {
+		transform: translate(1px, -2px) rotate(-1deg);
+	}
+}
+
+@keyframes shake-center-aligned {
+	0% {
+		transform: translate(calc(-50% + 1px), calc(-50% + 1px)) rotate(0deg);
+	}
+
+	10% {
+		transform: translate(calc(-50% - 1.5px), calc(-50% - 2.5px)) rotate(-1deg);
+	}
+
+	20% {
+		transform: translate(calc(-50% - 6px), calc(-50% + 0px)) rotate(1deg);
+	}
+
+	30% {
+		transform: translate(calc(-50% + 6px), calc(-50% + 3px)) rotate(0deg);
+	}
+
+	40% {
+		transform: translate(calc(-50% + 1px), calc(-50% - 1px)) rotate(1deg);
+	}
+
+	50% {
+		transform: translate(calc(-50% - 1.5px), calc(-50% + 2.5px)) rotate(-1deg);
+	}
+
+	60% {
+		transform: translate(calc(-50% - 6px), calc(-50% + 1px)) rotate(0deg);
+	}
+
+	70% {
+		transform: translate(calc(-50% + 6px), calc(-50% + 1px)) rotate(-1deg);
+	}
+
+	80% {
+		transform: translate(calc(-50% - 1px), calc(-50% - 1px)) rotate(1deg);
+	}
+
+	90% {
+		transform: translate(calc(-50% + 1.5px), calc(-50% + 2.5px)) rotate(0deg);
+	}
+
+	100% {
+		transform: translate(calc(-50% + 1px), calc(-50% - 2.5px)) rotate(-1deg);
+	}
 }

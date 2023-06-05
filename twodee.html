@@ -25,10 +25,12 @@
 		</div>
 	</section>
 
+	<!--Screen wide vignette-->
+	<div class="vignette"></div>
+
 	<!-- Mr Zoltar -->
-	<section class="container">
-		<div class="vignette"></div>
-		<div id="eightBallContainer" class="camera"
+	<section class="zoltarContainer">
+		<div id="eightBallContainer" class="camera clickable"
 		data-speedx="0.18" data-speedy="0.3" data-rotation="0.8" >
 			<img id="eight-ball-image" alt="Image of Zoltar's Eight Ball" src="assets/images/eightballicon.webp">
 		</div>
@@ -61,7 +63,7 @@
 	<!-- Main ticket fortune when clicking on zoltar-->
 	<section id="mainTicket" class="mainTicket ticket slide-in">
 		<img loading="lazy" src="/assets/images/horizontalrule.png" class="top" alt="ticket horizontal rule">
-		<span class="closeTicket" id="closeTicket">&times;</span>
+		<span class="closeTicket clickable" id="closeTicket">&times;</span>
 		<h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
 		<!-- <img loading="lazy" src="assets/images/header.png" class="ticket-header-image"> -->
 		<img loading="lazy" class="ticket-header-image" alt="ticket header">
@@ -71,19 +73,19 @@
 	</section>
 
 	<section id="storeTicketPrompt" style="display: none">
-		<button id="discardTicket" class="storeButton">Discard</button>
-		<button id="saveTicket" class="storeButton">Save</button>
+		<button id="discardTicket" class="storeButton clickable">Discard</button>
+		<button id="saveTicket" class="storeButton clickable">Save</button>
 	</section>
 
 	<!-- volume controls -->
-	<section class="volume-controls">
+	<section class="volume-controls clickable">
 		<img id="volumeOn" loading="eager" src="assets/images/2d/volume-on-icon-1.webp" height="100%" alt="volume ON button">
 		<img id="volumeOff" loading="lazy" src="assets/images/2d/volume-off-icon-1.webp" height="100%" alt="volume OFF button">
 	</section>
 
 	<!-- Ticket history interface and controls-->
 	<section>
-		<span class="closeTicket" id="closeHistory" style="display: none">&times;</span>
+		<span class="clickable closeTicket" id="closeHistory" style="display: none">&times;</span>
 		<div class="ticketHistoryBackground" style="display: none">
 		</div>
 		<div class="historyWrapper">
@@ -94,12 +96,12 @@
 		</div>
 		<section class="historyArrowButtons" style="display: none">
 			<!-- <button class="left ArrowButton"></button> -->
-			<img src="./assets/images/left-arrow.png" class="left ArrowButton">
+			<img src="./assets/images/left-arrow.png" class="left ArrowButton clickable">
 			<span id="currentCardPosition"></span>
-			<img src="./assets/images/right-arrow.png" class="right ArrowButton">
+			<img src="./assets/images/right-arrow.png" class="right ArrowButton clickable">
 			<!-- <button class="right ArrowButton">→</button> -->
 		</section>
-		<button id="ticketHistoryCircle">
+		<button id="ticketHistoryCircle" class="clickable">
 			<span id="ticketHistoryCount">0</span>
 		</button>
 	</section>
