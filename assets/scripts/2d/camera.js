@@ -9,9 +9,9 @@ let yValue = 0;
 let rotateDegree = 0;
 let frame = 0;
 const FLICKER_DELAY = 130;
-const FRAMES_BETWEEN_FLICKER = 400;
+const FRAMES_BETWEEN_FLICKER = 300;
 const LIGHTS_ON = 'radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1))';
-const LIGHTS_OFF = 'radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.7))';
+const LIGHTS_OFF = 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))';
 
 /**
  * adjusts vignette value to seem like lights flicker
@@ -44,9 +44,9 @@ function flickerLights() {
 window.addEventListener('mousemove', (e) => {
 	// Pauses Zoltar's movements if any asset if displayed on screen. Eg. ticket, history
 	frame += 1;
+	if (isHistoryOnScreen() || isTicketOnScreen()) return;
 	if (frame % FRAMES_BETWEEN_FLICKER === 0) flickerLights();
 	if (frame % 2 === 0) return;
-	if (isHistoryOnScreen() || isTicketOnScreen()) return;
 
 	xValue = e.clientX - window.innerWidth / 2;
 	yValue = e.clientY - window.innerHeight / 2;

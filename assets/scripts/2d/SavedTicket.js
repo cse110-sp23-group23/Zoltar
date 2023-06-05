@@ -12,8 +12,6 @@ class SavedTicket2D extends HTMLElement {
 		super();
 
 		const shadow = this.attachShadow({ mode: 'open' });
-		// const div = document.createElement('div');
-		// div.appendChild(document.createTextNode('Why not show?'));
 
 		const section = document.createElement('section');
 		section.classList.add('ticket', 'savedTicket');
@@ -42,7 +40,7 @@ class SavedTicket2D extends HTMLElement {
 		this.shadowRoot.querySelector('section').innerHTML = `
             <img loading="lazy" src="/assets/images/horizontalrule.png" class="top">
 	        <h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
-            <img loading="lazy" src="assets/images/header.png" class="ticket-header-image">
+            <img loading="lazy" src="assets/images/image-bank-front/header-${state.currentImageFront}.png" class="ticket-header-image">
 	        <p class="fortune-text">${state.currentMessage}</p>
 			<p class="fortune-number">
 				Your lucky numbers are ${convertArrToReadableString(state.currentNumbers)}

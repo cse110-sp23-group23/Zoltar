@@ -22,7 +22,7 @@ body {
 	height: 100%;
 	top: 0;
 	left: 0;
-	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1));
+	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.9));
 	pointer-events: none;
 }
 
@@ -38,18 +38,18 @@ body {
 }
 
 #eight-ball-image {
-    z-index: 7;
+	z-index: 7;
 	position: relative;
 	height: 14%;
 	left: 25.5%;
 	top: 80%;
-    opacity: 10%;
+	opacity: 10%;
 	transform: translate(-50%, -50%);
 	transition: 0.7s;
 }
 
 #eight-ball-image:hover {
-    opacity: 100%;
+	opacity: 100%;
 }
 
 
@@ -63,6 +63,7 @@ body {
 #zoltar-body {
 	z-index: 3;
 }
+
 #zoltar-roof {
 	z-index: 5;
 }
@@ -90,7 +91,7 @@ body {
 #background-img {
 	height: 150vh;
 	width: 150vw;
-	top: 50%;	 
+	top: 50%;
 	left: 50%;
 	z-index: 1;
 	filter: brightness(50%);
@@ -132,7 +133,7 @@ body {
 }
 
 .mainTicket:hover {
-	transform: translate(-50%, -50%) rotateX(5deg) rotateY(5deg);
+	transform: translate(-50%, -50%) rotateX(7deg) rotateY(7deg);
 }
 
 .savedTicket {
@@ -166,6 +167,8 @@ body {
 .ticket h1 {
 	z-index: 2;
 	font-size: 2rem;
+	line-height: 1rem;
+	margin: 0;
 }
 
 .ticket p {
@@ -337,7 +340,6 @@ body.shake {
 }
 
 .ArrowButton {
-	background-color: yellow;
 	height: 50px;
 	width: 75px;
 }

@@ -223,6 +223,19 @@ function openEightBall() {
 	window.location = ('https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/');
 }
 
+/**
+ * Creates the Event Listeners required for the page to function.
+ */
+function createEventListeners() {
+	window.addEventListener('mousedown' || 'keydown', go);
+	window.addEventListener('keydown', go);
+	domContent.eightball.addEventListener('click', openEightBall);
+	domContent.volumeControl.addEventListener('click', toggleAudio);
+	domContent.zoltar.addEventListener('click', zoltarHandler);
+	domContent.ticketX.addEventListener('click', () => { ticketHandler(CLOSE); });
+	createStoreButtonListener(domContent.storeButton);
+}
+
 function init() {
 	domContent = {
 		body: document.querySelector('body'),
@@ -242,14 +255,8 @@ function init() {
 		eightball: document.querySelector('#eight-ball-image'),
 
 	};
-	window.addEventListener('mousedown' || 'keydown', go);
-	window.addEventListener('keydown', go);
+	createEventListeners();
 	setTimeout(() => { domContent.loadedMessage.innerText = '[ press anywhere to continue ]'; }, LOADING_DELAY);
-	domContent.eightball.addEventListener('click', openEightBall);
-	domContent.volumeControl.addEventListener('click', toggleAudio);
-	domContent.zoltar.addEventListener('click', zoltarHandler);
-	domContent.ticketX.addEventListener('click', () => { ticketHandler(CLOSE); });
-	createStoreButtonListener(domContent.storeButton);
 }
 
 document.addEventListener('DOMContentLoaded', init);

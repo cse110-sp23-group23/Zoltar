@@ -111,6 +111,7 @@ function historyCircleButtonFunc() {
 		const state = {
 			currentMessage: ticket.currentMessage,
 			currentNumbers: ticket.currentNumbers,
+			currentImageFront: ticket.currentImageFront,
 		};
 		card.content = state;
 		currentCards.push(card);
