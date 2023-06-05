@@ -338,17 +338,18 @@ body.shake {
 }
 
 #ticketHistoryCircle {
-    font-family: Cinzel, fantasy;
-    background-color: yellow;
-    z-index: 100;
     position: absolute;
+    bottom: 2vw;
+    right: 2vw;
+    background-color: yellow;
     width: 5vw;
     height: 5vw;
     border-radius: 5vw;
+    text-align: center;
     border: none;
-    bottom: 2vw;
-    right: 2vw;
-    font-size: 2rem;
+    font-size: 2vw;
+    font-family: Cinzel, fantasy;
+    z-index: 100;
     cursor: url('../images/customcursorclick.png'), pointer;
 }
 
