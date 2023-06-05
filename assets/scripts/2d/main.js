@@ -1,17 +1,6 @@
 import { produceRandomNumbers, chooseOptionFromArr } from '../fortunes.js';
 import { convertArrToReadableString } from '../ticket.js';
 
-// const fortuneOutput = document.querySelector('#fortune-output');
-// const ticket = document.querySelector('#ticket');
-// const zoltar = document.querySelector('#zoltar-image');
-// const ticketX = document.getElementById('closeTicket');
-// const fortuneNumber = document.querySelector('#fortune-number');
-// const splash = document.querySelector('#splash-screen');
-// const volumeOn = document.querySelector('#volumeOn');
-// const volumeOff = document.querySelector('#volumeOff');
-const eightball = document.querySelector('#eight-ball-image');
-const volumeControl = document.querySelector('.volume-controls');
-
 // const LOADING_DELAY = 2000;
 const LOADING_DELAY = 500;
 const OPEN = 1;
@@ -184,17 +173,6 @@ document.addEventListener('keydown', (event) => {
 	}
 });
 
-volumeControl.addEventListener('click', () => {
-	toggleAudio();
-});
-
-/**
- * Clicking on the 8-ball goes to 8-ball project
- */
-eightball.addEventListener('click', () => {
-	window.location = ('https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/');
-});
-
 /**
  * Gets Background audio
  * Gets thunderAudio
@@ -241,12 +219,16 @@ function go() {
 	domContent.volumeOn.style.display = 'inline';
 } /* go */
 
+function openEightBall() {
+	window.location = ('https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/');
+}
+
 function init() {
 	domContent = {
 		body: document.querySelector('body'),
 		fortuneOutput: document.querySelector('#fortune-output'),
 		ticket: document.querySelector('#mainTicket'),
-		zoltar: document.querySelector('#zoltar-image'),
+		zoltar: document.querySelector('#eightBallContainer'),
 		ticketX: document.getElementById('closeTicket'),
 		fortuneNumber: document.querySelector('#fortune-number'),
 		volumeControl: document.querySelector('.volume-controls'),
@@ -257,10 +239,13 @@ function init() {
 		storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
 		storeButton: document.querySelectorAll('.storeButton'),
 		ticketImage: document.querySelector('.ticket-header-image'),
+		eightball: document.querySelector('#eight-ball-image'),
+
 	};
 	window.addEventListener('mousedown' || 'keydown', go);
 	window.addEventListener('keydown', go);
 	setTimeout(() => { domContent.loadedMessage.innerText = '[ press anywhere to continue ]'; }, LOADING_DELAY);
+	domContent.eightball.addEventListener('click', openEightBall);
 	domContent.volumeControl.addEventListener('click', toggleAudio);
 	domContent.zoltar.addEventListener('click', zoltarHandler);
 	domContent.ticketX.addEventListener('click', () => { ticketHandler(CLOSE); });
