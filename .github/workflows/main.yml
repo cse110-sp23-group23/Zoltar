@@ -74,8 +74,8 @@ jobs:
     - name: Installs
       run: |
         npm install uglify-js -g
-        apt-get update
-        apt-get install jpegoptim
+        sudo apt-get update
+        sudo apt-get install jpegoptim
     - name: Minify JS
       run: find ./assets/scripts -name "*.js" -exec uglifyjs {} -o {} --compress --mangle --module \;
     - name: Compress JPEGs
