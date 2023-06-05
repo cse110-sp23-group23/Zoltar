@@ -7,4 +7,36 @@ export function toggleClassToArr(arr, className) {
 	arr.forEach((el) => {
 		el.classList.toggle(className);
 	});
-}
+} /* toggleClassToArr */
+
+/**
+ * Clamps value between high and low value, inclusive
+ * @param { Integer } value number to be clamped
+ * @param { Integer } lo lowest allowed value
+ * @param { Integer } hi highest allowed value
+ * @return { Integer }
+ */
+export function clamp(value, lo, hi) {
+	if (value < lo) {
+		return lo;
+	}
+	return value > hi ? hi : value;
+} /* clamp */
+
+/**
+ * Loads array from external json file into javascript array
+ * @param { String } url location of json file
+ * @param { Array<Object> } destination array to put contents into
+ */
+export async function loadJsonArr(url) {
+	return fetch(url).then((responses) => responses.json());
+} /* loadJsonArr */
+
+/**
+ * Chooses a random item from an arrary
+ * @param { Array<Object> } array of objects to choose from
+ * @return { String } randomly chosen object
+ */
+export function chooseOptionFromArr(arr) {
+	return arr[Math.floor(Math.random() * arr.length)];
+} /* chooseOptionFromArr */

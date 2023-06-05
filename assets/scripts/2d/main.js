@@ -1,5 +1,6 @@
-import { produceRandomNumbers, chooseOptionFromArr } from '../fortunes.js';
+import { produceRandomNumbers } from '../fortunes.js';
 import { convertArrToReadableString } from '../ticket.js';
+import { chooseOptionFromArr } from '../util.js';
 
 // const LOADING_DELAY = 2000;
 const LOADING_DELAY = 500;

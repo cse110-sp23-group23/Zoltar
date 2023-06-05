@@ -1,4 +1,5 @@
-import { getAllTickets, clamp } from '../storage.js';
+import { getAllTickets } from '../storage.js';
+import { clamp } from '../util.js';
 
 const OPEN = 1;
 const CLOSE = 0;

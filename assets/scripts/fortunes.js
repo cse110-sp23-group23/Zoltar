@@ -1,19 +1,11 @@
 import { state, updateTicket } from './ticket.js';
+import { loadJsonArr, chooseOptionFromArr } from './util.js';
 
 const ENDPOINT_URL = 'https://zoltar-gpt-api-team-23.netlify.app/.netlify/functions/gptendpoint';
 const ENABLE_GPT_FLAG = false;
 
 let responseBank = [];
 let imageBank = [];
-
-/**
- * Chooses a random item from an arrary
- * @param { Array<Object> } array of objects to choose from
- * @return { String } randomly chosen object
- */
-export function chooseOptionFromArr(arr) {
-	return arr[Math.floor(Math.random() * arr.length)];
-} /* chooseOptionFromArr */
 
 /**
  * Generates an array of n distinct integers spaced between low and high.
@@ -82,15 +74,6 @@ export async function createFortuneOnTicket(options) {
 	}
 	updateTicket();
 } /* createFortuneOnTicket */
-
-/**
- * Loads array from external json file into javascript array
- * @param { String } url location of json file
- * @param { Array<Object> } destination array to put contents into
- */
-async function loadJsonArr(url) {
-	return fetch(url).then((responses) => responses.json());
-} /* loadJson */
 
 async function init() {
 	responseBank = await loadJsonArr('../assets/json/responses.json');
