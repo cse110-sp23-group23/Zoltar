@@ -80,8 +80,7 @@ jobs:
       run: find ./assets/scripts -name "*.js" -exec uglifyjs {} -o {} --compress --mangle --module \;
     - name: Compress JPEGs
       run: |
-        find -name "*.jpg" -exec jpegoptim --strip-all --all-progressive {} \;
-        find -name "*.jpeg" -exec jpegoptim --strip-all --all-progressive {} \;
+        find -name "*.jpg" -o -name "*.jpeg" | xargs jpegoptim --strip-all --all-progressive
     - name: Clean everything
       run: |
         rm -r -f __tests__
