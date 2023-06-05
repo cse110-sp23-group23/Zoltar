@@ -21,8 +21,6 @@ let muteAudio;
 let disableZoltar = false;
 let muteBackgroundAudio = true;
 let ticketOnScreen = false;
-let luckyNumbers;
-
 
 export function isTicketOnScreen() {
 	return ticketOnScreen;
@@ -101,7 +99,7 @@ async function getImages() {
 		.then((response) => response.json())
 		.then((json) => {
 			frontImages = json.front;
-			backImages = json.back
+			backImages = json.back;
 		});
 } /* getImages */
 
