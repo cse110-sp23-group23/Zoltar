@@ -6,15 +6,16 @@ let cameraEl;
 let xValue = 0;
 let yValue = 0;
 let rotateDegree = 0;
+let frame = 0;
 
 /**
  * Event Listener that creates a 3D like effect for the 2d Zoltar.
  */
 window.addEventListener('mousemove', (e) => {
 	// Pauses Zoltar's movements if any asset if displayed on screen. Eg. ticket, history
-	if (isHistoryOnScreen() || isTicketOnScreen()) {
-		return;
-	}
+	frame++;
+	if (frame % 2 === 0) return;
+	if (isHistoryOnScreen() || isTicketOnScreen()) return;
 
 	xValue = e.clientX - window.innerWidth / 2;
 	yValue = e.clientY - window.innerHeight / 2;
