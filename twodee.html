@@ -9,9 +9,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Zoltar!</title>
 	<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-	<link rel="stylesheet" type="text/css" href="assets/styles/pagestyles.css">
+	<link defer rel="stylesheet" type="text/css" href="assets/styles/pagestyles.css">
 	<link rel="stylesheet" type="text/css" href="assets/styles/twodee.css">
-	<link rel="stylesheet" type="text/css" href="assets/styles/ticket.css">
+	<link defer rel="stylesheet" type="text/css" href="assets/styles/ticket.css">
 
 
 </head>
@@ -30,44 +30,44 @@
 		<div class="vignette"></div>
 		<div id="eightBallContainer" class="camera"
 		data-speedx="0.18" data-speedy="0.3" data-rotation="0.8" >
-			<img id="eight-ball-image" alt="Image of Zoltar's Eight Ball" src="assets/images/eightballicon.png">
+			<img id="eight-ball-image" alt="Image of Zoltar's Eight Ball" src="assets/images/eightballicon.webp">
 		</div>
 		<img id="zoltar-frame" class="camera zoltar-image" 
 		data-speedx="0.18" data-speedy="0.3" data-rotation="0.8" 
-		alt="Zoltar Box frame" src="assets/images/2d/zoltar-frame.png">
+		alt="Zoltar Box frame" src="assets/images/2d/zoltar-frame.webp">
 
 		<img id="zoltar-hands" class="camera zoltar-image"
 		data-speedx="0.18" data-speedy="0.29" data-rotation="0.8"
-		alt="Zoltars Hands" src="assets/images/2d/zoltar-hands.png">
+		alt="Zoltars Hands" src="assets/images/2d/zoltar-hands.webp">
 
 
 		<img id="zoltar-body" class="camera zoltar-image" 
 		data-speedx="0.16" data-speedy="0.27" data-rotation="0.8" 
-		alt="Zoltars Body" src="assets/images/2d/zoltar-body.png">
+		alt="Zoltars Body" src="assets/images/2d/zoltar-body.webp">
 
 		<img id="zoltar-lamp" class="camera zoltar-image" 
 		data-speedx="0.14" data-speedy="0.25" data-rotation="0.8" 
-		alt="Zoltar Box Lamps" src="assets/images/2d/zoltar-lamp.png">
+		alt="Zoltar Box Lamps" src="assets/images/2d/zoltar-lamp.webp">
 
 		<img id="zoltar-box" class="camera zoltar-image" 
 		data-speedx="0.13" data-speedy="0.25" data-rotation="0.8" 
-		alt="Zoltars Box" src="assets/images/2d/zoltar-box.png">
+		alt="Zoltars Box" src="assets/images/2d/zoltar-box.webp">
 
 		<img id="background-img" class="camera zoltar-image" 
 		data-speedx="0.1" data-speedy="0.2" data-rotation="0.1" 
-		alt="Wooden Background wall" src="assets/images/2d/2d-wood_planks.jpg">
+		alt="Wooden Background wall" src="assets/images/2d/2d-wood_planks.webp">
 	</section>
 
 	<!-- Main ticket fortune when clicking on zoltar-->
 	<section id="mainTicket" class="mainTicket ticket slide-in">
-		<img loading="lazy" src="/assets/images/horizontalrule.png" class="top">
+		<img loading="lazy" src="/assets/images/horizontalrule.png" class="top" alt="ticket horizontal rule">
 		<span class="closeTicket" id="closeTicket">&times;</span>
 		<h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
 		<!-- <img loading="lazy" src="assets/images/header.png" class="ticket-header-image"> -->
-		<img loading="lazy" class="ticket-header-image">
+		<img loading="lazy" class="ticket-header-image" alt="ticket header">
 		<p id="fortune-output"></p>
 		<p id="fortune-number"></p>
-		<img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom">
+		<img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom" alt="ticket bottom rule">
 	</section>
 
 	<section id="storeTicketPrompt" style="display: none">
@@ -77,8 +77,8 @@
 
 	<!-- volume controls -->
 	<section class="volume-controls">
-		<img id="volumeOn" loading="eager" src="assets/images/2d/volume-on-icon.png" height="100%">
-		<img id="volumeOff" loading="lazy" src="assets/images/2d/volume-off-icon.png" height="100%">
+		<img id="volumeOn" loading="eager" src="assets/images/2d/volume-on-icon-1.webp" height="100%" alt="volume ON button">
+		<img id="volumeOff" loading="lazy" src="assets/images/2d/volume-off-icon-1.webp" height="100%" alt="volume OFF button">
 	</section>
 
 	<!-- Ticket history interface and controls-->
@@ -102,8 +102,8 @@
 		</button>
 	</section>
 
-	<script type="module" src="./assets/scripts/2d/SavedTicket.js"></script>
-	<script type="module" src="./assets/scripts/2d/ticketHistory.js"></script>
+	<script defer type="module" src="./assets/scripts/2d/SavedTicket.js"></script>
+	<script defer type="module" src="./assets/scripts/2d/ticketHistory.js"></script>
 	<script type="module" src="./assets/scripts/2d/main.js"></script>
 	<script type="module" src="./assets/scripts/2d/camera.js"></script>
 </body>

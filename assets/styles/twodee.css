@@ -22,7 +22,7 @@ body {
 	height: 100%;
 	top: 0;
 	left: 0;
-	background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.9));
+	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1));
 	pointer-events: none;
 }
 
@@ -45,7 +45,7 @@ body {
 	top: 80%;
     opacity: 10%;
 	transform: translate(-50%, -50%);
-	transition: 1s;
+	transition: 0.7s;
 }
 
 #eight-ball-image:hover {
@@ -109,7 +109,6 @@ body {
 
 }
 
-
 .ticket {
 	height: 55vh;
 	min-height: 600px;
@@ -119,7 +118,7 @@ body {
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
-	background-image: url('../images/2d/paper-texture.jpeg');
+	background-image: url('../images/2d/paper-texture.webp');
 	background-size: cover;
 	color: rgb(0, 0, 0);
 	border-radius: 20px;
