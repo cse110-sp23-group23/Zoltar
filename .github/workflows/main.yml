@@ -80,8 +80,8 @@ jobs:
       run: find ./assets/scripts -name "*.js" -exec uglifyjs {} -o {} --compress --mangle --module \;
     - name: Compress JPEGs
       run: |
-        find ./ -name "**/*.jpg" -exec jpegoptim --strip-all --all-progressive {} \;
-        find ./ -name "**/*.jpeg" -exec jpegoptim --strip-all --all-progressive {} \;
+        find -name "*.jpg" -exec jpegoptim --strip-all --all-progressive {} \;
+        find -name "*.jpeg" -exec jpegoptim --strip-all --all-progressive {} \;
     - name: Clean everything
       run: |
         rm -r -f __tests__
@@ -95,7 +95,7 @@ jobs:
         git branch -D gh-pages || true 
         git checkout -b gh-pages
         git add .
-        git commit -m "Minified JavaScript files"
+        git commit -m "Minified JS and compressed image files"
         git push -f origin gh-pages
   deploy:
     needs: [minify]
