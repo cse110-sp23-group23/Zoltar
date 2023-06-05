@@ -1,24 +1,10 @@
-import { toggleClassToArr } from './util.js';
+import { toggleClassToArr, clamp } from './util.js';
 
 let domContent = {};
 let currentCards = [];
 const state = {
 	currentlySelected: 0,
 };
-
-/**
- * Clamps value between high and low value, inclusive
- * @param { Integer } value number to be clamped
- * @param { Integer } lo lowest allowed value
- * @param { Integer } hi highest allowed value
- * @return { Integer }
- */
-export function clamp(value, lo, hi) {
-	if (value < lo) {
-		return lo;
-	}
-	return value > hi ? hi : value;
-} /* clamp */
 
 /**
  * Returns if history is currently displayed

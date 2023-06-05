@@ -72,9 +72,20 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v3
     - name: Installs
-      run: npm install uglify-js -g
-    - name: Minify
+      run: |
+        npm install uglify-js -g
+        sudo apt-get update
+        sudo apt-get install jpegoptim -y
+        sudo apt-get install pngquant -y
+    - name: Minify JS
       run: find ./assets/scripts -name "*.js" -exec uglifyjs {} -o {} --compress --mangle --module \;
+    - name: Compress JPEGs
+      run: |
+        find -name "*.jpeg" -print0 | xargs -0 -I {} sh -c 'jpegoptim --strip-all --all-progressive "{}" || echo "Failed to process {}"'
+        find -name "*.jpg" -print0 | xargs -0 jpegoptim --strip-all --all-progressive
+    - name: Compress PNGs
+      run: |
+        find -name "*.png" -exec pngquant --force --ext .png {} \;
     - name: Clean everything
       run: |
         rm -r -f __tests__
@@ -88,7 +99,7 @@ jobs:
         git branch -D gh-pages || true 
         git checkout -b gh-pages
         git add .
-        git commit -m "Minified JavaScript files"
+        git commit -m "Minified JS and compressed image files"
         git push -f origin gh-pages
   deploy:
     needs: [minify]

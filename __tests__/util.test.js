@@ -1,4 +1,4 @@
-import { clamp } from '../assets/scripts/storage.js';
+import { clamp, chooseOptionFromArr } from '../assets/scripts/util.js';
 
 /**
  * Test:
@@ -20,5 +20,18 @@ describe('clamp', () => {
 	test('should clamp value to value', () => {
 		const result = clamp(15, 10, 20);
 		expect(result).toBe(15);
+	});
+});
+
+/**
+ * Tests:
+ *  - Return a nonempty string.
+ */
+describe('chooseOptionFromArr', () => {
+	test('should return a nonempty string', () => {
+		const result = chooseOptionFromArr(['item1', 'item2', 'item3']);
+		expect(result).toBeTruthy(); // non-empty
+		expect(typeof result).toBe('string');
+		expect(['item1', 'item2', 'item3']).toContain(result);
 	});
 });
