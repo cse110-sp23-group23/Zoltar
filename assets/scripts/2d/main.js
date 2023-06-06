@@ -229,6 +229,20 @@ function go() {
 	window.removeEventListener('mousedown', go);
 	window.removeEventListener('keydown', go);
 	domContent.volumeOn.style.display = 'inline';
+
+	// Fade in the background audio over 5 seconds
+	let currentTime = 0;
+	const fadeDuration = 5000; // 5 seconds
+	const volumeIncrement = AUDIO_LOW / (fadeDuration / 100);
+
+	const fadeInInterval = setInterval(() => {
+		currentTime += 100;
+		backgroundmp3.volume = Math.min(AUDIO_LOW, volumeIncrement * (currentTime / 1000));
+		if (currentTime >= fadeDuration) {
+			clearInterval(fadeInInterval);
+			backgroundmp3.play();
+		}
+	}, 100);
 } /* go */
 
 function openEightBall() {
