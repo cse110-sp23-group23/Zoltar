@@ -32,6 +32,8 @@ jobs:
       run: percy exec -- npm run test
       env:
         NODE_OPTIONS: --experimental-vm-modules
+        PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+        CI: true
   lint:
     runs-on: ubuntu-latest
     steps:
