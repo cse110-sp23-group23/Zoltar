@@ -185,6 +185,12 @@ body.shake {
 	top: 50%;
 }
 
+@media (max-height: 800px){
+	.ticket {
+		min-height: 100px;
+	}
+}
+
 /* ----------------------------------------Ticket History--------------------------------------- */
 .savedTicket {
 	position: absolute;
