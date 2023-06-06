@@ -47,6 +47,7 @@
     "@percy/cli": "^1.25.0",
     "@percy/core": "^1.25.0",
     "@percy/puppeteer": "^2.0.2",
+    "core-js": "^3.30.2",
     "eslint": "^8.42.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
