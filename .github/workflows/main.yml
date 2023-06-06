@@ -22,8 +22,13 @@ jobs:
         npm install --save-dev node-fetch
         npm install -D jest-environment-jsdom
         npm ci -l verbose
+    - name: Start server
+      run: |
+        npm start &
+      env:
+        CI: true
     - name: Run TESTS
-      run: npm run test
+      run: percy exec -- npm run test
       env:
         NODE_OPTIONS: --experimental-vm-modules
   lint:
