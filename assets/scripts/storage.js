@@ -51,6 +51,7 @@ function updateCounts(count) {
 /**
  * Saves state of ticket to localStorage
  * @param { Object } ticket state of ticket
+ * @param { String } caller name of environment calling func, e.g. '2d'
  * @return { boolean } success status; false if too many tickets
  */
 export function saveState(ticketState, caller) {
@@ -230,10 +231,10 @@ function init() {
 	};
 
 	domContent.circleButton.addEventListener('click', displayStorage);
-	domContent.leftButton.addEventListener('click', () => { slide(-1); });
-	domContent.rightButton.addEventListener('click', () => { slide(1); });
 	domContent.inputField.addEventListener('change', updateSliderFromInput);
 	domContent.exitHistoryButton.addEventListener('click', exitHistory);
+	domContent.leftButton.addEventListener('click', () => { slide(-1); });
+	domContent.rightButton.addEventListener('click', () => { slide(1); });
 	window.addEventListener('keydown', keyHandler);
 
 	updateCounts(getAllTickets().length);

@@ -114,7 +114,8 @@ function assignTicketContent() {
 	state.currentNumbers = produceRandomNumbers(4, 1, 100);
 	domContent.ticketImage.src = `${IMAGE_FRONT}${state.currentImageFront}.png`;
 	domContent.fortuneOutput.textContent = state.currentMessage;
-	domContent.fortuneNumber.textContent = `Your lucky numbers are: ${convertArrToReadableString(state.currentNumbers)}`;
+	domContent.fortuneNumber.textContent = `Your lucky numbers are: 
+		${convertArrToReadableString(state.currentNumbers)}`;
 } /* assignTicketContent */
 
 /**

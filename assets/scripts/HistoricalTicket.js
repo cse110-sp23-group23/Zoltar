@@ -109,7 +109,8 @@ class HistoricalTicket extends HTMLElement {
 	 * @param none
 	 */
 	addTransitionEffects() {
-		toggleClassToArr([this.dom.frontContent, this.dom.backContent, this.dom.background], 'transition-flip');
+		const targets = [this.dom.frontContent, this.dom.backContent, this.dom.background, this.dom.overlay];
+		toggleClassToArr(targets, 'transition-action');
 	} /* addTransitionEffects */
 } /* HistoricalTicket */
 

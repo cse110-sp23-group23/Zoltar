@@ -54,8 +54,8 @@
 	transition: box-shadow 0.2s ease-in;
 }
 
-.transition-flip {
-	transition: transform 0.5s;
+.transition-action {
+	transition: transform 0.5s ease-in-out, opacity 200ms ease-in-out;
 }
 
 .ticket-title {
@@ -120,7 +120,6 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	transition: opacity 200ms ease-in-out;
 }
 
 .ticket-flip-overlay button {
