@@ -84,6 +84,7 @@ class HistoricalTicket extends HTMLElement {
 			return;
 		}
 		if (event.type === 'mouseover') {
+			this.dom.overlay.classList.add('transition-action');
 			this.dom.overlay.classList.remove('hidden');
 		} else if (event.type === 'mouseout') {
 			this.dom.overlay.classList.add('hidden');
@@ -109,8 +110,7 @@ class HistoricalTicket extends HTMLElement {
 	 * @param none
 	 */
 	addTransitionEffects() {
-		const targets = [this.dom.frontContent, this.dom.backContent, this.dom.background, this.dom.overlay];
-		toggleClassToArr(targets, 'transition-action');
+		toggleClassToArr([this.dom.frontContent, this.dom.backContent, this.dom.background], 'transition-action');
 	} /* addTransitionEffects */
 } /* HistoricalTicket */
 
