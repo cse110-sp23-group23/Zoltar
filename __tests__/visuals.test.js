@@ -10,12 +10,15 @@ beforeAll((done) => {
 });
 
 describe('visual testing thru percy.io', () => {
-	it('loads the homepage', async () => {
+	it('loads the homepage', async (done) => {
 		const browser = await puppeeter.launch();
 		const page = await browser.newPage();
 		await page.goto('http://localhost:5500');
 		await percySnapshot(page, 'Basic image');
+
 		page.close();
+		browser.close();
+		done();
 	});
 });
 
