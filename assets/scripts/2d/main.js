@@ -4,7 +4,6 @@ import { chooseOptionFromArr } from '../util.js';
 import { saveState } from '../storage.js';
 import { updateticketHistoryCount } from './ticketHistory.js';
 
-// const LOADING_DELAY = 2000;
 const LOADING_DELAY = 500;
 const OPEN = 1;
 const CLOSE = 0;
@@ -22,9 +21,15 @@ let disableZoltar = false;
 let muteBackgroundAudio = true;
 let ticketOnScreen = false;
 
+/**
+ * Checks if ticket is on screen
+ * @param none
+ * @returns boolean
+ */
 export function isTicketOnScreen() {
 	return ticketOnScreen;
-}
+} /* isTicketOnScreen */
+
 /**
  * Shakes document body
  * @param none
@@ -93,6 +98,7 @@ async function getResponses() {
 
 /**
  * Gets list of images from Json file
+ * @param none
  */
 async function getImages() {
 	fetch('assets/json/images.json')
@@ -205,8 +211,8 @@ function getAudio() {
  * init does not exceed 25 lines.
  * @param {array} array store, delete button
  */
-function createStoreButtonListener(but) {
-	but.forEach((button) => {
+function createStoreButtonListener(array) {
+	array.forEach((button) => {
 		button.addEventListener('click', (e) => {
 			e.preventDefault();
 			storeButtonHandler(button.id);
@@ -214,10 +220,11 @@ function createStoreButtonListener(but) {
 			ticketOnScreen = false;
 		});
 	});
-}
+} /* createStoreButtonListener */
 
 /**
  * Initiates audio when user clicks on splash screen
+ * Fades the audio in over a period of 5 seconds
  * @param none
  */
 function go() {
@@ -245,12 +252,17 @@ function go() {
 	}, 100);
 } /* go */
 
-function openEightBall() {
+/**
+ * Opens starter project 8 ball on the same tab.
+ * @param none
+ */
+export function openEightBall() {
 	window.location = ('https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/');
-}
+} /* openEightBall */
 
 /**
  * Creates the Event Listeners required for the page to function.
+ * @param none
  */
 function createEventListeners() {
 	window.addEventListener('mousedown' || 'keydown', go);
@@ -260,7 +272,7 @@ function createEventListeners() {
 	domContent.zoltar.addEventListener('click', zoltarHandler);
 	domContent.ticketX.addEventListener('click', () => { ticketHandler(CLOSE); });
 	createStoreButtonListener(domContent.storeButton);
-}
+} /* createEventListeners */
 
 function init() {
 	domContent = {
@@ -282,7 +294,7 @@ function init() {
 	};
 	createEventListeners();
 	setTimeout(() => { domContent.loadedMessage.innerText = '[ press anywhere to continue ]'; }, LOADING_DELAY);
-}
+} /* init */
 
 document.addEventListener('DOMContentLoaded', init);
 document.addEventListener('click', () => {

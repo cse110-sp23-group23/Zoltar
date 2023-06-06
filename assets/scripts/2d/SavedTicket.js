@@ -27,10 +27,10 @@ class SavedTicket2D extends HTMLElement {
 	}
 
 	/**
-	 * Setter for the content of the SavedTicket2D. Give an object with (string)'currentMessage'
-	 * and (number array)'currentNumbers' properties. Updates the ticket content with respective
-	 * properties
-	 * @param { Object } state - an object with currentMessage and currentNumbers
+	 * Setter for the content of the SavedTicket2D. Give an object with (string)currentImageFront,
+	 * (string)'currentMessage' and (number array)'currentNumbers' properties. Updates the ticket
+	 * content with respective properties
+	 * @param { Object } state - an object with currentImageFront, currentMessage and currentNumbers
 	 */
 	set content(state) {
 		if (!state) {
@@ -50,10 +50,18 @@ class SavedTicket2D extends HTMLElement {
 	        `;
 	}
 
+	/**
+	 * Setter for the position of the ticket.
+	 * @param { string } pos - CSS transform for the ticket.
+	 */
 	set position(pos) {
 		this.shadowRoot.querySelector('section').style.transform = `${pos}`;
 	}
 
+	/**
+	 * Setter for the z index of the ticket.
+	 * @param { number } int - CSS z-index for the ticket.
+	 */
 	set zIndex(int) {
 		this.shadowRoot.querySelector('section').style.zIndex = `${int}`;
 	}

@@ -4,6 +4,7 @@ import { clamp } from '../util.js';
 const OPEN = 1;
 const CLOSE = 0;
 const TOP_INDEX = 900;
+const ARBITRARY_PIXEL_COUNT = 300;
 
 let historyOnScreen = false;
 let count = 0;
@@ -12,20 +13,22 @@ let domContent = {};
 let selectedCard = 0;
 
 /**
- * Position cards on screen relative to currently selected card
+ * Positions ticket history card on screen relative to the main card that
+ * is being displayed.
  * @param none
  */
 function translateCards() {
 	currentCards.forEach((card, i) => {
 		const distance = i - selectedCard;
-		const geoSumDistance = (distance < 0 ? -1 : 1) * 300 * (1 - 0.9 ** Math.abs(distance));
+		const geoSumDistance = (distance < 0 ? -1 : 1) * ARBITRARY_PIXEL_COUNT * (1 - 0.9 ** Math.abs(distance));
 		const scaleFactor = 0.9 ** Math.abs(distance);
 		const cardMod = card;
 
 		cardMod.position = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
 		cardMod.zIndex = TOP_INDEX - Math.abs(distance);
 	});
-}
+} /* translateCards */
+
 /**
  * Displays the tickets from local storage
  * @param none
@@ -58,16 +61,21 @@ function slide(dir) {
 
 /**
  * Returns whether or not the tickets are on screen
+ * @param none
  * @returns boolean
  */
 export function isHistoryOnScreen() {
 	return historyOnScreen;
 } /* isHistoryOnScreen */
 
+/**
+ * updates ticket count on yellow button
+ * @param none
+ */
 export function updateticketHistoryCount() {
 	count = getAllTickets().length;
 	domContent.ticketHistoryCount.innerText = count;
-}
+} /* updateticketHistoryCount */
 
 /**
  * Toggles items display properties
@@ -96,7 +104,7 @@ function toggleItems(action) {
 
 /**
  * Gets all the tickets from storage and displays them
- * STILL WORKING ON THIS -Marc
+ * TODO: This function needs some clean up.
  * @param none
  */
 function historyCircleButtonFunc() {
@@ -124,7 +132,7 @@ function historyCircleButtonFunc() {
 	});
 	displayStorage();
 	historyOnScreen = true;
-}
+} /* historyCircleButtonFunc */
 
 function init() {
 	domContent = {

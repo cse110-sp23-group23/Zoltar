@@ -21,9 +21,11 @@ body {
 }
 
 .camera {
+	will-change: transform;
 	position: absolute;
 	transition: 0.45s cubic-bezier(0.2, 0.49, 0.32, 0.99);
 	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
 }
 
 body.shake {
@@ -59,7 +61,7 @@ body.shake {
 	position: relative;
 	height: 14%;
 	left: 25.5%;
-	top: 80%;
+	top: 79.5%;
 	opacity: 10%;
 	transform: translate(-50%, -50%);
 	transition: 0.7s;
@@ -77,6 +79,11 @@ body.shake {
 	top: 55%;
 	left: 50%;
 	height: 140vh;
+}
+
+#zoltar-test {
+	z-index: 1;
+	position: relative !important;
 }
 
 #zoltar-body {

@@ -12,11 +12,12 @@ const FLICKER_DELAY = 130;
 const FRAMES_BETWEEN_FLICKER = 400;
 const LIGHTS_ON = 'radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1))';
 const LIGHTS_OFF = 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))';
+const ROTATE_AMOUNT = 20;
 
 /**
- * adjusts vignette value to seem like lights flicker
+ * Adjusts vignette value to seem like the lights are flickers.
+ * If someone wants to rewrite this then feel free lol
  * @param none
- * I live to drink code climates tears
  */
 function flickerLights() {
 	vignette.style.background = LIGHTS_OFF;
@@ -30,7 +31,7 @@ function flickerLights() {
 				setTimeout(() => {
 					vignette.style.background = LIGHTS_OFF;
 					setTimeout(() => {
-						vignette.style.background = LIGHTS_ON;
+						vignette.style.background = LIGHTS_ON;// I live to drink code climates tears
 					}, FLICKER_DELAY);
 				}, FLICKER_DELAY);
 			}, FLICKER_DELAY);
@@ -40,18 +41,19 @@ function flickerLights() {
 
 /**
  * Event Listener that creates a 3D like effect for the 2d Zoltar.
+ * When the mouse moves, takes all the elements with the class 'camera' and shifts
+ * their positions relative to the mouse
  */
 window.addEventListener('mousemove', (e) => {
-	// Pauses Zoltar's movements if any asset if displayed on screen. Eg. ticket, history
 	frame += 1;
-	if (isHistoryOnScreen() || isTicketOnScreen()) return;
+	if (isHistoryOnScreen() || isTicketOnScreen()) return; // Pauses movements if any assets are displaying on screen.
 	if (frame % FRAMES_BETWEEN_FLICKER === 0) flickerLights();
-	if (frame % 2 === 0) return;
+	if (frame % 2 === 0) return;	// Improve performance by reducing frames to calculate.
 
-	xValue = e.clientX - window.innerWidth / 2;
-	yValue = e.clientY - window.innerHeight / 2;
+	xValue = e.clientX - window.innerWidth / 2; // x position relative to center of screen
+	yValue = e.clientY - window.innerHeight / 2; // y position relative to center of screen
 
-	rotateDegree = (xValue / (window.innerWidth / 2)) * 20;
+	rotateDegree = (xValue / (window.innerWidth / 2)) * ROTATE_AMOUNT;
 
 	cameraEl.forEach((element) => {
 		const { speedx } = element.dataset;
