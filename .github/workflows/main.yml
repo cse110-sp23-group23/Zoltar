@@ -21,6 +21,7 @@ jobs:
         npm install jest
         npm install --save-dev node-fetch
         npm install -D jest-environment-jsdom
+        npm install -g @percy/cli
         npm ci -l verbose
     - name: Start server
       run: |
