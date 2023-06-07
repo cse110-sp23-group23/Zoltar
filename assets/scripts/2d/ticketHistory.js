@@ -1,4 +1,4 @@
-import { getAllTickets } from '../storage.js';
+import { getAllTickets, saveAllStates } from '../storage.js';
 import { clamp } from '../util.js';
 
 const OPEN = 1;
@@ -17,7 +17,7 @@ let selectedCard = 0;
  * is being displayed.
  * @param none
  */
-function translateCards() {
+export function translateCards() {
 	currentCards.forEach((card, i) => {
 		const distance = i - selectedCard;
 		const geoSumDistance = (distance < 0 ? -1 : 1) * ARBITRARY_PIXEL_COUNT * (1 - 0.9 ** Math.abs(distance));
@@ -46,7 +46,7 @@ function displayStorage() {
  * @param {number} position card position
  */
 function updateCounterSpan(position) {
-	domContent.currentCardPosition.innerText = `${position + 1} / ${count}`;
+	domContent.currentCardPosition.innerText = `${position + 1} / ${currentCards.length}`;
 } /* updateCounterSpan */
 
 /**
@@ -77,12 +77,19 @@ export function updateticketHistoryCount() {
 	domContent.ticketHistoryCount.innerText = count;
 } /* updateticketHistoryCount */
 
+function shake(asset) {
+	asset.classList.add('shake');
+	setTimeout(() => {
+		asset.classList.remove('shake');
+	}, 1000);
+}
 /**
  * Toggles items display properties
  * @param {boolean} action OPEN to display, CLOSE to hide
  */
 function toggleItems(action) {
 	const items = [
+		domContent.historyWrapper,
 		domContent.ticketHistoryBackground,
 		domContent.arrowButtons,
 		domContent.historyCloseButton];
@@ -102,6 +109,28 @@ function toggleItems(action) {
 	}
 } /* toggleItems */
 
+export function removeCard(card) {
+	const index = currentCards.indexOf(card);
+	if (index === -1 || index > count) return;
+	domContent.ticketHistoryTickets.removeChild(card);
+	currentCards.splice(index, 1);
+	const newStates = getAllTickets();
+	newStates.splice(index, 1);
+	saveAllStates(newStates);
+	if (currentCards.length === 0) {
+		selectedCard = 0;
+	} else {
+		selectedCard = clamp(selectedCard, 0, currentCards.length - 1);
+	}
+	translateCards();
+	if (currentCards.length === 0) {
+		selectedCard = 0;
+		toggleItems(CLOSE);
+	}
+	updateCounterSpan(selectedCard);
+	updateticketHistoryCount();
+} /* removeCard */
+
 /**
  * Gets all the tickets from storage and displays them
  * TODO: This function needs some clean up.
@@ -112,27 +141,36 @@ function historyCircleButtonFunc() {
 		toggleItems(CLOSE);
 		return;
 	}
-	toggleItems(OPEN);
 	currentCards = [];
 	const allTickets = getAllTickets();
 	count = allTickets.length;
 
 	if (allTickets.length === 0) {
+		shake(domContent.historyCircleButton);
 		return;
 	}
-	allTickets.forEach((ticket) => {
+	toggleItems(OPEN);
+	allTickets.forEach((ticket, i) => {
 		const card = document.createElement('saved-ticket');
 		const state = {
 			currentMessage: ticket.currentMessage,
 			currentNumbers: ticket.currentNumbers,
 			currentImageFront: ticket.currentImageFront,
 		};
+		card.index = i;
 		card.content = state;
 		currentCards.push(card);
 	});
+	updateCounterSpan(selectedCard);
 	displayStorage();
 	historyOnScreen = true;
 } /* historyCircleButtonFunc */
+
+window.addEventListener('keydown', (event) => {
+	if (!historyOnScreen) return;
+	if (event.key === 'ArrowRight') slide(1);
+	if (event.key === 'ArrowLeft') slide(-1);
+});
 
 function init() {
 	domContent = {
@@ -145,6 +183,7 @@ function init() {
 		leftButton: document.querySelector('.left'),
 		rightButton: document.querySelector('.right'),
 		currentCardPosition: document.querySelector('#currentCardPosition'),
+		historyWrapper: document.querySelector('.historyWrapper'),
 	};
 
 	domContent.historyCircleButton.addEventListener('click', historyCircleButtonFunc);

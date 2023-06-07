@@ -69,7 +69,7 @@ export function saveState(ticketState, caller) {
  * Saves all current tickets in user history to local storage
  * @param { Array<State> } currentStates array of all states to save
  */
-function saveAllStates(currentStates) {
+export function saveAllStates(currentStates) {
 	window.localStorage.setItem('tickets', JSON.stringify(currentStates));
 } /* saveAllStates */
 

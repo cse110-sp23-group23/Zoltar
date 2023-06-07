@@ -1,4 +1,5 @@
 import { convertArrToReadableString } from '../ticket.js';
+import { removeCard } from './ticketHistory.js';
 
 /**
  * SavedTicket2D class for creating custom HTML elements. This class represents a ticket that
@@ -11,19 +12,42 @@ class SavedTicket2D extends HTMLElement {
 	constructor() {
 		super();
 
+		this.identifier = null;
 		const shadow = this.attachShadow({ mode: 'open' });
 
+		// Section
 		const section = document.createElement('section');
 		section.classList.add('ticket', 'savedTicket');
+		section.innerHTML = '';
+
+		// Style
 		const style = document.createElement('style');
 		style.innerHTML = `
 		    @import url('./assets/styles/twodee.css');
             @import url('./assets/styles/ticket.css');
 		`;
 
-		section.innerHTML = '';
+		// Discard Button
+		const discardButton = document.createElement('button');
+		discardButton.classList.add('clickable');
+		discardButton.innerText = 'Discard';
 
-		shadow.append(style, section);
+		const div = document.createElement('div');
+		div.append(discardButton);
+
+		section.append(style, div);
+		shadow.append(section);
+	}
+
+	connectedCallback() {
+		this.shadowRoot.querySelector('div').classList.add('deleteTicket');
+		this.shadowRoot.querySelector('button').addEventListener('click', () => {
+			removeCard(this);
+		});
+	}
+
+	set index(int) {
+		this.identifier = int;
 	}
 
 	/**
@@ -37,7 +61,7 @@ class SavedTicket2D extends HTMLElement {
 			return;
 		}
 
-		this.shadowRoot.querySelector('section').innerHTML = `
+		this.shadowRoot.querySelector('section').innerHTML += `
             <img loading="lazy" src="/assets/images/horizontalrule.png" class="top">
 	        <h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
             <img loading="lazy" src="assets/images/image-bank-front/header-${state.currentImageFront}.png" 
@@ -64,6 +88,10 @@ class SavedTicket2D extends HTMLElement {
 	 */
 	set zIndex(int) {
 		this.shadowRoot.querySelector('section').style.zIndex = `${int}`;
+	}
+
+	testAlert() {
+		this.shadowRoot.querySelector('button').innerText = 'wwww';
 	}
 }
 
