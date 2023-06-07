@@ -30,24 +30,36 @@ export function translateCards() {
 } /* translateCards */
 
 /**
- * Displays the tickets from local storage
- * @param none
- */
-function displayStorage() {
-	currentCards.forEach((card) => {
-		domContent.ticketHistoryTickets.append(card);
-	});
-
-	translateCards();
-} /* displayStorage */
-
-/**
  * Updates the counter between the arrow buttons on the ticket history screen
  * @param {number} position card position
  */
 function updateCounterSpan(position) {
 	domContent.currentCardPosition.innerText = `${position + 1} / ${currentCards.length}`;
 } /* updateCounterSpan */
+
+/**
+ * Displays the tickets from local storage
+ * @param none
+ */
+function displayStorage() {
+	const allTickets = getAllTickets();
+	allTickets.forEach((ticket, i) => {
+		const card = document.createElement('saved-ticket');
+		const state = {
+			currentMessage: ticket.currentMessage,
+			currentNumbers: ticket.currentNumbers,
+			currentImageFront: ticket.currentImageFront,
+		};
+		card.index = i;
+		card.content = state;
+		currentCards.push(card);
+	});
+	currentCards.forEach((card) => {
+		domContent.ticketHistoryTickets.append(card);
+	});
+	updateCounterSpan(selectedCard);
+	translateCards();
+} /* displayStorage */
 
 /**
  * Slides the Cards left or right
@@ -127,7 +139,6 @@ export function removeCard(card) {
 		selectedCard = 0;
 		toggleItems(CLOSE);
 	}
-	updateCounterSpan(selectedCard);
 	updateticketHistoryCount();
 } /* removeCard */
 
@@ -144,24 +155,11 @@ function historyCircleButtonFunc() {
 	currentCards = [];
 	const allTickets = getAllTickets();
 	count = allTickets.length;
-
 	if (allTickets.length === 0) {
 		shake(domContent.historyCircleButton);
 		return;
 	}
 	toggleItems(OPEN);
-	allTickets.forEach((ticket, i) => {
-		const card = document.createElement('saved-ticket');
-		const state = {
-			currentMessage: ticket.currentMessage,
-			currentNumbers: ticket.currentNumbers,
-			currentImageFront: ticket.currentImageFront,
-		};
-		card.index = i;
-		card.content = state;
-		currentCards.push(card);
-	});
-	updateCounterSpan(selectedCard);
 	displayStorage();
 	historyOnScreen = true;
 } /* historyCircleButtonFunc */
