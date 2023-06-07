@@ -22,7 +22,7 @@ function handleSplashTransition(controls) {
 			}
 		}, { once: true });
 	}, INSTRUCTIONS_DURATION_MS);
-}
+} /* handleSplashTransition */
 
 /**
  * Adds event listeners to trigger dismissal of splash screen
