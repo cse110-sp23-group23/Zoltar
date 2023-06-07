@@ -79,6 +79,7 @@ function init() {
 		return p.toString() === "[object SafariRemoteNotification]"; 
 	})(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
 	const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+	// Disable camera movement if browser is Safari or device itself is iOS/iPadOS
 	if (isSafari || isIOS) window.removeEventListener('mousemove', cameraMove);
 }
 
