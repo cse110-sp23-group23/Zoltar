@@ -13,6 +13,7 @@ class SavedTicket2D extends HTMLElement {
 		super();
 
 		this.identifier = null;
+		this.flipped = false;
 		const shadow = this.attachShadow({ mode: 'open' });
 
 		// Section
@@ -29,25 +30,40 @@ class SavedTicket2D extends HTMLElement {
 
 		// Discard Button
 		const discardButton = document.createElement('button');
+		discardButton.setAttribute('id', 'discardShadow');
 		discardButton.classList.add('clickable');
 		discardButton.innerText = 'Discard';
 
+		// Flip Button
+		const flipButton = document.createElement('button');
+		flipButton.setAttribute('id', 'flipShadow');
+		flipButton.classList.add('clickable', 'yellow');
+		flipButton.innerText = 'Flip';
+
 		const div = document.createElement('div');
-		div.append(discardButton);
+		div.append(flipButton, discardButton);
 
 		section.append(style, div);
 		shadow.append(section);
 	}
 
+	/**
+	 * Assigns event listeners when rendered on the DOM
+	 */
 	connectedCallback() {
 		this.shadowRoot.querySelector('div').classList.add('deleteTicket');
-		this.shadowRoot.querySelector('button').addEventListener('click', () => {
+
+		this.shadowRoot.getElementById('discardShadow').addEventListener('click', () => {
 			removeCard(this);
 		});
-	}
 
-	set index(int) {
-		this.identifier = int;
+		this.shadowRoot.getElementById('flipShadow').addEventListener('click', () => {
+			this.flip();
+		});
+
+		this.shadowRoot.querySelector('.front-side').addEventListener('click', () => {
+			this.flip();
+		});
 	}
 
 	/**
@@ -62,15 +78,21 @@ class SavedTicket2D extends HTMLElement {
 		}
 
 		this.shadowRoot.querySelector('section').innerHTML += `
-            <img loading="lazy" src="/assets/images/horizontalrule.png" class="top">
-	        <h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
-            <img loading="lazy" src="assets/images/image-bank-front/header-${state.currentImageFront}.png" 
-				class="ticket-header-image">
-	        <p class="fortune-text">${state.currentMessage}</p>
-			<p class="fortune-number">
-				Your lucky numbers are ${convertArrToReadableString(state.currentNumbers)}
-			</p>
-	        <img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom">
+			<div class="front-side rotate clickable">
+				<img loading="lazy" src="assets/images/image-bank-back/background-card-${state.currentImageBack}.png"
+				"class="ticket-front-image" alt="Front ticket image">
+			</div>
+			<div class="back-side">
+				<img loading="lazy" src="/assets/images/horizontalrule.png" class="top">
+				<h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
+				<img loading="lazy" src="assets/images/image-bank-front/header-${state.currentImageFront}.png" 
+					class="ticket-header-image">
+				<p class="fortune-text">${state.currentMessage}</p>
+				<p class="fortune-number">
+					Your lucky numbers are ${convertArrToReadableString(state.currentNumbers)}
+				</p>
+				<img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom">
+			</div>
 	        `;
 	}
 
@@ -90,8 +112,20 @@ class SavedTicket2D extends HTMLElement {
 		this.shadowRoot.querySelector('section').style.zIndex = `${int}`;
 	}
 
-	testAlert() {
-		this.shadowRoot.querySelector('button').innerText = 'wwww';
+	/**
+	 * Flips THIS card
+	 */
+	flip() {
+		this.flipped = !this.flipped;
+		this.shadowRoot.querySelector('.front-side').classList.toggle('rotate');
+		this.shadowRoot.querySelector('.back-side').classList.toggle('rotate');
+		if (this.flipped) {
+			this.shadowRoot.querySelector('div').style.display = 'none';
+		} else {
+			setTimeout(() => {
+				this.shadowRoot.querySelector('div').style.display = 'flex';
+			}, 500);
+		}
 	}
 }
 

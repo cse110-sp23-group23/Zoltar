@@ -41,6 +41,10 @@ body.shake {
 	pointer-events: none;
 }
 
+button:hover {
+	transition: 0.3s ease;
+	filter: brightness(70%);
+}
 
 /* ------------------------------------------Mr Zoltar------------------------------------------ */
 
@@ -72,9 +76,9 @@ body.shake {
 }
 
 #eight-ball-image:hover {
-	opacity: 85%;
+	opacity: 95%;
 	animation: shake-center-aligned 0.2s;
-	animation-iteration-count: 2;
+	animation-iteration-count: 100;
 	animation-delay: 0.3s;
 }
 
@@ -138,13 +142,44 @@ body.shake {
 	aspect-ratio: 1/1.5;
 	z-index: 10;
 	display: flex;
+	align-items: center;
+	border-radius: 20px;
+}
+
+.back-side {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
+	color: rgb(0, 0, 0);
+	border-radius: inherit;
 	background-image: url('../images/2d/paper-texture.webp');
 	background-size: cover;
-	color: rgb(0, 0, 0);
-	border-radius: 20px;
+	transition: 0.7s;
+	z-index: 11;
+}
+
+.front-side {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	border-radius: inherit;
+	transition: 0.7s;
+	z-index: 11;
+	background-image: url('../images/2d/paper-texture.webp');
+	background-size: cover;
+}
+
+.rotate {
+	transform: rotateY(180deg);
+	z-index: 10;
+}
+
+.front-side img {
+	width: 100%;
 }
 
 .mainTicket {
@@ -200,7 +235,8 @@ body.shake {
 	top: 50%;
 }
 
-@media (max-height: 800px){
+
+@media (max-height: 800px) {
 	.ticket {
 		min-height: 100px;
 	}
@@ -266,6 +302,12 @@ body.shake {
 	height: 100%;
 	width: 100%;
 	background: radial-gradient(circle at center, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0));
+	z-index: 13;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 8%;
+	align-items: center;
 }
 
 .deleteTicket:hover {
@@ -273,11 +315,12 @@ body.shake {
 	opacity: 100%;
 }
 
+.yellow {
+	background-color: yellow;
+}
+
 .deleteTicket button {
 	position: relative;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
 	width: 50%;
 	height: 15%;
 	font-family: Cinzel, fantasy;
