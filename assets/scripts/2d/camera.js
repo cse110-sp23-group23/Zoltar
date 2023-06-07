@@ -75,7 +75,7 @@ window.addEventListener('mousemove', cameraMove);
 function init() {
 	cameraEl = document.querySelectorAll('.camera');
 	vignette = document.querySelector('.vignette');
-	const isSafari = (navigator.userAgent.indexOf("Safari") != -1);
+	const isSafari = (navigator.userAgent.indexOf('Safari') !== -1);
 	const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 	|| (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
 	// Disable camera movement if browser is Safari or device itself is iOS/iPadOS
