@@ -1,4 +1,4 @@
-import { getAllTickets } from '../storage.js';
+import { getAllTickets, saveAllStates } from '../storage.js';
 import { clamp } from '../util.js';
 
 const OPEN = 1;
@@ -17,27 +17,48 @@ let selectedCard = 0;
  * is being displayed.
  * @param none
  */
-function translateCards() {
+export function translateCards() {
 	currentCards.forEach((card, i) => {
 		const distance = i - selectedCard;
 		const geoSumDistance = (distance < 0 ? -1 : 1) * ARBITRARY_PIXEL_COUNT * (1 - 0.9 ** Math.abs(distance));
 		const scaleFactor = 0.9 ** Math.abs(distance);
 		const cardMod = card;
 
-		cardMod.position = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
-		cardMod.zIndex = TOP_INDEX - Math.abs(distance);
+		// eslint-disable-next-line max-len
+		cardMod.position = [`translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`, TOP_INDEX - Math.abs(distance)];
 	});
 } /* translateCards */
+
+/**
+ * Updates the counter between the arrow buttons on the ticket history screen
+ * @param {number} position card position
+ */
+function updateCounterSpan(position) {
+	domContent.currentCardPosition.innerText = `${position + 1} / ${currentCards.length}`;
+} /* updateCounterSpan */
 
 /**
  * Displays the tickets from local storage
  * @param none
  */
 function displayStorage() {
+	const allTickets = getAllTickets();
+	allTickets.forEach((ticket, i) => {
+		const card = document.createElement('saved-ticket');
+		const state = {
+			currentMessage: ticket.currentMessage,
+			currentNumbers: ticket.currentNumbers,
+			currentImageFront: ticket.currentImageFront,
+			currentImageBack: ticket.currentImageBack,
+		};
+		card.index = i;
+		card.content = state;
+		currentCards.push(card);
+	});
 	currentCards.forEach((card) => {
 		domContent.ticketHistoryTickets.append(card);
 	});
-
+	updateCounterSpan(selectedCard);
 	translateCards();
 } /* displayStorage */
 
@@ -78,12 +99,19 @@ export function updateticketHistoryCount() {
 	domContent.ticketHistoryCount.innerText = count;
 } /* updateticketHistoryCount */
 
+function shake(asset) {
+	asset.classList.add('shake');
+	setTimeout(() => {
+		asset.classList.remove('shake');
+	}, 1000);
+}
 /**
  * Toggles items display properties
  * @param {boolean} action OPEN to display, CLOSE to hide
  */
 function toggleItems(action) {
 	const items = [
+		domContent.historyWrapper,
 		domContent.ticketHistoryBackground,
 		domContent.arrowButtons,
 		domContent.historyCloseButton];
@@ -103,6 +131,27 @@ function toggleItems(action) {
 	}
 } /* toggleItems */
 
+export function removeCard(card) {
+	const index = currentCards.indexOf(card);
+	if (index === -1 || index > count) return;
+	domContent.ticketHistoryTickets.removeChild(card);
+	currentCards.splice(index, 1);
+	const newStates = getAllTickets();
+	newStates.splice(index, 1);
+	saveAllStates(newStates);
+	if (currentCards.length === 0) {
+		selectedCard = 0;
+	} else {
+		selectedCard = clamp(selectedCard, 0, currentCards.length - 1);
+	}
+	translateCards();
+	if (currentCards.length === 0) {
+		selectedCard = 0;
+		toggleItems(CLOSE);
+	}
+	updateticketHistoryCount();
+} /* removeCard */
+
 /**
  * Gets all the tickets from storage and displays them
  * TODO: This function needs some clean up.
@@ -113,27 +162,23 @@ function historyCircleButtonFunc() {
 		toggleItems(CLOSE);
 		return;
 	}
-	toggleItems(OPEN);
 	currentCards = [];
 	const allTickets = getAllTickets();
 	count = allTickets.length;
-
 	if (allTickets.length === 0) {
+		shake(domContent.historyCircleButton);
 		return;
 	}
-	allTickets.forEach((ticket) => {
-		const card = document.createElement('saved-ticket');
-		const state = {
-			currentMessage: ticket.currentMessage,
-			currentNumbers: ticket.currentNumbers,
-			currentImageFront: ticket.currentImageFront,
-		};
-		card.content = state;
-		currentCards.push(card);
-	});
+	toggleItems(OPEN);
 	displayStorage();
 	historyOnScreen = true;
 } /* historyCircleButtonFunc */
+
+window.addEventListener('keydown', (event) => {
+	if (!historyOnScreen) return;
+	if (event.key === 'ArrowRight') slide(1);
+	if (event.key === 'ArrowLeft') slide(-1);
+});
 
 function init() {
 	domContent = {
@@ -147,6 +192,7 @@ function init() {
 		rightButton: document.querySelector('.right'),
 		currentCardPosition: document.querySelector('#currentCardPosition'),
 		inputForm: document.querySelector('#ticketHistoryInput'),
+		historyWrapper: document.querySelector('.historyWrapper'),
 	};
 
 	domContent.historyCircleButton.addEventListener('click', historyCircleButtonFunc);

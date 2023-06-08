@@ -40,3 +40,14 @@ export async function loadJsonArr(url) {
 export function chooseOptionFromArr(arr) {
 	return arr[Math.floor(Math.random() * arr.length)];
 } /* chooseOptionFromArr */
+
+/**
+ * Basic promise that resolves after fixed input time
+ * @param { Integer } delay ms delay before resolving
+ * @returns { Promise } promise to resolve after delay length
+ */
+export function flickerDelay(delay) {
+	return new Promise((resolve) => {
+		setTimeout(resolve, delay);
+	});
+} /* flickerDelay */

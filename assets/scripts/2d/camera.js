@@ -10,8 +10,8 @@ let rotateDegree = 0;
 let frame = 0;
 const FLICKER_DELAY = 130;
 const FRAMES_BETWEEN_FLICKER = 400;
-const LIGHTS_ON = 'radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1))';
-const LIGHTS_OFF = 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))';
+const LIGHTS_ON = 'radial-gradient(circle at center, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 1))';
+const LIGHTS_OFF = 'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.93))';
 const ROTATE_AMOUNT = 20;
 
 /**
@@ -40,11 +40,11 @@ function flickerLights() {
 }
 
 /**
- * Event Listener that creates a 3D like effect for the 2d Zoltar.
  * When the mouse moves, takes all the elements with the class 'camera' and shifts
  * their positions relative to the mouse
+ * @param e event
  */
-window.addEventListener('mousemove', (e) => {
+function cameraMove(e) {
 	frame += 1;
 	if (isHistoryOnScreen() || isTicketOnScreen()) return; // Pauses movements if any assets are displaying on screen.
 	if (frame % FRAMES_BETWEEN_FLICKER === 0) flickerLights();
@@ -65,11 +65,21 @@ window.addEventListener('mousemove', (e) => {
 			+ ${-xValue * speedx}px)) translateY(calc(-50% 
 			+ ${-yValue * speedy}px)) rotateY(${rotateDegree * rotation}deg)`;
 	});
-});
+}
+
+/**
+ * Event Listener that creates a 3D like effect for the 2d Zoltar.
+ */
+window.addEventListener('mousemove', cameraMove);
 
 function init() {
 	cameraEl = document.querySelectorAll('.camera');
 	vignette = document.querySelector('.vignette');
+	const isSafari = (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1);
+	const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+	|| (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+	// Disable camera movement if browser is Safari or device itself is iOS/iPadOS
+	if (isSafari || isIOS) window.removeEventListener('mousemove', cameraMove);
 }
 
 document.addEventListener('DOMContentLoaded', init);
