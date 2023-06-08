@@ -46,7 +46,8 @@ function displayStorage() {
  * @param {number} position card position
  */
 function updateCounterSpan(position) {
-	domContent.currentCardPosition.innerText = `${position + 1} / ${count}`;
+	domContent.inputForm.value = position + 1;
+	domContent.currentCardPosition.innerText = ` / ${count}`;
 } /* updateCounterSpan */
 
 /**
