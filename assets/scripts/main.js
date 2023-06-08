@@ -1,6 +1,7 @@
 import {
 	AmbientLight,
 	BoxGeometry,
+	SphereGeometry,
 	Clock,
 	LoadingManager,
 	Mesh,
@@ -14,6 +15,7 @@ import {
 	Vector2,
 	Vector3,
 	WebGLRenderer,
+	Group,
 } from 'three'; // eslint-disable-line import/no-unresolved
 // eslint-disable-next-line import/no-unresolved
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -21,6 +23,9 @@ import LockedControls from './LockedControls.js';
 import { isTicketCurrentlyDisplayed, toggleTicketOn } from './ticket.js';
 import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
+
+// eslint-disable-next-line no-console
+console.log('%cWelcome to %cZoltar%c.live!', '', 'color: red; font-weight: bolder', '');
 
 const options = {
 	camera: {
@@ -68,6 +73,21 @@ const options = {
 		material: new MeshLambertMaterial({ color: 0xe0c9a6 }),
 		geometry: new BoxGeometry(0.1, 0.005, 0.5),
 		rotationY: 0.57,
+	},
+	eyes: {
+		leftEyePos: new Vector3(-1.84, 1.3, 0.065),
+		rightEyePos: new Vector3(-1.945, 1.3, 0.145),
+		color: 0xbb2929,
+		stepSize: 0.05,
+		frames: [ // of form [action, timeUntilNextMS]
+			['remove', 600],
+			['add', 200],
+			['remove', 100],
+			['add', 300],
+			['remove', 100],
+			['add', 1000],
+		],
+		timingFunc: (i) => 2 * i,
 	},
 };
 
@@ -145,6 +165,32 @@ scene.add(spotlight.target);
 scene.add(spotlight);
 scene.add(ambient);
 
+// Glowing eyes setup
+const eyeGroup = new Group();
+const eyeLayers = [];
+const eyeMat = new MeshLambertMaterial({
+	color: options.eyes.color,
+	transparent: true,
+	depthWrite: false,
+});
+for (let i = 0; i < 1; i += options.eyes.stepSize) {
+	const newMat = eyeMat.clone();
+	newMat.opacity = 1 - (i ** (options.eyes.stepSize * 2));
+	const layer = new Mesh(
+		new SphereGeometry(options.eyes.stepSize + (i * i) / 2),
+		newMat,
+	);
+	const eyeLayer = new Group();
+	const leftEyeLayer = layer;
+	const rightEyeLayer = layer.clone(true);
+	leftEyeLayer.position.copy(options.eyes.leftEyePos);
+	rightEyeLayer.position.copy(options.eyes.rightEyePos);
+	eyeLayer.attach(leftEyeLayer);
+	eyeLayer.attach(rightEyeLayer);
+	eyeLayers.push(eyeLayer);
+}
+scene.add(eyeGroup);
+
 /**
  * Returns whether or not new event can be queued
  * @param none
@@ -158,17 +204,6 @@ export function canTriggerEvent() {
 } /* canTriggerEvent */
 
 /**
- * Generates card and displays on screen
- * @param none
- */
-function addCardToScene() {
-	toggleTicketOn();
-	scene.remove(ticket);
-	state.ticketSpawned = false;
-	controls.API.enabled = false;
-} /* addCardToScene */
-
-/**
  * Sets ticket texture to image at appropriate url for input
  * @param { String } nameOfImage name of image in format of prefix-name structure
  */
@@ -176,6 +211,71 @@ export function setTicketMapToImage(nameOfImage) {
 	const mapTexture = textureLoader.load(`${options.ticketMat.urlPrefix}${nameOfImage}-map.png`);
 	options.ticketMat.material.map = mapTexture;
 } /* setTicketMapToImage */
+
+/**
+ * Animates fading (quick, slow, hold) of eyes onto screen
+ * @param { String } dir string 'remove' or 'add' representing fading direction
+ */
+function fadeEyes(dir) {
+	if (dir !== 'add' && dir !== 'remove') return;
+	eyeLayers.forEach((layer, i) => {
+		setTimeout(() => {
+			eyeGroup[dir](layer);
+		}, options.eyes.timingFunc(i));
+	});
+} /* fadeEyes */
+
+/**
+ * Basic promise that resolves after fixed input time
+ * @param { Integer } delay ms delay before resolving
+ * @returns { Promise } promise to resolve after delay length
+ */
+function flickerDelay(delay) {
+	return new Promise((resolve) => {
+		setTimeout(resolve, delay);
+	});
+} /* flickerDelay */
+
+/**
+ * Adds/removes eye from scene and creates promise to allow next action in delay ms
+ * @param { String } action 'add' or 'remove'; action to take in frame
+ * @param { Integer } delay ms before allowing to resolve
+ * @return { Promise } promise to resolve in a set delay length
+ */
+function eyeFrame(action, delay) {
+	fadeEyes(action);
+	return flickerDelay(delay);
+}
+
+/**
+ * Triggers the screen to shake for predetermined time. Ticket dispenses after
+ * shaking is completed
+ * @param none
+ */
+function startShaking() {
+	state.currentShakeDuration = options.shake.minDurationMS / 1000;
+} /* startShaking */
+
+/**
+ * Starts animation sequence for ticket dispense action
+ * @param none
+ */
+function startThinkingAnimation() {
+	options.eyes.frames.reduce((prev, cur) => prev.then(() => eyeFrame(cur[0], cur[1])), Promise.resolve())
+		.then(() => { setTimeout(startShaking, 500); });
+} /* startThinkingAnimation */
+
+/**
+ * Generates card and displays on screen
+ * @param none
+ */
+function addCardToScene() {
+	toggleTicketOn();
+	fadeEyes('remove');
+	scene.remove(ticket);
+	state.ticketSpawned = false;
+	controls.API.enabled = false;
+} /* addCardToScene */
 
 /**
  * Shoots ray from camera and measures instersection with hitbox of
@@ -199,8 +299,8 @@ function shootRay(event) {
 function handleKeypress(event) {
 	if (event.key === ' ' && canTriggerEvent()) {
 		state.ticketSpawned = true;
-		state.currentShakeDuration = options.shake.minDurationMS / 1000;
 		state.responseGenerated = false;
+		startThinkingAnimation();
 		const paramOptions = {
 			callback: (ticketState) => {
 				state.responseGenerated = true;
