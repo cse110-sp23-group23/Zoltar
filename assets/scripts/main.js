@@ -49,7 +49,7 @@ const state = {
 
 const dom = {};
 
-// Load 3D scene and necesary objects
+// Load 3D scene and necessary objects
 const scene = new Scene();
 const clock = new Clock();
 const manager = new LoadingManager();
@@ -59,6 +59,9 @@ const textureLoader = new TextureLoader();
 const loader = new GLTFLoader(manager);
 const renderer = new WebGLRenderer({ alpha: false });
 const camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
+
+// Sound effects
+const rumble = new Audio('./assets/audio/rumble.mp3');
 
 // Light creation
 const spotlight = new SpotLight(options.light.spotlightColor, options.light.spotlightItensity);
@@ -188,6 +191,7 @@ function eyeFrame(frame) {
  * @param none
  */
 function startShaking() {
+	rumble.play();
 	state.currentShakeDuration = options.shake.minDurationMS / 1000;
 } /* startShaking */
 
