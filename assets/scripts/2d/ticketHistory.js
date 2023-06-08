@@ -64,20 +64,10 @@ function displayStorage() {
 } /* displayStorage */
 
 /**
- * Updates the counter between the arrow buttons on the ticket history screen
- * @param {number} position card position
- */
-function updateCounterSpan(position) {
-	domContent.inputForm.value = position + 1;
-	domContent.currentCardPosition.innerText = ` / ${count}`;
-} /* updateCounterSpan */
-
-/**
  * Slides the Cards left or right
  * @param {number} dir -1 or 1
  */
 function slide(dir) {
-	console.log(selectedCard + dir);
 	selectedCard = clamp(selectedCard + dir, 0, currentCards.length - 1);
 	translateCards();
 	updateCounterSpan(selectedCard);
@@ -179,7 +169,6 @@ function historyCircleButtonFunc() {
 
 function inputFormHandler() {
 	selectedCard = Number(domContent.inputForm.value) - 1;
-	console.log(selectedCard);
 	slide(0);
 }
 
