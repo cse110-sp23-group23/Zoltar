@@ -18,7 +18,7 @@ function handleSplashTransition(controls) {
 			dom.instructions.classList.add('hidden');
 			if (controls) {
 				const controlRef = controls;
-				controlRef.enabled = true;
+				controlRef.API.enabled = true;
 			}
 		}, { once: true });
 	}, INSTRUCTIONS_DURATION_MS);

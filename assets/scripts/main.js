@@ -75,7 +75,7 @@ document.body.appendChild(renderer.domElement);
 
 // Load custom controls and turn off by default
 const controls = new LockedControls(camera, renderer.domElement);
-controls.API.enabled = true;
+controls.API.enabled = false;
 
 // glTf 2.0 Loader
 loader.load('assets/models/fixedangle.glb', (gltf) => {
@@ -120,11 +120,10 @@ const eyeMat = new MeshLambertMaterial({
 });
 for (let i = 0; i < 1; i += options.eyes.stepSize) {
 	const newMat = eyeMat.clone();
-	newMat.opacity = 1 - (i ** (options.eyes.stepSize * 2));
-	const layer = new Mesh(
-		new SphereGeometry(options.eyes.stepSize + (i * i) / 2),
-		newMat,
-	);
+	newMat.opacity = options.eyes.baseOpacity * (1 - (i ** (options.eyes.stepSize * 2)));
+	const layerGeo = new SphereGeometry(options.eyes.baseSize + (i * i) / 2);
+	layerGeo.scale(2, 1, 2);
+	const layer = new Mesh(layerGeo, newMat);
 	const eyeLayer = new Group();
 	const leftEyeLayer = layer;
 	const rightEyeLayer = layer.clone(true);
@@ -160,25 +159,27 @@ export function setTicketMapToImage(nameOfImage) {
 /**
  * Animates fading (quick, slow, hold) of eyes onto screen
  * @param { String } dir string 'remove' or 'add' representing fading direction
+ * @param { String } numLayers if adding, number of layers to add. Remove always removes everything
  */
-function fadeEyes(dir) {
+function fadeEyes(dir, speed, numLayers) {
 	if (dir !== 'add' && dir !== 'remove') return;
 	eyeLayers.forEach((layer, i) => {
+		if (dir === 'add' && i >= numLayers) return;
 		setTimeout(() => {
 			eyeGroup[dir](layer);
-		}, options.eyes.timingFunc(i));
+		}, speed * i);
 	});
 } /* fadeEyes */
 
 /**
  * Adds/removes eye from scene and creates promise to allow next action in delay ms
- * @param { String } action 'add' or 'remove'; action to take in frame
- * @param { Integer } delay ms before allowing to resolve
+ * @param { Array } frame of form [action, numLayers, speed, timeUntilNextMS], action either 'add' or 'remove'
+ * 		and layers only effect 'add' action
  * @return { Promise } promise to resolve in a set delay length
  */
-function eyeFrame(action, delay) {
-	fadeEyes(action);
-	return flickerDelay(delay);
+function eyeFrame(frame) {
+	fadeEyes(frame[0], frame[2], frame[1]);
+	return flickerDelay(frame[3]);
 }
 
 /**
@@ -195,7 +196,7 @@ function startShaking() {
  * @param none
  */
 function startThinkingAnimation() {
-	options.eyes.frames.reduce((prev, cur) => prev.then(() => eyeFrame(cur[0], cur[1])), Promise.resolve())
+	options.eyes.frames.reduce((prev, cur) => prev.then(() => eyeFrame(cur)), Promise.resolve())
 		.then(() => { setTimeout(startShaking, 500); });
 } /* startThinkingAnimation */
 
@@ -205,7 +206,7 @@ function startThinkingAnimation() {
  */
 function addCardToScene() {
 	toggleTicketOn();
-	fadeEyes('remove');
+	fadeEyes('remove', 10);
 	scene.remove(ticket);
 	state.ticketSpawned = false;
 	controls.API.enabled = false;
