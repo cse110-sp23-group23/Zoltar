@@ -16,7 +16,7 @@ body {
 	height: 100%;
 	top: 0;
 	left: 0;
-	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.9));
+	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 1));
 	pointer-events: none;
 }
 
@@ -142,7 +142,6 @@ button:hover {
 	left: 50%;
 	width: 200%;
 	filter: brightness(50%);
-	
 }
 
 @media (max-width: 800px) {
@@ -150,10 +149,6 @@ button:hover {
 	.zoltar-image {
 		height: 80vh;
 		/* background-color: red; */
-	}
-
-	#floor-img {
-		display: inline;
 	}
 
 	#background-img {
@@ -292,6 +287,12 @@ button:hover {
 	top: 50%;
 }
 
+@media (pointer:coarse) {
+	.mainTicket:hover {
+		transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+	}
+}
+
 /* ----------------------------------------Ticket History--------------------------------------- */
 .savedTicket {
 	position: absolute;
@@ -374,7 +375,7 @@ button:hover {
 	width: 50%;
 	height: 15%;
 	font-family: Cinzel, fantasy;
-	font-size: 1.5rem;
+	font-size: calc(min(3vh, calc((3vh + 3vw) / 2)));
 	border: 1px solid black;
 	border-radius: 7px;
 }

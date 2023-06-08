@@ -24,8 +24,8 @@ export function translateCards() {
 		const scaleFactor = 0.9 ** Math.abs(distance);
 		const cardMod = card;
 
-		cardMod.position = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
-		cardMod.zIndex = TOP_INDEX - Math.abs(distance);
+		// eslint-disable-next-line max-len
+		cardMod.position = [`translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`, TOP_INDEX - Math.abs(distance)];
 	});
 } /* translateCards */
 

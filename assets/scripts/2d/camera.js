@@ -10,8 +10,8 @@ let rotateDegree = 0;
 let frame = 0;
 const FLICKER_DELAY = 130;
 const FRAMES_BETWEEN_FLICKER = 400;
-const LIGHTS_ON = 'radial-gradient(circle at center, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1))';
-const LIGHTS_OFF = 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))';
+const LIGHTS_ON = 'radial-gradient(circle at center, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 1))';
+const LIGHTS_OFF = 'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.93))';
 const ROTATE_AMOUNT = 20;
 
 /**

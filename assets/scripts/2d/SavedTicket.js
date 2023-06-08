@@ -27,6 +27,7 @@ class SavedTicket2D extends HTMLElement {
             @import url('./assets/styles/ticket.css');
 		`;
 
+		// Discard Button
 		const discardButton = document.createElement('button');
 		discardButton.setAttribute('id', 'discardShadow');
 		discardButton.classList.add('clickable');
@@ -38,6 +39,7 @@ class SavedTicket2D extends HTMLElement {
 		flipButton.classList.add('clickable', 'yellow');
 		flipButton.innerText = 'Flip';
 
+		// Button Overlay
 		const div = document.createElement('div');
 		div.append(flipButton, discardButton);
 
@@ -47,6 +49,7 @@ class SavedTicket2D extends HTMLElement {
 
 	/**
 	 * Assigns event listeners when rendered on the DOM
+	 * @param
 	 */
 	connectedCallback() {
 		this.shadowRoot.querySelector('div').classList.add('deleteTicket');
@@ -101,30 +104,29 @@ class SavedTicket2D extends HTMLElement {
 	 * Setter for the position of the ticket.
 	 * @param { string } pos - CSS transform for the ticket.
 	 */
-	set position(pos) {
-		this.shadowRoot.querySelector('section').style.transform = `${pos}`;
-	}
-
-	/**
-	 * Setter for the z index of the ticket.
-	 * @param { number } int - CSS z-index for the ticket.
-	 */
-	set zIndex(int) {
-		this.shadowRoot.querySelector('section').style.zIndex = `${int}`;
+	set position(tuple) {
+		const section = this.shadowRoot.querySelector('section');
+		section.style.transform = `${tuple[0]}`;
+		section.style.zIndex = `${tuple[1]}`;
 	}
 
 	/**
 	 * Flips THIS card
+	 * @param none
 	 */
 	flip() {
 		this.flipped = !this.flipped;
-		this.shadowRoot.querySelector('.front-side').classList.toggle('rotate');
-		this.shadowRoot.querySelector('.back-side').classList.toggle('rotate');
+
+		const div = this.shadowRoot.querySelectorAll('div');
+		this.shadowRoot.querySelectorAll('.subTicket').forEach((el) => {
+			el.classList.toggle('rotate');
+		});
+
 		if (this.flipped) {
-			this.shadowRoot.querySelector('div').style.display = 'none';
+			div.style.display = 'none';
 		} else {
 			setTimeout(() => {
-				this.shadowRoot.querySelector('div').style.display = 'flex';
+				div.style.display = 'flex';
 			}, 500);
 		}
 	}
