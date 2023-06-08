@@ -154,6 +154,27 @@ html, body {
 	z-index: 150;
 }
 
+.vignette-cover {
+	background-image: radial-gradient(transparent 50%, #FDDB26);
+	animation-name: vignette-fade-in;
+	animation-duration: 400ms;
+	animation-timing-function: ease-out;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+@keyframes vignette-fade-in {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 0.2;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
 canvas {
 	position: absolute;
 	left: 0;
