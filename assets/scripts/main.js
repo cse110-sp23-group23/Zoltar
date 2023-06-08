@@ -254,6 +254,7 @@ function handleKeypress(event) {
 		state.responseGenerated = false;
 		flickVignette();
 		startThinkingAnimation();
+		rumble.load();
 		const paramOptions = {
 			callback: (ticketState) => {
 				state.responseGenerated = true;
