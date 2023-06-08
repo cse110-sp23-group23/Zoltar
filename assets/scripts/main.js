@@ -104,6 +104,8 @@ const state = {
 	shakeDeltaVec: new Vector3(),
 };
 
+const dom = {};
+
 // Load 3D scene and necesary objects
 const scene = new Scene();
 const clock = new Clock();
@@ -293,6 +295,19 @@ function shootRay(event) {
 } /* shootRay */
 
 /**
+ * Quickly flash vignette on edges of screen to show user they clicked button
+ * @param none
+ */
+function flickVignette() {
+	dom.cover.classList.remove('hidden');
+	dom.cover.classList.add('vignette-cover');
+	dom.cover.addEventListener('animationend', () => {
+		dom.cover.classList.add('hidden');
+		dom.cover.classList.remove('vignette-cover');
+	});
+} /* flickVignette */
+
+/**
  * Decides and calls appropriate action for all keypresses heard in window
  * @param { Event } event - keypress event passed by eventlistener
  */
@@ -300,6 +315,7 @@ function handleKeypress(event) {
 	if (event.key === ' ' && canTriggerEvent()) {
 		state.ticketSpawned = true;
 		state.responseGenerated = false;
+		flickVignette();
 		startThinkingAnimation();
 		const paramOptions = {
 			callback: (ticketState) => {
@@ -449,16 +465,16 @@ function animate() {
 } /* animate */
 
 function init() {
-	const buttons = [
+	dom.buttons = [
 		document.querySelector('#save-button'),
 		document.querySelector('#discard-button'),
 	];
-
-	buttons.forEach((el) => {
+	dom.buttons.forEach((el) => {
 		el.addEventListener('click', () => {
 			controls.API.enabled = true;
 		});
 	});
+	dom.cover = document.querySelector('.cover');
 
 	window.addEventListener('click', shootRay);
 	window.addEventListener('keydown', handleKeypress);
