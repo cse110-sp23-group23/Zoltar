@@ -145,6 +145,7 @@ function init() {
 		leftButton: document.querySelector('.left'),
 		rightButton: document.querySelector('.right'),
 		currentCardPosition: document.querySelector('#currentCardPosition'),
+		inputForm: document.querySelector('#ticketHistoryInput'),
 	};
 
 	domContent.historyCircleButton.addEventListener('click', historyCircleButtonFunc);
