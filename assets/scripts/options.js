@@ -58,14 +58,14 @@ export const options = {
 		rotationY: 0.57,
 	},
 	eyes: {
-		leftEyePos: new Vector3(-1.854, 1.3, 0.054),
+		leftEyePos: new Vector3(-1.851, 1.3, 0.055),
 		rightEyePos: new Vector3(-1.945, 1.3, 0.12),
 		color: 0xbb2929,
 		stepSize: 0.02,
 		baseSize: 0.02,
 		baseOpacity: 0.7,
 		frames: [ // of form [action, numLayers, speed (inverse), timeUntilNextMS]
-			['remove', 0, 7, 2500],
+			['remove', 0, 7, 1500],
 			// ['add', 50, 7, 1000],
 			// ['remove', 0, 1, 2000],
 			// ['add', 50, 7, 1000],
