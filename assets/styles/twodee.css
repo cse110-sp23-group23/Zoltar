@@ -236,17 +236,6 @@ body.shake {
 	z-index: 10;
 }
 
-#ticketHistoryInput {
-	font-family: Carolingia, fantasy;
-	background-color: rgba(230, 230, 230, 0.95);
-	border: none;
-	width: 2.5vw;
-	height: 2.5vw;
-	text-align: center;
-	border-radius: 0.4vw;
-	transition: background-color 200ms ease-in-out;
-	font-size: 1vw;
-}
 
 .historyArrowButtons {
 	font-family: Carolingia, fantasy;
@@ -257,6 +246,19 @@ body.shake {
 	left: 50%;
 	bottom: 10%;
 	transform: translateX(-50%);
+	align-items: center;
+}
+
+#ticketHistoryInput {
+	font-family: Carolingia, fantasy;
+	background-color: rgba(230, 230, 230, 0.95);
+	border: none;
+	width: 2.5vw;
+	height: 2.5vw;
+	text-align: center;
+	border-radius: 0.4vw;
+	transition: background-color 200ms ease-in-out;
+	font-size: 1vw;
 }
 
 .ArrowButton {
