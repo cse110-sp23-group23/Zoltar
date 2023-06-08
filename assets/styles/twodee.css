@@ -156,15 +156,6 @@ button:hover {
 	transition: 0.7s;
 }
 
-/* .back-side {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	color: rgb(0, 0, 0);
-	z-index: 11;
-} */
-
 .back-side {
 	display: flex;
 	align-items: center;
@@ -174,7 +165,6 @@ button:hover {
 
 .back-side .rule {
 	width: 90%;
-	/* background-color:aqua; */
 	position: absolute;
 }
 
@@ -191,7 +181,6 @@ button:hover {
 	height: 85%;
 	width: 100%;
 	padding: 0 5%;
-	/* background-color: red; */
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -200,24 +189,19 @@ button:hover {
 }
 
 .content-container img {
-	/* background-color: yellow; */
 	height: 30%;
 }
 
 .content-container h1 {
-	/* background-color: purple; */
 	margin: 0;
 	font-size: calc(min(4vh, calc((4vh + 4vw) / 2)));
 }
 .content-container p {
 	text-align: justify;
-	/* background-color: blue; */
 	margin: 0;
 	font-size: calc(min(2vh, calc(2vh + 2vw) / 2));
 	font-family: Bodoni, monospace;
 }
-
-
 
 .front-side {
 	z-index: 11;
@@ -245,7 +229,6 @@ button:hover {
 
 .closeTicket {
 	position: absolute;
-	/* background-color:red; */
 	font-size: calc(min(4vh, calc((4vh + 4vw) / 2)));
 	transition: 0.1s;
 	z-index: 10;
@@ -268,31 +251,6 @@ button:hover {
 .visible {
 	top: 50%;
 }
-
-
-/* @media (max-height: 800px) {
-	.ticket {
-		background-color: red;
-		height: 70vh;
-		min-height: 80vh;
-	}
-
-	.ticket h1 {
-		z-index: 2;
-		font-size: 2rem;
-		line-height: 1rem;
-		margin: 0;
-	}
-	
-	.ticket p {
-		text-align: justify;
-		margin: 0.25rem 1.5rem;
-		justify-self: center;
-		font-family: Bodoni, monospace;
-		font-weight: 500;
-		font-size: 50%;
-	}
-} */
 
 /* ----------------------------------------Ticket History--------------------------------------- */
 .savedTicket {
