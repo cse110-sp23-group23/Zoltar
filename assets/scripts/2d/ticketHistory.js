@@ -49,6 +49,7 @@ function displayStorage() {
 			currentMessage: ticket.currentMessage,
 			currentNumbers: ticket.currentNumbers,
 			currentImageFront: ticket.currentImageFront,
+			currentImageBack: ticket.currentImageBack,
 		};
 		card.index = i;
 		card.content = state;

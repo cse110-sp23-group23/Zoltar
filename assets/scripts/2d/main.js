@@ -9,6 +9,7 @@ const OPEN = 1;
 const CLOSE = 0;
 const AUDIO_LOW = 0.3;
 const IMAGE_FRONT = 'assets/images/image-bank-front/header-';
+const IMAGE_BACK = 'assets/images/image-bank-back/background-card-';
 
 let domContent = {};
 let backgroundmp3;
@@ -20,6 +21,14 @@ let muteAudio;
 let disableZoltar = false;
 let muteBackgroundAudio = true;
 let ticketOnScreen = false;
+
+/**
+ * Flips the main ticket
+ */
+function flipCard() {
+	domContent.frontSide.classList.toggle('rotate');
+	domContent.backSide.classList.toggle('rotate');
+} /* flipCard */
 
 /**
  * Checks if ticket is on screen
@@ -118,7 +127,9 @@ function assignTicketContent() {
 	state.currentImageFront = chooseOptionFromArr(frontImages);
 	state.currentMessage = chooseOptionFromArr(responses.fortunes).message;
 	state.currentNumbers = produceRandomNumbers(4, 1, 100);
-	domContent.ticketImage.src = `${IMAGE_FRONT}${state.currentImageFront}.png`;
+
+	domContent.ticketFrontImage.src = `${IMAGE_BACK}${state.currentImageBack}.png`;
+	domContent.ticketHeaderImage.src = `${IMAGE_FRONT}${state.currentImageFront}.png`;
 	domContent.fortuneOutput.textContent = state.currentMessage;
 	domContent.fortuneNumber.textContent = `Your lucky numbers are: 
 		${convertArrToReadableString(state.currentNumbers)}`;
@@ -257,7 +268,9 @@ function go() {
  * @param none
  */
 export function openEightBall() {
-	window.location = ('https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/');
+	setTimeout(() => {
+		window.location = ('https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/');
+	}, 500);
 } /* openEightBall */
 
 /**
@@ -272,6 +285,11 @@ function createEventListeners() {
 	domContent.zoltar.addEventListener('click', zoltarHandler);
 	domContent.ticketX.addEventListener('click', () => { ticketHandler(CLOSE); });
 	createStoreButtonListener(domContent.storeButton);
+	domContent.ticket.addEventListener('click', () => {
+		if (ticketOnScreen) {
+			flipCard();
+		}
+	});
 } /* createEventListeners */
 
 function init() {
@@ -289,8 +307,11 @@ function init() {
 		loadedMessage: document.querySelector('.loaded-message'),
 		storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
 		storeButton: document.querySelectorAll('.storeButton'),
-		ticketImage: document.querySelector('.ticket-header-image'),
+		ticketHeaderImage: document.querySelector('.back-side-image'),
+		ticketFrontImage: document.querySelector('.ticket-front-image'),
 		eightball: document.querySelector('#eight-ball-image'),
+		backSide: document.querySelector('.back-side'),
+		frontSide: document.querySelector('.front-side'),
 	};
 	createEventListeners();
 	setTimeout(() => { domContent.loadedMessage.innerText = '[ press anywhere to continue ]'; }, LOADING_DELAY);

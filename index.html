@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-G676FKQ2F9"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-G676FKQ2F9');
+	</script>
 	<meta charset="UTF-8">
 	<meta name="description" content="Zoltar! fortune teller. See your future, if you dare...">
 	<meta name="keywords" content="Zoltar, Fortune, Magic, Future, Prophecy">
@@ -20,6 +30,7 @@
 		}
 	</script>
 </head>
+
 <body class="custom-mouse">
 	<!--begin splash screen-->
 	<div class="cover hidden"></div>
@@ -48,17 +59,20 @@
 			<div class="ticket-weathered-background">
 				<svg style="display: none;">
 					<defs>
-					<filter id="weathered-edges" x="0" y="0" width="100%" height="100%">
-						<feTurbulence baseFrequency="0.04" numOctaves="5" seed="10" type="fractalNoise" result="turbulence" />
-						<feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R" yChannelSelector="G" />
-					</filter>
+						<filter id="weathered-edges" x="0" y="0" width="100%" height="100%">
+							<feTurbulence baseFrequency="0.04" numOctaves="5" seed="10" type="fractalNoise"
+								result="turbulence" />
+							<feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R"
+								yChannelSelector="G" />
+						</filter>
 					</defs>
 				</svg>
 			</div>
 			<!--end SVG-->
 		</div>
 		<div class="ticket-back-content">
-			<img src="assets/images/image-bank-back/background-card-king.png" class="ticket-back-image" alt="medieval image on back of card" draggable="false">
+			<img src="assets/images/image-bank-back/background-card-king.png" class="ticket-back-image"
+				alt="medieval image on back of card" draggable="false">
 		</div>
 		<div class="ticket-front-content flipped">
 			<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule" draggable="false">
@@ -66,12 +80,16 @@
 				<img src="assets/images/close.png" alt="exit button" draggable="false">
 			</button>
 			<p class="ticket-title">YOUR FORTUNE</p>
-			<img src="assets/images/image-bank-front/header-classic.png" class="ticket-header-image" alt="header decorative image" draggable="false">
-			<p class="ticket-text" id="fortune-content">Zoltar foresees a fateful encounter with a one-eyed, bow-tied llama, revealing an ancient guacamole recipe. This divine discovery shall bring world peace and avocado enlightenment. Trust the llama's wisdom.</p>
+			<img src="assets/images/image-bank-front/header-classic.png" class="ticket-header-image"
+				alt="header decorative image" draggable="false">
+			<p class="ticket-text" id="fortune-content">Zoltar foresees a fateful encounter with a one-eyed, bow-tied
+				llama, revealing an ancient guacamole recipe. This divine discovery shall bring world peace and avocado
+				enlightenment. Trust the llama's wisdom.</p>
 			<p class="ticket-text">Your lucky numbers are <span id="ticket-lucky-numbers">12, 14, 37, and 72</span>.</p>
-			<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule" draggable="false">
+			<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule"
+				draggable="false">
 		</div>
-	</div>	
+	</div>
 	<!--end main ticket-->
 	<!--ticket history interface and controls-->
 	<div class="save-delete-ticket hidden">
@@ -86,7 +104,7 @@
 			<img src="assets/images/close.png" alt="exit button" draggable="false">
 		</button>
 		<div class="ticket-history">
-			
+
 		</div>
 		<div class="ticket-history-controls">
 			<button id="left-button">
@@ -104,6 +122,7 @@
 	<!--end ticket history interface and controls-->
 	<!--ticket history template for use by HistoricalTicket.js-->
 	<template id="historical-ticket-template">
+
 		<head>
 			<style>
 				@import url('./assets/styles/pasttickets.css');
@@ -112,26 +131,34 @@
 		<div class="ticket-wrapper">
 			<div class="ticket-background flipped">
 				<div class="ticket-weathered-background">
-				<svg style="display: none;">
-					<defs>
-					<filter id="weathered-edges" x="0" y="0" width="100%" height="100%">
-						<feTurbulence baseFrequency="0.04" numOctaves="5" seed="10" type="fractalNoise" result="turbulence" />
-						<feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R" yChannelSelector="G" />
-					</filter>
-					</defs>
-				</svg>
+					<svg style="display: none;">
+						<defs>
+							<filter id="weathered-edges" x="0" y="0" width="100%" height="100%">
+								<feTurbulence baseFrequency="0.04" numOctaves="5" seed="10" type="fractalNoise"
+									result="turbulence" />
+								<feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R"
+									yChannelSelector="G" />
+							</filter>
+						</defs>
+					</svg>
 				</div>
 			</div>
 			<div class="ticket-back-content flipped">
-				<img src="assets/images/image-bank-back/background-card-king.png" class="ticket-back-image" alt="medieval image on back of card" draggable="false">
+				<img src="assets/images/image-bank-back/background-card-king.png" class="ticket-back-image"
+					alt="medieval image on back of card" draggable="false">
 			</div>
 			<div class="ticket-front-content">
-				<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule" draggable="false">
+				<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule"
+					draggable="false">
 				<p class="ticket-title">YOUR FORTUNE</p>
-				<img src="assets/images/image-bank-front/header-classic.png" class="ticket-header-image" alt="header decorative image" draggable="false">
-				<p class="ticket-text"><slot name="fortune-content"></slot></p>
+				<img src="assets/images/image-bank-front/header-classic.png" class="ticket-header-image"
+					alt="header decorative image" draggable="false">
+				<p class="ticket-text">
+					<slot name="fortune-content"></slot>
+				</p>
 				<p class="ticket-text">Your lucky numbers are <slot name="lucky-numbers"></slot>.</p>
-				<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule" draggable="false">
+				<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule"
+					draggable="false">
 				<div class="ticket-flip-overlay hidden">
 					<button class="flip-history-button">Flip</button>
 					<button class="discard-history-button">Discard</button>
@@ -155,4 +182,5 @@
 	<script type="module" src="assets/scripts/HistoricalTicket.js"></script>
 	<script type="module" src="assets/scripts/main.js"></script>
 </body>
+
 </html>
