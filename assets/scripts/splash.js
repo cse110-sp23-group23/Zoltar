@@ -1,7 +1,7 @@
 import { playBackgroundNoise } from './noise.js';
 
 const LOADED_MESSAGE = '[ press anywhere to continue ]';
-const INSTRUCTIONS_DURATION_MS = 2000;
+const INSTRUCTIONS_DURATION_MS = 2;
 
 const dom = {};
 
