@@ -134,6 +134,46 @@ button:hover {
 	filter: brightness(50%);
 }
 
+#floor-img {
+	display: none;
+	z-index: 1;
+	position: absolute;
+	top: 115%;
+	left: 50%;
+	width: 200%;
+	filter: brightness(50%);
+	
+}
+
+@media (max-width: 800px) {
+	
+	.zoltar-image {
+		height: 80vh;
+		/* background-color: red; */
+	}
+
+	#floor-img {
+		display: inline;
+	}
+
+	#background-img {
+		height: 120vh;
+		width: 120vw;
+	}
+
+	#eightBallContainer {
+		height: 80vh;
+		width: calc(2/3 * 80vh);
+		opacity: 50%;
+	}
+
+	#eight-ball-image {
+		height: 14%;
+		left: 25.5%;
+		top: 82%;
+	}
+}
+
 /* -----------------------------------------Main Ticket----------------------------------------- */
 
 .ticket {
