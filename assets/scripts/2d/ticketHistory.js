@@ -34,7 +34,8 @@ export function translateCards() {
  * @param {number} position card position
  */
 function updateCounterSpan(position) {
-	domContent.currentCardPosition.innerText = `${position + 1} / ${currentCards.length}`;
+	domContent.inputForm.value = position + 1;
+	domContent.currentCardPosition.innerText = ` / ${count}`;
 } /* updateCounterSpan */
 
 /**
@@ -61,15 +62,6 @@ function displayStorage() {
 	updateCounterSpan(selectedCard);
 	translateCards();
 } /* displayStorage */
-
-/**
- * Updates the counter between the arrow buttons on the ticket history screen
- * @param {number} position card position
- */
-function updateCounterSpan(position) {
-	domContent.inputForm.value = position + 1;
-	domContent.currentCardPosition.innerText = ` / ${count}`;
-} /* updateCounterSpan */
 
 /**
  * Slides the Cards left or right

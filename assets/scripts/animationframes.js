@@ -9,7 +9,10 @@
  * @returns { Vector3 } - representation of intermediate distance on coord plane
  */
 function calcMidDistance(objectPos, targetPos, speed, delta) {
-	return targetPos.clone().sub(objectPos).multiplyScalar(speed * delta);
+	return targetPos
+		.clone()
+		.sub(objectPos)
+		.multiplyScalar(speed * delta);
 } /* calcMidDistance */
 
 /**
