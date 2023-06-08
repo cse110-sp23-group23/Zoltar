@@ -11,7 +11,6 @@ import { removeCard } from './ticketHistory.js';
 class SavedTicket2D extends HTMLElement {
 	constructor() {
 		super();
-
 		this.identifier = null;
 		this.flipped = false;
 		const shadow = this.attachShadow({ mode: 'open' });
@@ -28,7 +27,6 @@ class SavedTicket2D extends HTMLElement {
             @import url('./assets/styles/ticket.css');
 		`;
 
-		// Discard Button
 		const discardButton = document.createElement('button');
 		discardButton.setAttribute('id', 'discardShadow');
 		discardButton.classList.add('clickable');
@@ -78,20 +76,23 @@ class SavedTicket2D extends HTMLElement {
 		}
 
 		this.shadowRoot.querySelector('section').innerHTML += `
-			<div class="front-side rotate clickable">
+			<div class="front-side subTicket rotate clickable">
 				<img loading="lazy" src="assets/images/image-bank-back/background-card-${state.currentImageBack}.png"
 				"class="ticket-front-image" alt="Front ticket image">
 			</div>
-			<div class="back-side">
-				<img loading="lazy" src="/assets/images/horizontalrule.png" class="top">
-				<h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
-				<img loading="lazy" src="assets/images/image-bank-front/header-${state.currentImageFront}.png" 
-					class="ticket-header-image">
-				<p class="fortune-text">${state.currentMessage}</p>
-				<p class="fortune-number">
-					Your lucky numbers are ${convertArrToReadableString(state.currentNumbers)}
-				</p>
-				<img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom">
+			<div class="back-side subTicket">
+				<img loading="lazy" src="/assets/images/horizontalrule.png" class="rule top-rule">
+				<section class="content-container">
+					<h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
+					<img loading="lazy" class="back-side-image" 
+					src="assets/images/image-bank-front/header-${state.currentImageFront}.png" 
+						class="ticket-header-image">
+					<p class="fortune-text">${state.currentMessage}</p>
+					<p class="fortune-number">
+						Your lucky numbers are ${convertArrToReadableString(state.currentNumbers)}
+					</p>
+				</section>
+				<img loading="lazy" src="/assets/images/horizontalrule.png" class="rule bottom-rule">
 			</div>
 	        `;
 	}

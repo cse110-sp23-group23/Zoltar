@@ -137,40 +137,90 @@ button:hover {
 /* -----------------------------------------Main Ticket----------------------------------------- */
 
 .ticket {
-	height: 55vh;
-	min-height: 600px;
+	/* height: 65vh; */
+	height: calc(min(65vh, calc((65vh + 65vw) / 2)));
 	aspect-ratio: 1/1.5;
 	z-index: 10;
 	display: flex;
 	align-items: center;
-	border-radius: 20px;
+	border-radius: 6%;
 }
 
-.back-side {
+.subTicket {
 	position: absolute;
 	height: 100%;
 	width: 100%;
+	background-image: url('../images/2d/paper-texture.webp');
+	background-size: cover;
+	border-radius: inherit;
+	transition: 0.7s;
+}
+
+/* .back-side {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: rgb(0, 0, 0);
+	z-index: 11;
+} */
+
+.back-side {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 11;
+}
+
+.back-side .rule {
+	width: 90%;
+	/* background-color:aqua; */
+	position: absolute;
+}
+
+.top-rule {
+	top: 0;
+}
+
+.bottom-rule {
+	bottom: 0;
+}
+
+
+.content-container {
+	height: 85%;
+	width: 100%;
+	padding: 0 5%;
+	/* background-color: red; */
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
-	color: rgb(0, 0, 0);
-	border-radius: inherit;
-	background-image: url('../images/2d/paper-texture.webp');
-	background-size: cover;
-	transition: 0.7s;
-	z-index: 11;
+	overflow: hidden;
 }
 
+.content-container img {
+	/* background-color: yellow; */
+	height: 30%;
+}
+
+.content-container h1 {
+	/* background-color: purple; */
+	margin: 0;
+	font-size: calc(min(4vh, calc((4vh + 4vw) / 2)));
+}
+.content-container p {
+	text-align: justify;
+	/* background-color: blue; */
+	margin: 0;
+	font-size: calc(min(2vh, calc(2vh + 2vw) / 2));
+	font-family: Bodoni, monospace;
+}
+
+
+
 .front-side {
-	position: absolute;
-	height: 100%;
-	width: 100%;
-	border-radius: inherit;
-	transition: 0.7s;
 	z-index: 11;
-	background-image: url('../images/2d/paper-texture.webp');
-	background-size: cover;
 }
 
 .rotate {
@@ -193,33 +243,17 @@ button:hover {
 	transform: translate(-50%, -50%) rotateX(7deg) rotateY(7deg);
 }
 
-.ticket h1 {
-	z-index: 2;
-	font-size: 2rem;
-	line-height: 1rem;
-	margin: 0;
-}
-
-.ticket p {
-	text-align: justify;
-	margin: 0.25rem 1.5rem;
-	justify-self: center;
-	font-family: Bodoni, monospace;
-	font-weight: 500;
-	font-size: 1.1rem;
-}
-
 .closeTicket {
 	position: absolute;
-	transition: 0.2s;
-}
-
-#closeTicket {
-	font-size: 2em;
+	/* background-color:red; */
+	font-size: calc(min(4vh, calc((4vh + 4vw) / 2)));
+	transition: 0.1s;
 	z-index: 10;
+	line-height: calc(min(3vh, calc((3vh + 3vw) / 2)));
 	color: #220505;
-	left: 15px;
-	top: 5px;
+	left: 0%;
+	top: 0%;
+	padding: calc(min(0.8vh, calc((0.8vh + 0.8vw) / 2)));
 }
 
 #closeTicket:hover {
@@ -236,11 +270,29 @@ button:hover {
 }
 
 
-@media (max-height: 800px) {
+/* @media (max-height: 800px) {
 	.ticket {
-		min-height: 100px;
+		background-color: red;
+		height: 70vh;
+		min-height: 80vh;
 	}
-}
+
+	.ticket h1 {
+		z-index: 2;
+		font-size: 2rem;
+		line-height: 1rem;
+		margin: 0;
+	}
+	
+	.ticket p {
+		text-align: justify;
+		margin: 0.25rem 1.5rem;
+		justify-self: center;
+		font-family: Bodoni, monospace;
+		font-weight: 500;
+		font-size: 50%;
+	}
+} */
 
 /* ----------------------------------------Ticket History--------------------------------------- */
 .savedTicket {
@@ -335,15 +387,18 @@ button:hover {
 /* -------------Ticket History UI------------- */
 #ticketHistoryCircle {
 	position: absolute;
-	bottom: 2vw;
-	right: 2vw;
+	bottom: 0;
+	right: 0;
+	margin: 2rem;
+	padding: 0;
 	background-color: yellow;
-	width: 5vw;
-	height: 5vw;
-	border-radius: 5vw;
+	width: 70px;
+	height: 70px;
+	border-radius: 100%;
 	text-align: center;
+	justify-content: center;
 	border: none;
-	font-size: 2vw;
+	font-size: 3rem;
 	font-family: Cinzel, fantasy;
 	z-index: 100;
 }

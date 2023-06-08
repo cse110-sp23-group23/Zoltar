@@ -307,7 +307,7 @@ function init() {
 		loadedMessage: document.querySelector('.loaded-message'),
 		storeTicketPrompt: document.querySelector('#storeTicketPrompt'),
 		storeButton: document.querySelectorAll('.storeButton'),
-		ticketHeaderImage: document.querySelector('.ticket-header-image'),
+		ticketHeaderImage: document.querySelector('.back-side-image'),
 		ticketFrontImage: document.querySelector('.ticket-front-image'),
 		eightball: document.querySelector('#eight-ball-image'),
 		backSide: document.querySelector('.back-side'),

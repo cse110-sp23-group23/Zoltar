@@ -65,18 +65,19 @@
 
 	<!-- Main ticket fortune when clicking on zoltar-->
 	<section id="mainTicket" class="mainTicket ticket slide-in clickable">
-		<div class="front-side">
+		<div class="front-side subTicket">
 			<img loading="lazy" class="ticket-front-image" alt="Front ticket image">
 		</div>
-		<div class="back-side rotate">
-			<img loading="lazy" src="/assets/images/horizontalrule.png" class="top" alt="ticket horizontal rule">
-			<span class="closeTicket clickable" id="closeTicket">&times;</span>
-			<h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
-			<!-- <img loading="lazy" src="assets/images/header.png" class="ticket-header-image"> -->
-			<img loading="lazy" class="ticket-header-image" alt="ticket header">
-			<p id="fortune-output"></p>
-			<p id="fortune-number"></p>
-			<img loading="lazy" src="/assets/images/horizontalrule.png" class="bottom" alt="ticket bottom rule">
+		<div class="back-side subTicket rotate">
+			<img loading="lazy" src="/assets/images/horizontalrule.png" class="rule top-rule" alt="ticket horizontal rule">
+			<span class="closeTicket clickable" id="closeTicket">&times</span>
+			<section class="content-container">
+				<h1 class="ticket-title" class="loaded-message">YOUR FORTUNE</h1>
+				<img loading="lazy" class="back-side-image" alt="ticket header">
+				<p id="fortune-output"></p>
+				<p id="fortune-number"></p>
+			</section>
+			<img loading="lazy" src="/assets/images/horizontalrule.png" class="rule bottom-rule" alt="ticket bottom rule">
 		</div>
 	</section>
 
