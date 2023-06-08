@@ -64,6 +64,15 @@ function displayStorage() {
 } /* displayStorage */
 
 /**
+ * Updates the counter between the arrow buttons on the ticket history screen
+ * @param {number} position card position
+ */
+function updateCounterSpan(position) {
+	domContent.inputForm.value = position + 1;
+	domContent.currentCardPosition.innerText = ` / ${count}`;
+} /* updateCounterSpan */
+
+/**
  * Slides the Cards left or right
  * @param {number} dir -1 or 1
  */
