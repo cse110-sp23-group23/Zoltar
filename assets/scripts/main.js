@@ -359,10 +359,10 @@ function animateShakeFrame(delta) {
 
 /**
  * Helper to calculate a 'step' in the direction of targetPos from objectPos in 3 dimensions
- * @param {*} objectPos - vector representing cur position in 3d space
- * @param {*} targetPos - vector representing target position in 3d spcae
- * @param {*} speed - scalar representing proportion of distance to travel
- * @param {*} delta - time since last call
+ * @param { Vector3 } objectPos - vector representing cur position in 3d space
+ * @param { Vector3} targetPos - vector representing target position in 3d spcae
+ * @param { Double } speed - scalar representing proportion of distance to travel
+ * @param { Double } delta - time since last call
  * @returns { Vector3 } - representation of intermediate distance on coord plane
  */
 function calcMidDistance(objectPos, targetPos, speed, delta) {
