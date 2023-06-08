@@ -33,8 +33,9 @@ export function translateCards() {
  * Updates the counter between the arrow buttons on the ticket history screen
  * @param {number} position card position
  */
-function updateCounterSpan(position) {
-	domContent.currentCardPosition.innerText = `${position + 1} / ${currentCards.length}`;
+function updateCounterSpan() {
+	domContent.inputForm.value = selectedCard + 1;
+	domContent.currentCardPosition.innerText = ` / ${count}`;
 } /* updateCounterSpan */
 
 /**
@@ -63,19 +64,11 @@ function displayStorage() {
 } /* displayStorage */
 
 /**
- * Updates the counter between the arrow buttons on the ticket history screen
- * @param {number} position card position
- */
-function updateCounterSpan(position) {
-	domContent.inputForm.value = position + 1;
-	domContent.currentCardPosition.innerText = ` / ${count}`;
-} /* updateCounterSpan */
-
-/**
  * Slides the Cards left or right
  * @param {number} dir -1 or 1
  */
 function slide(dir) {
+	console.log(selectedCard + dir);
 	selectedCard = clamp(selectedCard + dir, 0, currentCards.length - 1);
 	translateCards();
 	updateCounterSpan(selectedCard);
@@ -150,6 +143,7 @@ export function removeCard(card) {
 		toggleItems(CLOSE);
 	}
 	updateticketHistoryCount();
+	updateCounterSpan();
 } /* removeCard */
 
 /**
@@ -173,6 +167,12 @@ function historyCircleButtonFunc() {
 	displayStorage();
 	historyOnScreen = true;
 } /* historyCircleButtonFunc */
+
+function inputFormHandler() {
+	selectedCard = Number(domContent.inputForm.value) - 1;
+	console.log(selectedCard);
+	slide(0);
+}
 
 window.addEventListener('keydown', (event) => {
 	if (!historyOnScreen) return;
@@ -199,6 +199,7 @@ function init() {
 	domContent.historyCloseButton.addEventListener('click', () => { toggleItems(CLOSE); });
 	domContent.leftButton.addEventListener('click', () => { slide(-1); });
 	domContent.rightButton.addEventListener('click', () => { slide(1); });
+	domContent.inputForm.addEventListener('change', () => { inputFormHandler(); });
 
 	updateticketHistoryCount();
 	updateCounterSpan(0);

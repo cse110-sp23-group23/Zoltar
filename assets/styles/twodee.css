@@ -339,7 +339,7 @@ button:hover {
 	display: flex;
 	position: absolute;
 	left: 50%;
-	bottom: 10%;
+	bottom: calc(min(5vh, calc(5vh + 5vw) / 2));;
 	transform: translateX(-50%);
 	align-items: center;
 }
@@ -438,8 +438,9 @@ button:hover {
 
 .storeButton {
 	font-family: Cinzel, fantasy;
-	height: 7vh;
-	width: 15vw;
+	height: calc(max(7vh, calc(7vh + 7vw) / 2));
+	width: calc(max(15vw, calc(15vw + 15vw) / 2));
+	font-size:calc(min(3vh, calc(3vh + 3vw) / 2));
 	border-radius: 10px;
 	margin-left: 20px;
 }

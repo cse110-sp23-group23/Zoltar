@@ -146,11 +146,11 @@ function ticketHandler(action) {
 		if (thundermp3) thundermp3.play();
 		shakeScreen();
 		assignTicketContent();
-		disableZoltar = true;
 		setTimeout(() => {
 			displayTicket();
+			disableZoltar = true;
+			ticketOnScreen = true;
 		}, 1300);
-		ticketOnScreen = true;
 	} else if (ticketOnScreen) {
 		displayTicketPrompt();
 		closeTicket();

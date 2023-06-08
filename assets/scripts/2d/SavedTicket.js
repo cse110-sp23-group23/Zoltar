@@ -117,7 +117,7 @@ class SavedTicket2D extends HTMLElement {
 	flip() {
 		this.flipped = !this.flipped;
 
-		const div = this.shadowRoot.querySelectorAll('div');
+		const div = this.shadowRoot.querySelector('div');
 		this.shadowRoot.querySelectorAll('.subTicket').forEach((el) => {
 			el.classList.toggle('rotate');
 		});
