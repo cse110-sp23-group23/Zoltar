@@ -341,13 +341,14 @@ function handleResize() {
  */
 function animate() {
 	const delta = clock.getDelta();
-
-	animateShakeFrame(delta, state, options, ticket, camera, scene);
-	animateFlickerFrame(delta, state, options, scene, ambient);
-	animateTicketSlideFrame(delta, options, ticket);
-	conditionalAnimateSlideCameraFrame(delta, state, options, camera);
+	const args = {
+		state, options, ticket, camera, scene, ambient,
+	};
+	animateShakeFrame(delta, args);
+	animateFlickerFrame(delta, args);
+	animateTicketSlideFrame(delta, args);
+	conditionalAnimateSlideCameraFrame(delta, args);
 	controls.update(delta);
-
 	renderer.render(scene, camera);
 	requestAnimationFrame(animate);
 } /* animate */
