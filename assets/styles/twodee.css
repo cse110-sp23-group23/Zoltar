@@ -15,10 +15,6 @@ body.shake {
 	pointer-events: none;
 }
 
-.clickable {
-	cursor: url('../images/customcursorclick.png'), pointer;
-}
-
 .vignette {
 	position: absolute;
 	z-index: -5;

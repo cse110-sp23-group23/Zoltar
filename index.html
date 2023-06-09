@@ -162,6 +162,19 @@
 		</div>
 	</template>
 	<!--end ticket history template-->
+	<!-- Settings Menu -->
+	<div class="settings-menu-container">
+		<button class="settings-menu-button clickable">
+			<img src="./assets/images/left-arrow.png">
+		</button>
+		<section class="settings-menu-settings">
+			<img class="settings-menu-icon clickable" src="./assets/images/zoltar-title.webp">
+			<img class="volume settings-menu-icon clickable" src="./assets/images/volume-on-icon.webp">
+			<img class="settings-menu-icon clickable" src="./assets/images/information-icon.png">
+			<img class="exit-zoltar settings-menu-icon clickable" src="./assets/images/quit-icon.png">
+		</section>
+	</div>
+	
 	<script>
 		// offer 2d version after 20s, loaded inline for faster execution
 		setTimeout(() => {
@@ -170,6 +183,7 @@
 	</script>
 	<script type="module" src="assets/scripts/HistoricalTicket.js"></script>
 	<script type="module" src="assets/scripts/main.js"></script>
+	<script type="module" src="assets/scripts/settings.js"></script>
 </body>
 
 </html>

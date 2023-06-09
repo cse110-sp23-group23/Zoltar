@@ -309,6 +309,7 @@ historical-ticket {
 }
 
 .settings-menu-container {
+	width: calc(min(17vh, calc((17vh + 17vw) / 2)));
 	padding: 2rem;
 	position: absolute;
 	top: 0;
@@ -320,7 +321,7 @@ historical-ticket {
 }
 
 .settings-menu-button {
-	width: calc(min(10vh, calc((10vh + 10vw) / 2)));
+	width: 50%;
 	background-color: transparent;
 	border: transparent;
 	padding: 0;
@@ -333,12 +334,17 @@ historical-ticket {
 	transition: 0.5s ease;
 }
 
+.settings-menu-button img:hover {
+	filter: brightness(65%);
+}
+
+
 .settings-menu-button:active {
 	border-style: outset;
 }
 
 .settings-menu-settings {
-	width: calc(min(10vh, calc((10vh + 10vw) / 2)));
+	width: 50%;
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
@@ -347,6 +353,11 @@ historical-ticket {
 .settings-menu-icon {
 	width: 100%;
 	filter: invert(1);
+	transition: 0.3s ease;
+}
+
+.settings-menu-icon:hover {
+	transform: scale(1.1);
 }
 
 .clicked {
@@ -355,4 +366,8 @@ historical-ticket {
 
 .settings-slide-in {
 	transform: translateX(0);
+}
+
+.clickable {
+	cursor: url('../images/customcursorclick.png'), pointer;
 }
