@@ -11,7 +11,7 @@ const state = {
  * @param none
  * @return { Boolean }
  */
-function historyIsOpen() {
+export function historyIsOpen() {
 	return !domContent.historyWrapper.classList.contains('hidden');
 } /* historyIsOpen */
 

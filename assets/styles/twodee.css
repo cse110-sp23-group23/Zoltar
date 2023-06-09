@@ -1,0 +1,225 @@
+.camera {
+	will-change: transform;
+	position: absolute;
+	transition: 0.45s cubic-bezier(0.2, 0.49, 0.32, 0.99);
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+}
+
+body.shake {
+	animation: shake 0.5s;
+	animation-iteration-count: 2;
+}
+
+.noPointer {
+	pointer-events: none;
+}
+
+/* ------------------------------------------Mr Zoltar------------------------------------------ */
+
+.zoltarContainer {
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	z-index: -100;
+}
+
+#eightBallContainer {
+	opacity: 100%;
+	z-index: 7;
+	height: 140vh;
+	width: calc(2/3 * 140vh);
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+
+#eight-ball-image {
+	z-index: 7;
+	position: relative;
+	height: 14%;
+	left: 25.5%;
+	top: 79.5%;
+	opacity: 10%;
+	transform: translate(-50%, -50%);
+	transition: 0.6s;
+}
+
+#eight-ball-image:hover {
+	opacity: 95%;
+	animation: shake-center-aligned 0.2s;
+	animation-iteration-count: 100;
+	animation-delay: 0.3s;
+}
+
+.zoltar-image {
+	pointer-events: none;
+	top: 55%;
+	left: 50%;
+	height: 140vh;
+}
+
+#zoltar-test {
+	z-index: 1;
+	position: relative !important;
+}
+
+#zoltar-body {
+	z-index: 4;
+}
+
+#zoltar-eyes {
+	z-index: 3;
+}
+
+#zoltar-roof {
+	z-index: 5;
+}
+
+#zoltar-frame {
+	z-index: 6;
+}
+
+#zoltar-lamp {
+	z-index: 5;
+}
+
+#zoltar-title {
+	z-index: 5;
+}
+
+#zoltar-hands {
+	z-index: 5;
+}
+
+#zoltar-box {
+	z-index: 2;
+}
+
+#background-img {
+	height: 150vh;
+	width: 150vw;
+	top: 50%;
+	z-index: 1;
+	filter: brightness(50%);
+}
+
+#floor-img {
+	display: none;
+	z-index: 1;
+	position: absolute;
+	top: 115%;
+	left: 50%;
+	width: 200%;
+	filter: brightness(50%);
+}
+
+@media (max-width: 800px) {
+	
+	.zoltar-image {
+		height: 80vh;
+		/* background-color: red; */
+	}
+
+	#background-img {
+		height: 120vh;
+		width: 120vw;
+	}
+
+	#eightBallContainer {
+		height: 80vh;
+		width: calc(2/3 * 80vh);
+		opacity: 50%;
+	}
+
+	#eight-ball-image {
+		height: 14%;
+		left: 25.5%;
+		top: 82%;
+	}
+}
+
+.vignette {
+	position: absolute;
+	z-index: -5;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 1));
+	pointer-events: none;
+}
+
+@keyframes shake-center-aligned {
+	0% {
+		transform: translate(calc(-50% + 1px), calc(-50% + 1px)) rotate(0deg);
+	}
+	10% {
+		transform: translate(calc(-50% - 1.5px), calc(-50% - 2.5px)) rotate(-1deg);
+	}
+	20% {
+		transform: translate(calc(-50% - 6px), calc(-50% + 0px)) rotate(1deg);
+	}
+	30% {
+		transform: translate(calc(-50% + 6px), calc(-50% + 3px)) rotate(0deg);
+	}
+	40% {
+		transform: translate(calc(-50% + 1px), calc(-50% - 1px)) rotate(1deg);
+	}
+	50% {
+		transform: translate(calc(-50% - 1.5px), calc(-50% + 2.5px)) rotate(-1deg);
+	}
+	60% {
+		transform: translate(calc(-50% - 6px), calc(-50% + 1px)) rotate(0deg);
+	}
+	70% {
+		transform: translate(calc(-50% + 6px), calc(-50% + 1px)) rotate(-1deg);
+	}
+	80% {
+		transform: translate(calc(-50% - 1px), calc(-50% - 1px)) rotate(1deg);
+	}
+	90% {
+		transform: translate(calc(-50% + 1.5px), calc(-50% + 2.5px)) rotate(0deg);
+	}
+	100% {
+		transform: translate(calc(-50% + 1px), calc(-50% - 2.5px)) rotate(-1deg);
+	}
+}
+
+@keyframes shake {
+	0% {
+		transform: translate(1px, 1px) rotate(0deg);
+	}
+	10% {
+		transform: translate(-1px, -2px) rotate(-1deg);
+	}
+	20% {
+		transform: translate(-3px, 0px) rotate(1deg);
+	}
+	30% {
+		transform: translate(3px, 2px) rotate(0deg);
+	}
+	40% {
+		transform: translate(1px, -1px) rotate(1deg);
+	}
+	50% {
+		transform: translate(-1px, 2px) rotate(-1deg);
+	}
+	60% {
+		transform: translate(-3px, 1px) rotate(0deg);
+	}
+	70% {
+		transform: translate(3px, 1px) rotate(-1deg);
+	}
+	80% {
+		transform: translate(-1px, -1px) rotate(1deg);
+	}
+	90% {
+		transform: translate(1px, 2px) rotate(0deg);
+	}
+	100% {
+		transform: translate(1px, -2px) rotate(-1deg);
+	}
+}
