@@ -1,5 +1,6 @@
-import { isHistoryOnScreen } from './ticketHistory.js';
-import { isTicketOnScreen } from './main.js';
+import { historyIsOpen } from './storage.js';
+import { isTicketCurrentlyDisplayed } from './ticket.js';
+import { state } from './main2d.js';
 
 let cameraEl;
 let vignette;
@@ -46,7 +47,7 @@ function flickerLights() {
  */
 function cameraMove(e) {
 	frame += 1;
-	if (isHistoryOnScreen() || isTicketOnScreen()) return; // Pauses movements if any assets are displaying on screen.
+	if (historyIsOpen() || isTicketCurrentlyDisplayed() || !state.controls.API.enabled) return;
 	if (frame % FRAMES_BETWEEN_FLICKER === 0) flickerLights();
 	if (frame % 2 === 0) return;	// Improve performance by reducing frames to calculate.
 

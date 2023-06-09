@@ -66,10 +66,6 @@ export const options = {
 		baseOpacity: 0.7,
 		frames: [ // of form [action, numLayers, speed (inverse), timeUntilNextMS]
 			['remove', 0, 7, 1500],
-			// ['add', 50, 7, 1000],
-			// ['remove', 0, 1, 2000],
-			// ['add', 50, 7, 1000],
-			// ['remove', 0, 7, 3000],
 			['add', 100, 8, 0],
 		],
 	},
