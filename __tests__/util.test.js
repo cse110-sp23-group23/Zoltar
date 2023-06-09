@@ -54,15 +54,17 @@ describe('toggleClassToArr', () => {
 		expect((classlist.length)).toBe(int);
 	}
 
-	test('should add class to the tags', () => {
+	beforeEach(() => {
 		toggleClassToArr(arr, 'dummy-class');
+	});
+
+	test('should add class to the tags', () => {
 		arr.forEach((tag) => {
 			testClassList(tag.classList, true, 1);
 		});
 	});
 
 	test('should remove class from the tags', () => {
-		toggleClassToArr(arr, 'dummy-class');
 		arr.forEach((tag) => {
 			testClassList(tag.classList, false, 0);
 		});
