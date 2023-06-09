@@ -48,7 +48,7 @@ describe('toggleClassToArr', () => {
 
 	const arr = [one, two, three];
 
-	function testThings(classlist, bool, int) {
+	function testClassList(classlist, bool, int) {
 		expect((typeof classlist)).toBe('object');
 		expect((classlist.contains('dummy-class'))).toBe(bool);
 		expect((classlist.length)).toBe(int);
@@ -57,14 +57,14 @@ describe('toggleClassToArr', () => {
 	test('should add class to the tags', () => {
 		toggleClassToArr(arr, 'dummy-class');
 		arr.forEach((tag) => {
-			testThings(tag.classList, true, 1);
+			testClassList(tag.classList, true, 1);
 		});
 	});
 
 	test('should remove class from the tags', () => {
 		toggleClassToArr(arr, 'dummy-class');
 		arr.forEach((tag) => {
-			testThings(tag.classList, false, 0);
+			testClassList(tag.classList, false, 0);
 		});
 	});
 });
