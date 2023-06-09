@@ -1,22 +1,35 @@
 const VOLUME_SRC_ON = './assets/images/volume-on-icon.webp';
 const VOLUME_SRC_OFF = './assets/images/volume-off-icon.webp';
+const DEFAULT_SETTINGS = {
+	isVolumeOn: true,
+};
 
-let isVolumeOn = true;
 let dom = {};
+let settings = {
+	isVolumeOn: true,
+};
+
+function refreshSettingsMenu() {
+	dom.volume.src = settings.isVolumeOn ? VOLUME_SRC_OFF : VOLUME_SRC_ON;
+}
+
+function putSettingsLocalStorage() {
+	localStorage.setItem('settings', JSON.stringify(settings));
+}
+
+function getSettingsLocalStorage() {
+	settings = JSON.parse(localStorage.getItem('settings')) || DEFAULT_SETTINGS;
+	refreshSettingsMenu();
+}
 
 /**
- * doesnt work but i sleep now
+ * Toggles mute on / off and saves state to localStorage
+ * @param none
  */
-function toggleVolume() {
-	if (isVolumeOn) {
-		dom.volume.src = VOLUME_SRC_OFF;
-		isVolumeOn = false;
-		// volumeOff();
-	} else {
-		dom.volume.src = VOLUME_SRC_ON;
-		isVolumeOn = true;
-		// volumeOn();
-	}
+function toggleMute() {
+	settings.isVolumeOn = !settings.isVolumeOn;
+	putSettingsLocalStorage();
+	refreshSettingsMenu();
 }
 
 function toggleSettingsContainer() {
@@ -32,9 +45,11 @@ function init() {
 		exitButton: document.querySelector('.exit-zoltar'),
 	};
 
+	getSettingsLocalStorage();
+
 	// eslint-disable-next-line no-restricted-globals
-	dom.exitButton.addEventListener('click', () => { location.reload(); });
-	dom.settingsButton.addEventListener('click', () => { toggleSettingsContainer(); });
-	dom.volume.addEventListener('click', () => { toggleVolume(); });
+	dom.exitButton.addEventListener('click', location.reload);
+	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
+	dom.volume.addEventListener('click', toggleMute);
 }
 document.addEventListener('DOMContentLoaded', init);
