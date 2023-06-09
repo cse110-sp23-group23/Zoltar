@@ -15,6 +15,21 @@ body.shake {
 	pointer-events: none;
 }
 
+.clickable {
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.vignette {
+	position: absolute;
+	z-index: -5;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 1));
+	pointer-events: none;
+}
+
 /* ------------------------------------------Mr Zoltar------------------------------------------ */
 
 .zoltarContainer {
@@ -26,7 +41,7 @@ body.shake {
 	z-index: -100;
 }
 
-#eightBallContainer {
+#eight-ball-container {
 	opacity: 100%;
 	z-index: 7;
 	height: 140vh;
@@ -128,7 +143,7 @@ body.shake {
 		width: 120vw;
 	}
 
-	#eightBallContainer {
+	#eight-ball-container {
 		height: 80vh;
 		width: calc(2/3 * 80vh);
 		opacity: 50%;
@@ -141,16 +156,7 @@ body.shake {
 	}
 }
 
-.vignette {
-	position: absolute;
-	z-index: -5;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 1));
-	pointer-events: none;
-}
+/* ------------------------------------------Animations------------------------------------------ */
 
 @keyframes shake-center-aligned {
 	0% {

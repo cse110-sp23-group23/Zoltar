@@ -300,6 +300,6 @@ historical-ticket {
 	top: 50%;
 	height: 35vw;
 	width: 25vw;
-	transition: transform 500ms linear;
+	transition: transform 0.45s ease;
 	perspective: 65vw;
 }

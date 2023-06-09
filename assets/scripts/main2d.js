@@ -57,9 +57,11 @@ function addCardToScene() {
  * @param none
  */
 export function openEightBall() {
+	state.controls.API.enabled = false;
+	startShaking();
 	setTimeout(() => {
 		window.location = ('https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/');
-	}, 500);
+	}, 800);
 } /* openEightBall */
 
 /**
@@ -67,7 +69,9 @@ export function openEightBall() {
  * @param { Event } event - keypress event passed by eventlistener
  */
 function handleKeypress(event) {
-	if (event.key === ' ' && canTriggerEvent()) {
+	if (!(event.key === ' ' || event.target.id === 'eight-ball-container')) return;
+
+	if (canTriggerEvent()) {
 		state.ticketSpawned = true;
 		state.responseGenerated = false;
 		flickVignette();
@@ -78,7 +82,7 @@ function handleKeypress(event) {
 		};
 		createFortuneOnTicket(paramOptions);
 		startShaking();
-		setTimeout(addCardToScene, 500);
+		setTimeout(addCardToScene, 1000);
 	}
 } /* handleKeypress */
 
@@ -91,6 +95,7 @@ function init() {
 		cover: document.querySelector('.cover'),
 		body: document.querySelector('body'),
 		eightBall: document.querySelector('#eight-ball-image'),
+		zoltar: document.querySelector('#eight-ball-container'),
 	};
 
 	dom.eightBall.addEventListener('click', openEightBall);
@@ -99,6 +104,11 @@ function init() {
 			dom.body.classList.remove('shake');
 			state.controls.API.enabled = true;
 		});
+	});
+	dom.zoltar.addEventListener('click', (e) => {
+		if (e.target.id === 'eight-ball-container') {
+			handleKeypress(e);
+		}
 	});
 	window.addEventListener('keydown', handleKeypress);
 
