@@ -1,6 +1,7 @@
 import { isTicketCurrentlyDisplayed, toggleTicketOn } from './ticket.js';
 import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
+import { flickVignette } from './util.js';
 
 // eslint-disable-next-line no-console
 console.log('%cWelcome to %cZoltar%c.live!', '', 'color: red; font-weight: bolder', '');
@@ -28,7 +29,7 @@ const rumble = new Audio('./assets/audio/rumble.mp3');
 export function canTriggerEvent() {
 	return !isTicketCurrentlyDisplayed()
 		&& !state.ticketSpawned
-		&& document.querySelector('.cover').classList.contains('hidden');
+		&& dom.cover.classList.contains('hidden');
 } /* canTriggerEvent */
 
 /**
@@ -60,19 +61,6 @@ export function openEightBall() {
 		window.location = ('https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/');
 	}, 500);
 } /* openEightBall */
-
-/**
- * Quickly flash vignette on edges of screen to show user they clicked button
- * @param none
- */
-function flickVignette() {
-	dom.cover.classList.remove('hidden');
-	dom.cover.classList.add('vignette-cover');
-	dom.cover.addEventListener('animationend', () => {
-		dom.cover.classList.add('hidden');
-		dom.cover.classList.remove('vignette-cover');
-	});
-} /* flickVignette */
 
 /**
  * Decides and calls appropriate action for all keypresses heard in window

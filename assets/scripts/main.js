@@ -28,7 +28,7 @@ import LockedControls from './LockedControls.js';
 import { isTicketCurrentlyDisplayed, toggleTicketOn } from './ticket.js';
 import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
-import { flickerDelay } from './util.js';
+import { flickerDelay, flickVignette } from './util.js';
 import { options } from './options.js';
 
 // eslint-disable-next-line no-console
@@ -232,19 +232,6 @@ function shootRay(event) {
 } /* shootRay */
 
 /**
- * Quickly flash vignette on edges of screen to show user they clicked button
- * @param none
- */
-function flickVignette() {
-	dom.cover.classList.remove('hidden');
-	dom.cover.classList.add('vignette-cover');
-	dom.cover.addEventListener('animationend', () => {
-		dom.cover.classList.add('hidden');
-		dom.cover.classList.remove('vignette-cover');
-	});
-} /* flickVignette */
-
-/**
  * Decides and calls appropriate action for all keypresses heard in window
  * @param { Event } event - keypress event passed by eventlistener
  */
@@ -305,7 +292,6 @@ function init() {
 			controls.API.enabled = true;
 		});
 	});
-	dom.cover = document.querySelector('.cover');
 
 	window.addEventListener('click', shootRay);
 	window.addEventListener('keydown', handleKeypress);
