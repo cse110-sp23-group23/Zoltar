@@ -1,3 +1,6 @@
+const VOLUME_SRC_ON = './assets/images/volume-on-icon.webp';
+const VOLUME_SRC_OFF = './assets/images/volume-off-icon.webp';
+
 let isVolumeOn = true;
 let dom = {};
 
@@ -5,15 +8,12 @@ let dom = {};
  * doesnt work but i sleep now
  */
 function toggleVolume() {
-	const STRING_ON = './assets/images/volume-on-icon.webp';
-	const STRING_OFF = './assets/images/volume-off-icon.webp';
-
 	if (isVolumeOn) {
-		dom.volume.src = STRING_OFF;
+		dom.volume.src = VOLUME_SRC_OFF;
 		isVolumeOn = false;
 		// volumeOff();
 	} else {
-		dom.volume.src = STRING_ON;
+		dom.volume.src = VOLUME_SRC_ON;
 		isVolumeOn = true;
 		// volumeOn();
 	}

@@ -371,3 +371,13 @@ historical-ticket {
 .clickable {
 	cursor: url('../images/customcursorclick.png'), pointer;
 }
+
+.splash-screen-image {
+	position: absolute;
+	top:0;
+	height: 100vh;
+	overflow: hidden;
+	opacity: 50%;
+	filter: blur(5px);
+	z-index: -1;
+}
