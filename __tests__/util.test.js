@@ -1,4 +1,4 @@
-import { clamp, chooseOptionFromArr } from '../assets/scripts/util.js';
+import { clamp, chooseOptionFromArr, toggleClassToArr } from '../assets/scripts/util.js';
 
 /**
  * Test:
@@ -33,5 +33,38 @@ describe('chooseOptionFromArr', () => {
 		expect(result).toBeTruthy(); // non-empty
 		expect(typeof result).toBe('string');
 		expect(['item1', 'item2', 'item3']).toContain(result);
+	});
+});
+
+/**
+ * Tests:
+ * - Add class to tags
+ * - Remove class to tags
+ */
+describe('toggleClassToArr', () => {
+	const one = document.createElement('section');
+	const two = document.createElement('div');
+	const three = document.createElement('h1');
+
+	const arr = [one, two, three];
+
+	function testClassList(classlist, bool, int) {
+		expect((typeof classlist)).toBe('object');
+		expect((classlist.contains('dummy-class'))).toBe(bool);
+		expect((classlist.length)).toBe(int);
+	}
+
+	test('should add class to the tags', () => {
+		toggleClassToArr(arr, 'dummy-class');
+		arr.forEach((tag) => {
+			testClassList(tag.classList, true, 1);
+		});
+	});
+
+	test('should remove class from the tags', () => {
+		toggleClassToArr(arr, 'dummy-class');
+		arr.forEach((tag) => {
+			testClassList(tag.classList, false, 0);
+		});
 	});
 });
