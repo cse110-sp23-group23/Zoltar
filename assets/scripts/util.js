@@ -51,3 +51,17 @@ export function flickerDelay(delay) {
 		setTimeout(resolve, delay);
 	});
 } /* flickerDelay */
+
+/**
+ * Quickly flash vignette on edges of screen to show user they clicked button
+ * @param none
+ */
+export function flickVignette() {
+	const cover = document.querySelector('.cover');
+	cover.classList.remove('hidden');
+	cover.classList.add('vignette-cover');
+	cover.addEventListener('animationend', () => {
+		cover.classList.add('hidden');
+		cover.classList.remove('vignette-cover');
+	});
+} /* flickVignette */
