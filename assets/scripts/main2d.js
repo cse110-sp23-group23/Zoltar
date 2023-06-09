@@ -94,18 +94,17 @@ function handleKeypress(event) {
 function toggleVolume() {
 	const STRING_ON = './assets/images/volume-on-icon.webp';
 	const STRING_OFF = './assets/images/volume-off-icon.webp';
-	let img = dom.volume.src;
 
 	if (isVolumeOn) {
-		img = STRING_OFF;
+		dom.volume.src = STRING_OFF;
 		isVolumeOn = false;
 		// volumeOff();
 	} else {
-		img = STRING_ON;
+		dom.volume.src = STRING_ON;
 		isVolumeOn = true;
 		// volumeOn();
 	}
-};
+}
 
 function toggleSettingsContainer() {
 	dom.settingsButton.classList.toggle('clicked');
@@ -139,8 +138,8 @@ function init() {
 			handleKeypress(e);
 		}
 	});
-	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
-	dom.volume.addEventListener('click', toggleVolume);
+	dom.settingsButton.addEventListener('click', () => { toggleSettingsContainer(); });
+	dom.volume.addEventListener('click', () => { toggleVolume(); });
 	window.addEventListener('keydown', handleKeypress);
 
 	tellPageLoaded(state.controls);
