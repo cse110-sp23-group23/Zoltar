@@ -13,7 +13,8 @@
 	src: url('../fonts/CinzelDecorative-Regular.ttf');
 }
 
-html, body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 	background-color: black;
@@ -111,7 +112,8 @@ html, body {
 	z-index: 200;
 }
 
-#save-button, #discard-button {
+#save-button,
+#discard-button {
 	border-radius: 0.35vw;
 	width: 12vw;
 	text-align: center;
@@ -167,9 +169,11 @@ html, body {
 	0% {
 		opacity: 0;
 	}
+
 	50% {
 		opacity: 0.2;
 	}
+
 	100% {
 		opacity: 0;
 	}
@@ -195,7 +199,7 @@ canvas {
 	font-size: 2vw;
 	font-family: Cinzel, fantasy;
 	transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out, background-color 200ms ease-in-out;
-	box-shadow: 0 0 5vw 0.1vw rgb(30,30,30);
+	box-shadow: 0 0 5vw 0.1vw rgb(30, 30, 30);
 	border: 0.1vw solid black;
 }
 
@@ -302,4 +306,53 @@ historical-ticket {
 	width: 25vw;
 	transition: transform 0.45s ease;
 	perspective: 65vw;
+}
+
+.settings-menu-container {
+	padding: 2rem;
+	position: absolute;
+	top: 0;
+	right: 0px;
+	display: flex;
+	transform: translateX(50%);
+	transition: 0.5s ease;
+	gap: 2rem;
+}
+
+.settings-menu-button {
+	width: calc(min(10vh, calc((10vh + 10vw) / 2)));
+	background-color: transparent;
+	border: transparent;
+	padding: 0;
+	display: flex;
+
+}
+
+.settings-menu-button img {
+	width: 100%;
+	transition: 0.5s ease;
+}
+
+.settings-menu-button:active {
+	border-style: outset;
+}
+
+.settings-menu-settings {
+	width: calc(min(10vh, calc((10vh + 10vw) / 2)));
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.settings-menu-icon {
+	width: 100%;
+	filter: invert(1);
+}
+
+.clicked {
+	transform: rotate(180deg);
+}
+
+.settings-slide-in {
+	transform: translateX(0);
 }

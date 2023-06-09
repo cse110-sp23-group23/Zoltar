@@ -3,6 +3,8 @@ import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
 import { flickVignette } from './util.js';
 
+let isVolumeOn = true;
+
 // eslint-disable-next-line no-console
 console.log('%cWelcome to %cZoltar%c.live!', '', 'color: red; font-weight: bolder', '');
 
@@ -86,6 +88,30 @@ function handleKeypress(event) {
 	}
 } /* handleKeypress */
 
+/**
+ * doesnt work but i sleep now
+ */
+function toggleVolume() {
+	const STRING_ON = './assets/images/volume-on-icon.webp';
+	const STRING_OFF = './assets/images/volume-off-icon.webp';
+	let img = dom.volume.src;
+
+	if (isVolumeOn) {
+		img = STRING_OFF;
+		isVolumeOn = false;
+		// volumeOff();
+	} else {
+		img = STRING_ON;
+		isVolumeOn = true;
+		// volumeOn();
+	}
+};
+
+function toggleSettingsContainer() {
+	dom.settingsButton.classList.toggle('clicked');
+	dom.settings.classList.toggle('settings-slide-in');
+}
+
 function init() {
 	dom = {
 		buttons: [
@@ -96,6 +122,9 @@ function init() {
 		body: document.querySelector('body'),
 		eightBall: document.querySelector('#eight-ball-image'),
 		zoltar: document.querySelector('#eight-ball-container'),
+		settings: document.querySelector('.settings-menu-container'),
+		settingsButton: document.querySelector('.settings-menu-button img'),
+		volume: document.querySelector('.volume'),
 	};
 
 	dom.eightBall.addEventListener('click', openEightBall);
@@ -110,6 +139,8 @@ function init() {
 			handleKeypress(e);
 		}
 	});
+	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
+	dom.volume.addEventListener('click', toggleVolume);
 	window.addEventListener('keydown', handleKeypress);
 
 	tellPageLoaded(state.controls);
