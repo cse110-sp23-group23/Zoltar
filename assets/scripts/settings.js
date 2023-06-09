@@ -34,7 +34,8 @@ function toggleMute() {
 
 function toggleSettingsContainer() {
 	dom.settingsButton.classList.toggle('clicked');
-	dom.settings.classList.toggle('settings-slide-in');
+	dom.subSettingsBtn.classList.toggle('settings-opacity');
+	dom.subSettingsBtn.classList.toggle('settings-slide-in');
 }
 
 function init() {
@@ -43,6 +44,7 @@ function init() {
 		settingsButton: document.querySelector('.settings-menu-button img'),
 		volume: document.querySelector('.volume'),
 		exitButton: document.querySelector('.exit-zoltar'),
+		subSettingsBtn: document.querySelector('.settings-menu-settings'),
 	};
 
 	getSettingsLocalStorage();

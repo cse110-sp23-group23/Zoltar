@@ -39,7 +39,7 @@ body {
 	position: absolute;
 	top: 0;
 	left: 0;
-	transition: opacity 200ms ease-in-out;
+	transition: opacity 800ms ease-in-out;
 }
 
 #splash-screen {
@@ -88,9 +88,10 @@ body {
 
 .link-to-2d {
 	font-family: Bodoni, monospace;
-	font-size: 1vw;
+	font-size: 2.5vw;
 	color: white;
 	font-weight: 100;
+	margin-bottom: 10vh;
 }
 
 .link-to-2d a {
@@ -309,24 +310,23 @@ historical-ticket {
 }
 
 .settings-menu-container {
-	width: calc(min(17vh, calc((17vh + 17vw) / 2)));
+	width: calc(min(8vh, calc((8vh + 8vw) / 2)));
 	padding: 2rem;
 	position: absolute;
 	top: 0;
 	right: 0px;
 	display: flex;
-	transform: translateX(50%);
+	flex-direction: column;
 	transition: 0.5s ease;
 	gap: 2rem;
 }
 
 .settings-menu-button {
-	width: 50%;
+	width: 100%;
 	background-color: transparent;
 	border: transparent;
 	padding: 0;
 	display: flex;
-
 }
 
 .settings-menu-button img {
@@ -344,10 +344,14 @@ historical-ticket {
 }
 
 .settings-menu-settings {
-	width: 50%;
+	opacity: 0%;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+	transition: 0.3s ease;
+	transform: translateX(150%);
+
 }
 
 .settings-menu-icon {
@@ -360,12 +364,21 @@ historical-ticket {
 	transform: scale(1.1);
 }
 
+.settings-menu-icon:active {
+	transition: 0s;
+	transform: scale(1);
+}
+
 .clicked {
-	transform: rotate(180deg);
+	transform: rotate(-180deg);
 }
 
 .settings-slide-in {
 	transform: translateX(0);
+}
+
+.settings-opacity {
+	opacity: 100%;
 }
 
 .clickable {
