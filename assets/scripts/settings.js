@@ -8,7 +8,7 @@ let dom = {};
 let settings = {
 	isVolumeOn: true,
 };
-let state = {
+const state = {
 	isTicketDisplayed: false,
 	ticketOpened: null,
 };
@@ -89,14 +89,6 @@ function settingsTicketHandler(ticket) {
 	displaySettingsTicket(ticket);
 } /* settingsTicketHandler */
 
-/**
- * Reloads the browser window
- */
-function reload() {
-	// cant call this on its own 'Illegal invocation'
-	window.location.reload();
-}
-
 function init() {
 	dom = {
 		settings: document.querySelector('.settings-menu-container'),
@@ -124,7 +116,7 @@ function init() {
 	});
 
 	// eslint-disable-next-line no-restricted-globals
-	dom.exitButton.addEventListener('click', reload);
+	dom.exitButton.addEventListener('click', location.reload.bind(location));
 	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
 	dom.volume.addEventListener('click', toggleMute);
 }
