@@ -97,9 +97,7 @@ function translateCards() {
  */
 export function deleteCard(card) {
 	const index = currentCards.indexOf(card);
-	if (index === -1) {
-		return;
-	}
+	if (index === -1) return;
 	domContent.ticketHistory.removeChild(card);
 	currentCards.splice(index, 1);
 	const newStates = getAllTickets();
@@ -134,11 +132,9 @@ function handleHoverListeners(cards, action) {
  * @param none
  */
 function displayStorage() {
-	domContent.ticketCounter.classList.add('no-opacity');
 	const allTickets = getAllTickets();
-	if (allTickets.length === 0) {
-		return;
-	}
+	if (allTickets.length === 0) return;
+	domContent.ticketCounter.classList.add('no-opacity');
 	domContent.cover.classList.remove('hidden');
 	domContent.historyWrapper.classList.remove('hidden');
 	domContent.historyIcon.classList.add('hidden');
@@ -209,9 +205,7 @@ function updateSliderFromInput() {
  * @param { Event } event - event object passed in
  */
 function keyHandler(event) {
-	if (!historyIsOpen()) {
-		return;
-	}
+	if (!historyIsOpen()) return;
 	if (event.key === 'ArrowLeft') {
 		slide(-1);
 	} else if (event.key === 'ArrowRight') {
@@ -236,6 +230,7 @@ function init() {
 	};
 
 	domContent.historyIcon.addEventListener('click', () => {
+		if (getAllTickets().length === 0) return;
 		domContent.historyIcon.classList.add('count-tickets-flipped');
 		domContent.historyIcon.addEventListener('transitionend', displayStorage, { once: true });
 	});
