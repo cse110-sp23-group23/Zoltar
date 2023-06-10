@@ -35,6 +35,15 @@ export function isTicketCurrentlyFlipped() {
 } /* isTicketCurrentlyFlipped */
 
 /**
+ * Returns if user is currently looking at the save/discard ticket prompt
+ * @param none
+ * @return { Boolean }
+ */
+export function isSaveDiscardVisible() {
+	return !buttons.main.classList.contains('hidden');
+} /* isSaveDiscardVisible */
+
+/**
  * Slides ticket off screen
  * @param none
  */

@@ -25,7 +25,7 @@ import {
 	conditionalAnimateSlideCameraFrame,
 } from './animationframes.js';
 import LockedControls from './LockedControls.js';
-import { isTicketCurrentlyDisplayed, toggleTicketOn } from './ticket.js';
+import { isTicketCurrentlyDisplayed, isSaveDiscardVisible, toggleTicketOn } from './ticket.js';
 import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
 import { flickerDelay, flickVignette } from './util.js';
@@ -267,6 +267,15 @@ function handleResize() {
 } /* handleResize */
 
 /**
+ * Returns if leaving now will risk losing important data (e.g. ticket is not saved)
+ * @param none
+ * @return { Boolean }
+ */
+function safeToExit() {
+	return !isTicketCurrentlyDisplayed() && !state.ticketSpawned && !isSaveDiscardVisible();
+} /* safeToExit */
+
+/**
  * Animation farm; generates each frame and calls self
  * @param none
  */
@@ -299,8 +308,13 @@ function init() {
 	window.addEventListener('keydown', handleKeypress);
 	window.addEventListener('resize', handleResize);
 	window.addEventListener('beforeunload', (event) => {
+		const message = 'Leaving now will cause your ticket to be lost. Are you sure?';
+		if (safeToExit()) {
+			event.preventDefault();
+			return;
+		}
 		// eslint-disable-next-line no-param-reassign
-		event.returnValue = 'Leaving now will cause your ticket to be lost.';
+		event.returnValue = message;
 	});
 
 	manager.onLoad = () => { tellPageLoaded(controls); };
