@@ -12,6 +12,12 @@ const state = {
 	ticketOpened: null,
 };
 
+let controls;
+
+export function setControls(passedControls) {
+	controls = passedControls;
+}
+
 /**
  * Updates display of settings menu to match current settings
  * @param none
@@ -68,6 +74,7 @@ function closeAllSettingsTickets() {
 	});
 	state.isTicketDisplayed = false;
 	state.ticketOpened = null;
+	controls.API.enabled = true;
 } /* closeAllSettingsTickets */
 
 /**
@@ -78,6 +85,7 @@ function displaySettingsTicket(ticket) {
 	ticket.classList.remove('hidden');
 	state.isTicketDisplayed = true;
 	state.ticketOpened = ticket;
+	controls.API.enabled = false;
 } /* displaySettingsTicket */
 
 /**
@@ -110,15 +118,13 @@ function init() {
 		instructionsButton: document.querySelector('.instructions-button'),
 		instructionsTicket: document.querySelector('.instructions'),
 	};
-	dom.instructionsButton.addEventListener('click', () => {
-		settingsTicketHandler(dom.instructionsTicket);
+	dom.instructionsButton.addEventListener('click', () => { settingsTicketHandler(dom.instructionsTicket); });
+	dom.creditsButton.addEventListener('click', () => {	settingsTicketHandler(dom.creditsTicket); });
+	dom.closeTicket.forEach((button) => { button.addEventListener('click', closeAllSettingsTickets); });
+	window.addEventListener('keydown', (event) => {
+		if (event.key === 'Escape') closeAllSettingsTickets();
 	});
-	dom.creditsButton.addEventListener('click', () => {
-		settingsTicketHandler(dom.creditsTicket);
-	});
-	dom.closeTicket.forEach((button) => {
-		button.addEventListener('click', closeAllSettingsTickets);
-	});
+
 	// eslint-disable-next-line no-restricted-globals
 	dom.exitButton.addEventListener('click', location.reload.bind(location));
 	dom.settingsButton.addEventListener('click', toggleSettingsContainer);

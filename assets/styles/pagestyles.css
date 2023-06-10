@@ -332,7 +332,7 @@ historical-ticket {
 	right: 0px;
 	display: flex;
 	flex-direction: column;
-	transition: 0.5s ease;
+	transition: .5s ease;
 	gap: 2rem;
 }
 
@@ -346,7 +346,7 @@ historical-ticket {
 
 .settings-menu-button img {
 	width: 100%;
-	transition: 0.5s ease;
+	transition: 0.3s ease-in-out;
 }
 
 .settings-menu-button img:hover {
@@ -363,9 +363,8 @@ historical-ticket {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-	transition: 0.3s ease;
+	transition: 0.3s ease-in-out;
 	transform: translateX(150%);
-
 }
 
 .settings-menu-icon {
@@ -406,4 +405,20 @@ historical-ticket {
 	opacity: 50%;
 	filter: blur(5px);
 	z-index: -1;
+}
+
+.gh-icon {
+	width: 1.5vw;
+	height: 1.5vw;
+	margin-bottom: 0.3vw;
+}
+
+.gh-footer {
+	position: absolute;
+	bottom: 3vw;
+	width: 100%;
+}
+
+.gh-footer .copyright {
+	margin: 0;
 }

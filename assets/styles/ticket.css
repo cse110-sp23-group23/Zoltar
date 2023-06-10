@@ -114,6 +114,11 @@ body {
 	padding: 0 2vw 0 2vw;
 }
 
+.ticket-front-content ul {
+	text-align: left;
+	padding-inline-start: 4vw;
+}
+
 .centered {
 	text-align: center !important;
 }

@@ -30,6 +30,7 @@ import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
 import { flickerDelay, flickVignette } from './util.js';
 import { options } from './options.js';
+import { setControls } from './settings.js';
 
 // eslint-disable-next-line no-console
 console.log('%cWelcome to %cZoltar%c.live!', '', 'color: red; font-weight: bolder', '');
@@ -77,8 +78,9 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Load custom controls and turn off by default
-const controls = new LockedControls(camera, renderer.domElement);
+export const controls = new LockedControls(camera, renderer.domElement);
 controls.API.enabled = false;
+setControls(controls);
 
 // glTf 2.0 Loader
 loader.load('assets/models/fixedangle.glb', (gltf) => {

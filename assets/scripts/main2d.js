@@ -2,6 +2,7 @@ import { isTicketCurrentlyDisplayed, toggleTicketOn } from './ticket.js';
 import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
 import { flickVignette } from './util.js';
+import { setControls } from './settings.js';
 
 // eslint-disable-next-line no-console
 console.log('%cWelcome to %cZoltar%c.live!', '', 'color: red; font-weight: bolder', '');
@@ -113,6 +114,7 @@ function init() {
 	window.addEventListener('keydown', handleKeypress);
 
 	tellPageLoaded(state.controls);
+	setControls(state.controls);
 } /* init */
 
 document.addEventListener('DOMContentLoaded', init);
