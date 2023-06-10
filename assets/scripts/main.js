@@ -296,6 +296,10 @@ function init() {
 	window.addEventListener('click', shootRay);
 	window.addEventListener('keydown', handleKeypress);
 	window.addEventListener('resize', handleResize);
+	window.addEventListener('beforeunload', (event) => {
+		// eslint-disable-next-line no-param-reassign
+		event.returnValue = 'Leaving now will cause your ticket to be lost.';
+	});
 
 	manager.onLoad = () => { tellPageLoaded(controls); };
 

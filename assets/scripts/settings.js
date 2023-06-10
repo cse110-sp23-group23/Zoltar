@@ -7,6 +7,8 @@ const DEFAULT_SETTINGS = {
 let dom = {};
 let settings = {
 	isVolumeOn: true,
+};
+const state = {
 	isTicketDisplayed: false,
 	ticketOpened: null,
 };
@@ -45,8 +47,7 @@ function toggleSettingsContainer() {
 } /* toggleSettingsContainer */
 
 /**
- * Closes all of the settings Tickets.
- * How else am I supposed to describe this function
+ * Closes every instance of a settings Tickets
  * @param none
  */
 function closeAllSettingsTickets() {
@@ -54,8 +55,8 @@ function closeAllSettingsTickets() {
 	arr.forEach((ticket) => {
 		ticket.classList.add('hidden');
 	});
-	settings.isTicketDisplayed = false;
-	settings.ticketOpened = null;
+	state.isTicketDisplayed = false;
+	state.ticketOpened = null;
 } /* closeAllSettingsTickets */
 
 /**
@@ -64,8 +65,8 @@ function closeAllSettingsTickets() {
  */
 function displaySettingsTicket(ticket) {
 	ticket.classList.remove('hidden');
-	settings.isTicketDisplayed = true;
-	settings.ticketOpened = ticket;
+	state.isTicketDisplayed = true;
+	state.ticketOpened = ticket;
 } /* displaySettingsTicket */
 
 /**
@@ -74,12 +75,12 @@ function displaySettingsTicket(ticket) {
  * @returns none
  */
 function settingsTicketHandler(ticket) {
-	if (!settings.isTicketDisplayed) {
+	if (!state.isTicketDisplayed) {
 		displaySettingsTicket(ticket);
 		return;
 	}
 
-	if (ticket === settings.ticketOpened) {
+	if (ticket === state.ticketOpened) {
 		closeAllSettingsTickets();
 		return;
 	}
@@ -87,14 +88,6 @@ function settingsTicketHandler(ticket) {
 	closeAllSettingsTickets();
 	displaySettingsTicket(ticket);
 } /* settingsTicketHandler */
-
-/**
- * Reloads the browser window
- */
-function reload() {
-	// cant call this on its own 'Illegal invocation'
-	window.location.reload();
-}
 
 function init() {
 	dom = {
@@ -123,7 +116,7 @@ function init() {
 	});
 
 	// eslint-disable-next-line no-restricted-globals
-	dom.exitButton.addEventListener('click', reload);
+	dom.exitButton.addEventListener('click', location.reload.bind(location));
 	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
 	dom.volume.addEventListener('click', toggleMute);
 }
