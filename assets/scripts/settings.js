@@ -60,7 +60,7 @@ function closeAllSettingsTickets() {
 
 /**
  * Displays desired settings ticket
- * @param {*} ticket settings ticket to open
+ * @param {Object} ticket settings ticket to open
  */
 function displaySettingsTicket(ticket) {
 	ticket.classList.remove('hidden');
@@ -70,7 +70,7 @@ function displaySettingsTicket(ticket) {
 
 /**
  * Handles opening and closing settings menu tickets
- * @param {DOM Object} ticket settings ticket to open/close
+ * @param {Object} ticket settings ticket to open/close
  * @returns none
  */
 function settingsTicketHandler(ticket) {
