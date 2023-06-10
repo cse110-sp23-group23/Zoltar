@@ -1,5 +1,5 @@
-const VOLUME_SRC_ON = './assets/images/volume-on-icon.webp';
-const VOLUME_SRC_OFF = './assets/images/volume-off-icon.webp';
+const VOLUME_SRC_ON = './assets/images/volume_on.svg';
+const VOLUME_SRC_OFF = './assets/images/volume_off.svg';
 const DEFAULT_SETTINGS = {
 	isVolumeOn: true,
 };
