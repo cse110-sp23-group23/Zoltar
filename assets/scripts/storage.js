@@ -20,7 +20,11 @@ export function historyIsOpen() {
  * @param none
  */
 function exitHistory() {
-	toggleClassToArr([domContent.cover, domContent.historyWrapper, domContent.circleButton], 'hidden');
+	toggleClassToArr([domContent.cover, domContent.historyWrapper, domContent.historyIcon], 'hidden');
+	domContent.historyIcon.classList.remove('count-tickets-flipped');
+	domContent.historyIcon.addEventListener('transitionend', () => {
+		domContent.ticketCounter.classList.remove('no-opacity');
+	}, { once: true });
 } /* exitHistory */
 
 /**
@@ -130,13 +134,14 @@ function handleHoverListeners(cards, action) {
  * @param none
  */
 function displayStorage() {
+	domContent.ticketCounter.classList.add('no-opacity');
 	const allTickets = getAllTickets();
 	if (allTickets.length === 0) {
 		return;
 	}
 	domContent.cover.classList.remove('hidden');
 	domContent.historyWrapper.classList.remove('hidden');
-	domContent.circleButton.classList.add('hidden');
+	domContent.historyIcon.classList.add('hidden');
 	if (currentCards.length !== allTickets.length) {
 		handleHoverListeners(currentCards, 'remove');
 		currentCards = [];
@@ -219,7 +224,7 @@ function keyHandler(event) {
 function init() {
 	domContent = {
 		ticketCounter: document.getElementById('ticket-count'),
-		circleButton: document.querySelector('.count-tickets-circle'),
+		historyIcon: document.querySelector('.count-tickets-icon'),
 		cover: document.querySelector('.cover'),
 		ticketHistory: document.querySelector('.ticket-history'),
 		leftButton: document.querySelector('#left-button'),
@@ -230,7 +235,10 @@ function init() {
 		historyWrapper: document.querySelector('.history-wrapper'),
 	};
 
-	domContent.circleButton.addEventListener('click', displayStorage);
+	domContent.historyIcon.addEventListener('click', () => {
+		domContent.historyIcon.classList.add('count-tickets-flipped');
+		domContent.historyIcon.addEventListener('transitionend', displayStorage, { once: true });
+	});
 	domContent.inputField.addEventListener('change', updateSliderFromInput);
 	domContent.exitHistoryButton.addEventListener('click', exitHistory);
 	domContent.leftButton.addEventListener('click', () => { slide(-1); });

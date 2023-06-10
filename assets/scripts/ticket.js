@@ -126,7 +126,7 @@ function init() {
 		buttonRemove: document.querySelector('#close-ticket'),
 		text: document.querySelector('#fortune-content'),
 		numbers: document.querySelector('#ticket-lucky-numbers'),
-		ticketCount: document.querySelector('.count-tickets-circle'),
+		ticketCount: document.querySelector('.count-tickets-icon'),
 	};
 
 	buttons = {
