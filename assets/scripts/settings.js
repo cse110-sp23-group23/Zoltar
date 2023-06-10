@@ -29,7 +29,7 @@ export function setControls(passedControls) {
  * @param none
  */
 function refreshSettingsMenu() {
-	dom.volume.src = settings.isVolumeOn ? VOLUME_SRC_OFF : VOLUME_SRC_ON;
+	dom.volumeImg.src = settings.isVolumeOn ? VOLUME_SRC_OFF : VOLUME_SRC_ON;
 } /* refreshSettingsMenu */
 
 /**
@@ -133,6 +133,7 @@ function init() {
 		settings: document.querySelector('.settings-menu-container'),
 		settingsButton: document.querySelector('.settings-menu-button img'),
 		volume: document.querySelector('.volume'),
+		volumeImg: document.querySelector('.volume img'),
 		exitButton: document.querySelector('.exit-zoltar'),
 		subSettingsBtn: document.querySelector('.settings-menu-settings'),
 		closeTicket: document.querySelectorAll('.close-settings-ticket'),
@@ -144,15 +145,14 @@ function init() {
 		cover: document.querySelector('.cover'),
 		settingsTickets: document.querySelectorAll('.settings-ticket'),
 	};
-	dom.instructionsButton.addEventListener('click', () => { settingsTicketHandler(dom.instructionsTicket); });
-	dom.creditsButton.addEventListener('click', () => {	settingsTicketHandler(dom.creditsTicket); });
-	dom.closeTicket.forEach((button) => { button.addEventListener('click', closeAllSettingsTickets); });
-	window.addEventListener('keydown', handleKeydown);
-
 	// eslint-disable-next-line no-restricted-globals
 	dom.exitButton.addEventListener('click', location.reload.bind(location));
 	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
 	dom.volume.addEventListener('click', toggleMute);
+	dom.instructionsButton.addEventListener('click', () => { settingsTicketHandler(dom.instructionsTicket); });
+	dom.creditsButton.addEventListener('click', () => {	settingsTicketHandler(dom.creditsTicket); });
+	dom.closeTicket.forEach((button) => { button.addEventListener('click', closeAllSettingsTickets); });
+	window.addEventListener('keydown', handleKeydown);
 
 	getSettingsLocalStorage();
 } /* init */

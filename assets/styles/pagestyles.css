@@ -76,7 +76,7 @@ body {
 
 .loaded-message {
 	font-family: Cinzel, monospace;
-	font-size: 2vw;
+	font-size: 1.8vw;
 	color: white;
 	font-weight: 100;
 }
@@ -337,25 +337,26 @@ historical-ticket {
 	gap: 2rem;
 }
 
-.settings-menu-button {
+.settings-menu-button, .settings-menu-icon {
 	width: 100%;
 	background-color: transparent;
 	border: transparent;
 	padding: 0;
 	display: flex;
+	transition: filter 200ms ease-in-out, transform 50ms ease-in-out;
 }
 
-.settings-menu-button img {
+.settings-menu-button img, .settings-menu-icon img {
 	width: 100%;
 	transition: 0.3s ease-in-out;
 }
 
-.settings-menu-button img:hover {
+.settings-menu-button:hover, .settings-menu-icon:hover {
 	filter: brightness(65%);
 }
 
-.settings-menu-button:active {
-	border-style: outset;
+.settings-menu-button:active, .settings-menu-icon:active {
+	transform: scale(0.95);
 }
 
 .settings-menu-settings {
@@ -365,20 +366,6 @@ historical-ticket {
 	gap: 2rem;
 	transition: 0.3s ease-in-out;
 	transform: translateX(150%);
-}
-
-.settings-menu-icon {
-	width: 100%;
-	transition: 0.3s ease;
-}
-
-.settings-menu-icon:hover {
-	transform: scale(1.1);
-}
-
-.settings-menu-icon:active {
-	transition: 0s;
-	transform: scale(1);
 }
 
 .clicked {
