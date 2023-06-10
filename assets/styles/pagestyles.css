@@ -359,7 +359,6 @@ historical-ticket {
 }
 
 .settings-menu-settings {
-	opacity: 0%;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -390,8 +389,12 @@ historical-ticket {
 	transform: translateX(0);
 }
 
-.settings-opacity {
-	opacity: 100%;
+.settings-ticket {
+	position: absolute;
+	transition: transform 0.5s, top 0.5s;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .clickable {

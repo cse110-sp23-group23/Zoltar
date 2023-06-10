@@ -15,9 +15,14 @@ const state = {
 
 let controls;
 
+/**
+ * Allows external functions to tell settings functions which type of controls, 3d or 2d
+ * are currently being used by passing control object
+ * @param { Object } passedControls controls to be used later by settings
+ */
 export function setControls(passedControls) {
 	controls = passedControls;
-}
+} /* setControls */
 
 /**
  * Updates display of settings menu to match current settings
@@ -64,7 +69,6 @@ function toggleMute() {
 function toggleSettingsContainer() {
 	state.isSettingsOpen = !state.isSettingsOpen;
 	dom.settingsButton.classList.toggle('clicked');
-	dom.subSettingsBtn.classList.toggle('settings-opacity');
 	dom.subSettingsBtn.classList.toggle('settings-slide-in');
 } /* toggleSettingsContainer */
 
@@ -75,7 +79,7 @@ function toggleSettingsContainer() {
 function closeAllSettingsTickets() {
 	if (!state.isTicketDisplayed) return;
 	dom.settingsTickets.forEach((ticket) => {
-		ticket.classList.add('hidden');
+		ticket.classList.add('hidden-animation');
 	});
 	state.isTicketDisplayed = false;
 	state.ticketOpened = null;
@@ -88,7 +92,7 @@ function closeAllSettingsTickets() {
  * @param {Object} ticket settings ticket to open
  */
 function displaySettingsTicket(ticket) {
-	ticket.classList.remove('hidden');
+	ticket.classList.remove('hidden-animation');
 	state.isTicketDisplayed = true;
 	state.ticketOpened = ticket;
 	controls.API.enabled = false;
@@ -96,20 +100,17 @@ function displaySettingsTicket(ticket) {
 } /* displaySettingsTicket */
 
 /**
- * Handles opening and closing settings menu tickets
+ * When icon is pressed, closes corresponding ticket if already open,
+ * otherwise opens ticket
  * @param {Object} ticket settings ticket to open/close
  */
 function settingsTicketHandler(ticket) {
-	if (!state.isTicketDisplayed) {
-		displaySettingsTicket(ticket);
-		return;
-	}
-	if (ticket === state.ticketOpened) {
+	if (state.isTicketDisplayed && ticket === state.ticketOpened) {
 		closeAllSettingsTickets();
-		return;
+	} else {
+		if (state.isTicketDisplayed) closeAllSettingsTickets();
+		displaySettingsTicket(ticket);
 	}
-	closeAllSettingsTickets();
-	displaySettingsTicket(ticket);
 } /* settingsTicketHandler */
 
 /**
