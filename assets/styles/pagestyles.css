@@ -369,7 +369,7 @@ historical-ticket {
 }
 
 .clicked {
-	transform: rotate(-180deg);
+	transform: rotate3d(0, 1, 0, -180deg);
 }
 
 .settings-slide-in {
