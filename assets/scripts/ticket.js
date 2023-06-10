@@ -139,7 +139,6 @@ function init() {
 	dom = {
 		settings: document.querySelector('.settings-menu-container'),
 	};
-
 	ticket.main.addEventListener('click', flipTicket);
 	ticket.buttonRemove.addEventListener('click', toggleTicketOff);
 	[buttons.discard, buttons.save].forEach((el, i) => {
