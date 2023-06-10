@@ -165,15 +165,86 @@
 	<!--end ticket history template-->
 	<!-- Settings Menu -->
 	<div class="settings-menu-container">
-		<button class="settings-menu-button clickable">
-			<img src="./assets/images/left-arrow.png">
+		<button class="settings-menu-button">
+			<img class="clickable" src="./assets/images/left-arrow.png" draggable="false">
 		</button>
 		<section class="settings-menu-settings">
-			<img class="settings-menu-icon clickable" src="./assets/images/zoltar-title.webp">
-			<img class="volume settings-menu-icon clickable" src="./assets/images/volume-on-icon.webp">
-			<img class="settings-menu-icon clickable" src="./assets/images/information-icon.png">
-			<img class="exit-zoltar settings-menu-icon clickable" src="./assets/images/quit-icon.png">
+			<img class="instructions-button settings-menu-icon clickable" src="./assets/images/question-icon.png" draggable="false">
+			<img class="credits-button settings-menu-icon clickable" src="./assets/images/information-icon.png" draggable="false">
+			<img class="volume settings-menu-icon clickable" src="./assets/images/volume-on-icon.webp" draggable="false">
+			<img class="exit-zoltar settings-menu-icon clickable" src="./assets/images/quit-icon.png" draggable="false">
 		</section>
+	</div>
+	<!--end Settings Menu-->
+	<!--Credits Ticket-->
+	<div class="credits hidden settings-ticket">
+		<div class="ticket-wrapper">
+			<div class="ticket-background">
+				<!--start background SVG-->
+				<div class="ticket-weathered-background">
+					<svg>
+						<defs>
+							<filter id="weathered-edges" x="0" y="0" width="100%" height="100%">
+								<feTurbulence baseFrequency="0.04" numOctaves="5" seed="10" type="fractalNoise"
+									result="turbulence" />
+								<feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R"
+									yChannelSelector="G" />
+							</filter>
+						</defs>
+					</svg>
+				</div>
+				<!--end SVG-->
+			</div>
+			<div class="ticket-front-content">
+				<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule" draggable="false">
+				<button class="close-settings-ticket" type="button">
+					<img src="assets/images/close.png" alt="exit button" draggable="false">
+				</button>
+				<p class="ticket-title">Credits</p>
+				<p class="ticket-text centered">"Torture chamber cubicle" <br> By AngelaC <br>Licensed under Creative Commons Attribution.</p>
+				<p class="ticket-text centered">"ZOLTAR" <br> By Austin Beaulier <br> Licensed under CC-BY-4.0.</p>
+				<p class="ticket-text centered">"Zoltar Speaks"<br> by Hulki Okan Tabak<br>through unsplash</p>
+				<br>
+				<p class="ticket-text centered">© Fortune 500 @ UCSD 2023</p>
+				<a href="https://github.com/cse110-sp23-group23/Zoltar" class="clickable"><img src="./assets/images/github-icon.png" height="30px"></a>
+				<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule"
+					draggable="false">
+			</div>
+		</div>
+	</div>
+	<!--Instructions Ticket-->
+	<div class="instructions hidden settings-ticket">
+		<div class="ticket-wrapper">
+			<div class="ticket-background">
+				<!--start background SVG-->
+				<div class="ticket-weathered-background">
+					<svg>
+						<defs>
+							<filter id="weathered-edges" x="0" y="0" width="100%" height="100%">
+								<feTurbulence baseFrequency="0.04" numOctaves="5" seed="10" type="fractalNoise"
+									result="turbulence" />
+								<feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R"
+									yChannelSelector="G" />
+							</filter>
+						</defs>
+					</svg>
+				</div>
+				<!--end SVG-->
+			</div>
+			<div class="ticket-front-content">
+				<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule" draggable="false">
+				<button class="close-settings-ticket" type="button">
+					<img src="assets/images/close.png" alt="exit button" draggable="false">
+				</button>
+				<p class="ticket-title">Instructions</p>
+				<p class="ticket-text centered">Press "Space" or click on Zoltar to get a Fortune
+					<br> Click on bottom right ticket to show ticket history
+					<br> idk man what else is there
+				</p>
+				<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule"
+					draggable="false">
+			</div>
+		</div>
 	</div>
 	
 	<script>

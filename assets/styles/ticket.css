@@ -41,6 +41,20 @@ body {
 	width: 1.5vw;
 }
 
+.close-settings-ticket {
+	position: absolute;
+	top: 1vw;
+	left: 1vw;
+	padding: 0;
+	background-color: transparent;
+	border: none;
+	cursor: url('../images/customcursorclick.png'), pointer;
+}
+
+.close-settings-ticket img {
+	width: 1.5vw;
+}
+
 .ticket-wrapper {
 	position: absolute;
 	left: 50%;
@@ -98,6 +112,10 @@ body {
 .ticket-text {
 	text-align: justify;
 	padding: 0 2vw 0 2vw;
+}
+
+.centered {
+	text-align: center !important;
 }
 
 .ticket-weathered-background {
