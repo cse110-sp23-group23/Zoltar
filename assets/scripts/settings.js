@@ -84,7 +84,6 @@ function settingsTicketHandler(ticket) {
 		closeAllSettingsTickets();
 		return;
 	}
-
 	closeAllSettingsTickets();
 	displaySettingsTicket(ticket);
 } /* settingsTicketHandler */
@@ -102,9 +101,7 @@ function init() {
 		instructionsButton: document.querySelector('.instructions-button'),
 		instructionsTicket: document.querySelector('.instructions'),
 	};
-
 	getSettingsLocalStorage();
-
 	dom.instructionsButton.addEventListener('click', () => {
 		settingsTicketHandler(dom.instructionsTicket);
 	});
@@ -114,7 +111,6 @@ function init() {
 	dom.closeTicket.forEach((button) => {
 		button.addEventListener('click', closeAllSettingsTickets);
 	});
-
 	// eslint-disable-next-line no-restricted-globals
 	dom.exitButton.addEventListener('click', location.reload.bind(location));
 	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
