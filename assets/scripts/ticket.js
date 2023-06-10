@@ -136,9 +136,7 @@ function init() {
 		discard: document.getElementById('discard-button'),
 		cover: document.querySelector('.cover'),
 	};
-	dom = {
-		settings: document.querySelector('.settings-menu-container'),
-	};
+	dom = { settings: document.querySelector('.settings-menu-container') };
 	ticket.main.addEventListener('click', flipTicket);
 	ticket.buttonRemove.addEventListener('click', toggleTicketOff);
 	[buttons.discard, buttons.save].forEach((el, i) => {
