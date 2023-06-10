@@ -3,7 +3,6 @@ const VOLUME_SRC_OFF = './assets/images/volume-off-icon.webp';
 const DEFAULT_SETTINGS = {
 	isVolumeOn: true,
 };
-
 let dom = {};
 let settings = {
 	isVolumeOn: true,
@@ -13,18 +12,30 @@ const state = {
 	ticketOpened: null,
 };
 
+/**
+ * Updates display of settings menu to match current settings
+ * @param none
+ */
 function refreshSettingsMenu() {
 	dom.volume.src = settings.isVolumeOn ? VOLUME_SRC_OFF : VOLUME_SRC_ON;
-}
+} /* refreshSettingsMenu */
 
+/**
+ * Saves current settings to local storage
+ * @param none
+ */
 function putSettingsLocalStorage() {
 	localStorage.setItem('settings', JSON.stringify(settings));
-}
+} /* putSettingsLocalStorage */
 
+/**
+ * Sets current settings to settings saved in local storage
+ * @param none
+ */
 function getSettingsLocalStorage() {
 	settings = JSON.parse(localStorage.getItem('settings')) || DEFAULT_SETTINGS;
 	refreshSettingsMenu();
-}
+} /* getSettingsLocalStorage */
 
 /**
  * Toggles mute on / off and saves state to localStorage
@@ -72,14 +83,12 @@ function displaySettingsTicket(ticket) {
 /**
  * Handles opening and closing settings menu tickets
  * @param {Object} ticket settings ticket to open/close
- * @returns none
  */
 function settingsTicketHandler(ticket) {
 	if (!state.isTicketDisplayed) {
 		displaySettingsTicket(ticket);
 		return;
 	}
-
 	if (ticket === state.ticketOpened) {
 		closeAllSettingsTickets();
 		return;
@@ -101,7 +110,6 @@ function init() {
 		instructionsButton: document.querySelector('.instructions-button'),
 		instructionsTicket: document.querySelector('.instructions'),
 	};
-	getSettingsLocalStorage();
 	dom.instructionsButton.addEventListener('click', () => {
 		settingsTicketHandler(dom.instructionsTicket);
 	});
@@ -115,5 +123,7 @@ function init() {
 	dom.exitButton.addEventListener('click', location.reload.bind(location));
 	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
 	dom.volume.addEventListener('click', toggleMute);
+
+	getSettingsLocalStorage();
 }
 document.addEventListener('DOMContentLoaded', init);
