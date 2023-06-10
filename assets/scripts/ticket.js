@@ -7,6 +7,7 @@ const IMAGE_BANK_PREFIX_FRONT = 'assets/images/image-bank-front/header-';
 
 let ticket = {};
 let buttons = {};
+let dom = {};
 
 export const state = {
 	currentMessage: '',
@@ -53,6 +54,7 @@ function toggleTicketOff() {
  */
 export function toggleTicketOn() {
 	ticket.ticketCount.classList.add('hidden');
+	dom.settings.classList.add('hidden');
 	ticket.main.classList.remove('hidden-animation');
 	setTimeout(() => {
 		ticket.main.classList.add('ticket-hoverable');
@@ -76,7 +78,7 @@ function flipTicket() {
  * @param { Integer } index representing button clicked; 0 for discard, 1 for save
  */
 function hideSavePrompt(index) {
-	toggleClassToArr([buttons.main, buttons.cover, ticket.ticketCount], 'hidden');
+	toggleClassToArr([buttons.main, buttons.cover, ticket.ticketCount, dom.settings], 'hidden');
 	if (index === 1) {
 		saveState(state);
 	}
@@ -128,12 +130,14 @@ function init() {
 		numbers: document.querySelector('#ticket-lucky-numbers'),
 		ticketCount: document.querySelector('.count-tickets-icon'),
 	};
-
 	buttons = {
 		main: document.querySelector('.save-delete-ticket'),
 		save: document.getElementById('save-button'),
 		discard: document.getElementById('discard-button'),
 		cover: document.querySelector('.cover'),
+	};
+	dom = {
+		settings: document.querySelector('.settings-menu-container'),
 	};
 
 	ticket.main.addEventListener('click', flipTicket);

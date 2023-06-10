@@ -155,6 +155,7 @@ body {
 	top: 0;
 	left: 0;
 	z-index: 150;
+	transition: opacity 150ms ease-in-out;
 }
 
 .vignette-cover {
@@ -332,7 +333,7 @@ historical-ticket {
 	right: 0px;
 	display: flex;
 	flex-direction: column;
-	transition: .5s ease;
+	transition: 150ms ease-in-out;
 	gap: 2rem;
 }
 

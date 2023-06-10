@@ -4,11 +4,12 @@ const DEFAULT_SETTINGS = {
 	isVolumeOn: true,
 };
 let dom = {};
-let settings = {
+export const settings = {
 	isVolumeOn: true,
 };
 const state = {
 	isTicketDisplayed: false,
+	isSettingsOpen: false,
 	ticketOpened: null,
 };
 
@@ -39,7 +40,10 @@ function putSettingsLocalStorage() {
  * @param none
  */
 function getSettingsLocalStorage() {
-	settings = JSON.parse(localStorage.getItem('settings')) || DEFAULT_SETTINGS;
+	const newSettings = JSON.parse(localStorage.getItem('settings')) || DEFAULT_SETTINGS;
+	Object.entries(newSettings).forEach(([key, val]) => {
+		settings[key] = val;
+	});
 	refreshSettingsMenu();
 } /* getSettingsLocalStorage */
 
@@ -58,6 +62,7 @@ function toggleMute() {
  * @param none
  */
 function toggleSettingsContainer() {
+	state.isSettingsOpen = !state.isSettingsOpen;
 	dom.settingsButton.classList.toggle('clicked');
 	dom.subSettingsBtn.classList.toggle('settings-opacity');
 	dom.subSettingsBtn.classList.toggle('settings-slide-in');
@@ -68,13 +73,14 @@ function toggleSettingsContainer() {
  * @param none
  */
 function closeAllSettingsTickets() {
-	const arr = document.querySelectorAll('.settings-ticket');
-	arr.forEach((ticket) => {
+	if (!state.isTicketDisplayed) return;
+	dom.settingsTickets.forEach((ticket) => {
 		ticket.classList.add('hidden');
 	});
 	state.isTicketDisplayed = false;
 	state.ticketOpened = null;
 	controls.API.enabled = true;
+	dom.ticketCount.classList.remove('hidden');
 } /* closeAllSettingsTickets */
 
 /**
@@ -86,6 +92,7 @@ function displaySettingsTicket(ticket) {
 	state.isTicketDisplayed = true;
 	state.ticketOpened = ticket;
 	controls.API.enabled = false;
+	dom.ticketCount.classList.add('hidden');
 } /* displaySettingsTicket */
 
 /**
@@ -105,6 +112,21 @@ function settingsTicketHandler(ticket) {
 	displaySettingsTicket(ticket);
 } /* settingsTicketHandler */
 
+/**
+ * Handles keydown event listener for setttings. Closes currently open settings tickets
+ * or menu if any exist on 'escape' keypress.
+ * @param event
+ */
+function handleKeydown(event) {
+	if (event.key === 'Escape') {
+		if (state.isTicketDisplayed) {
+			closeAllSettingsTickets();
+		} else if (state.isSettingsOpen && dom.cover.classList.contains('hidden')) {
+			toggleSettingsContainer();
+		}
+	}
+} /* handleEscape */
+
 function init() {
 	dom = {
 		settings: document.querySelector('.settings-menu-container'),
@@ -117,13 +139,14 @@ function init() {
 		creditsTicket: document.querySelector('.credits'),
 		instructionsButton: document.querySelector('.instructions-button'),
 		instructionsTicket: document.querySelector('.instructions'),
+		ticketCount: document.querySelector('.count-tickets-icon'),
+		cover: document.querySelector('.cover'),
+		settingsTickets: document.querySelectorAll('.settings-ticket'),
 	};
 	dom.instructionsButton.addEventListener('click', () => { settingsTicketHandler(dom.instructionsTicket); });
 	dom.creditsButton.addEventListener('click', () => {	settingsTicketHandler(dom.creditsTicket); });
 	dom.closeTicket.forEach((button) => { button.addEventListener('click', closeAllSettingsTickets); });
-	window.addEventListener('keydown', (event) => {
-		if (event.key === 'Escape') closeAllSettingsTickets();
-	});
+	window.addEventListener('keydown', handleKeydown);
 
 	// eslint-disable-next-line no-restricted-globals
 	dom.exitButton.addEventListener('click', location.reload.bind(location));
@@ -131,5 +154,5 @@ function init() {
 	dom.volume.addEventListener('click', toggleMute);
 
 	getSettingsLocalStorage();
-}
+} /* init */
 document.addEventListener('DOMContentLoaded', init);

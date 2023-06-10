@@ -20,7 +20,8 @@ export function historyIsOpen() {
  * @param none
  */
 function exitHistory() {
-	toggleClassToArr([domContent.cover, domContent.historyWrapper, domContent.historyIcon], 'hidden');
+	const arr = [domContent.cover, domContent.historyWrapper, domContent.historyIcon, domContent.settings];
+	toggleClassToArr(arr, 'hidden');
 	domContent.historyIcon.classList.remove('count-tickets-flipped');
 	domContent.historyIcon.addEventListener('transitionend', () => {
 		domContent.ticketCounter.classList.remove('no-opacity');
@@ -135,9 +136,8 @@ function displayStorage() {
 	const allTickets = getAllTickets();
 	if (allTickets.length === 0) return;
 	domContent.ticketCounter.classList.add('no-opacity');
-	domContent.cover.classList.remove('hidden');
-	domContent.historyWrapper.classList.remove('hidden');
-	domContent.historyIcon.classList.add('hidden');
+	const arr = [domContent.cover, domContent.historyWrapper, domContent.historyIcon, domContent.settings];
+	toggleClassToArr(arr, 'hidden');
 	if (currentCards.length !== allTickets.length) {
 		handleHoverListeners(currentCards, 'remove');
 		currentCards = [];
@@ -227,6 +227,7 @@ function init() {
 		inputCounter: document.querySelector('#ticket-history-total'),
 		exitHistoryButton: document.querySelector('#close-history'),
 		historyWrapper: document.querySelector('.history-wrapper'),
+		settings: document.querySelector('.settings-menu-container'),
 	};
 
 	domContent.historyIcon.addEventListener('click', () => {
