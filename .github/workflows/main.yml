@@ -25,16 +25,17 @@ jobs:
         npm ci -l verbose
         sudo apt-get update
         sudo apt-get install -y xvfb
-        export $DISPLAY=:99
-        Xvfb :99 -scren 0 1023x768x24 > /dev/null 2>&1 &
-        sleep 3
     - name: Start server
       run: |
         npm start &
       env:
         CI: true
     - name: Run TESTS
-      run: percy exec -- npm run test
+      run: | 
+        export DISPLAY =:99
+        Xvfb :99 -scren 0 1023x768x24 > /dev/null 2>&1 &
+        sleep 3
+        percy exec -- npm run test
       env:
         NODE_OPTIONS: --experimental-vm-modules
         PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
