@@ -26,6 +26,7 @@ describe('visual testing thru percy.io', () => {
 			headless: false,
 			args: [
 				'--no-sandbox',
+				'--disable-setuid-sandbox',
 			],
 		});
 		page = await browser.newPage();
