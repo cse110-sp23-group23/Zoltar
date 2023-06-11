@@ -15,7 +15,7 @@ describe('visual testing thru percy.io', () => {
 	});
 
 	it('(3D) loads the homepage', async () => {
-		await page.goto('http://localhost:5500');
+		await page.goto('http://localhost:5500/index.html');
 		await new Promise((r) => { setTimeout(r, 1000); });
 		await percySnapshot(page, 'Loading 3D page image');
 	});
@@ -35,13 +35,14 @@ describe('visual testing thru percy.io', () => {
 		const fn = () => document.querySelector('.loaded-message').innerText.toLowerCase() !== 'loading...';
 		await page.waitForFunction(fn, 60000);
 		await splashScreen.click();
-		await new Promise((r) => { setTimeout(r, 2000); });
+		await new Promise((r) => { setTimeout(r, 5000); });
 
 		classList = await page.evaluate((el) => el.classList, splashScreen);
 		const classAfter = Object.keys(classList).length;
 
 		expect(classAfter).toBe(classBefore + 2);
-		expect(Object.values(classList)).toContain('hidden', 'no-opacity');
+		expect(Object.values(classList)).toContain('hidden');
+		expect(Object.values(classList)).toContain('no-opacity');
 	}
 
 	it('(3D) pressing anywhere on screen removes splash screen', async () => {
@@ -52,8 +53,8 @@ describe('visual testing thru percy.io', () => {
 		await testSplashOnURL('http://localhost:5500/index2d.html');
 	}, 30000);
 
-	afterEach(() => {
-		page.close();
-		browser.close();
+	afterEach(async () => {
+		await page.close();
+		await browser.close();
 	});
 }, 120000);
