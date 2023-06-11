@@ -111,6 +111,7 @@ export function animateTicketSlideFrame(delta, args) {
 		args.options.ticketSlide.finalPosition,
 		args.options.ticketSlide.speed,
 		delta,
+		'codeClimateSucks',
 	);
 	args.ticket.position.add(ticketAdjustment);
 } /* animateTicketSlideFrame */
