@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: [ubuntu-latest]
     container: 
-      image: circleci/node:18.14.1-browsers
+      image: cimg/node:18.14.1-browsers
     steps:
     - name: Checkout
       uses: actions/checkout@v3
