@@ -167,9 +167,11 @@ describe('visual testing thru percy.io', () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await clickSettingsButton();
 		const volumeButton = await page.waitForSelector('.volume');
+		// Test localStorage contents after toggling volume off
 		await volumeButton.click();
 		let settings = JSON.parse(await page.evaluate(() => localStorage.getItem("settings")));
 		expect(settings.isVolumeOn).toBe(false);
+		// Test localStorage contents after toggling volume back on
 		await volumeButton.click();
 		settings = JSON.parse(await page.evaluate(() => localStorage.getItem("settings")));
 		expect(settings.isVolumeOn).toBe(true);
