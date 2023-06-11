@@ -22,13 +22,13 @@ describe('visual testing thru percy.io', () => {
 
 	beforeEach(async () => {
 		browser = await puppeteer.launch({
-			headless: false,
+			headless: true,
 			args: [
 				// '--enable-features=Vulkan',
-				// '--use-gl=swiftshader',
-				// '--use-angle=swiftshader',
+				'--use-gl=swiftshader',
+				'--use-angle=swiftshader',
 				// // '--use-vulkan=swiftshader',
-				// // '--use-webgpu-adapter=swiftshader',
+				'--use-webgpu-adapter=swiftshader',
 				'--no-sandbox',
 				'--disable-setuid-sandbox',
 				// '--ignore-gpu-blacklist',

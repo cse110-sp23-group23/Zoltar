@@ -109,10 +109,6 @@ body {
 	line-height: 1.5;
 }
 
-.instructions-list li {
-	font-size: 2vw;
-}
-
 .ticket-text {
 	text-align: justify;
 	padding: 0 2vw 0 2vw;
