@@ -32,6 +32,7 @@ jobs:
         CI: true
     - name: Run TESTS
       run: |
+        netstat -lt
         percy exec -- npm run test
       env:
         NODE_OPTIONS: --experimental-vm-modules
