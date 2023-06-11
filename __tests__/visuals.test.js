@@ -17,22 +17,12 @@ describe('visual testing thru percy.io', () => {
 		classBefore: '',
 		classAfter: '',
 		classList: '',
-
 	};
 
 	beforeEach(async () => {
 		browser = await puppeteer.launch({
-			headless: true,
-			args: [
-				// '--enable-features=Vulkan',
-				'--use-gl=swiftshader',
-				'--use-angle=swiftshader',
-				// // '--use-vulkan=swiftshader',
-				'--use-webgpu-adapter=swiftshader',
-				'--no-sandbox',
-				'--disable-setuid-sandbox',
-				// '--ignore-gpu-blacklist',
-			],
+			headless: false,
+			args: [],
 		});
 		page = await browser.newPage();
 		await page.setDefaultTimeout(0);
@@ -108,19 +98,11 @@ describe('visual testing thru percy.io', () => {
 
 		const fn = () => document.querySelector('.loaded-message').innerText.toLowerCase() !== 'loading...';
 
-		console.log('reached here');
-		// setInterval(async () => {
-		// 	await page.screenshot({ // Screenshot the website using defined options
-		// 		path: './screenshot.png', // Save the screenshot in current directory
-		// 		fullPage: true, // take a fullpage screenshot
-		// 	});
-		// }, 5000);
-
 		await page.waitForFunction(fn, 60000);
 
 		// clicks on splash screen
 		await splashScreen.click();
-		await new Promise((r) => { setTimeout(r, 5000); });
+		await new Promise((r) => { setTimeout(r, 2000); });
 	} /* loadPagePastSplashScreen */
 
 	it('(3D) pressing anywhere on screen removes splash screen', async () => {

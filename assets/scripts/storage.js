@@ -26,6 +26,7 @@ function exitHistory() {
 	domContent.historyIcon.addEventListener('transitionend', () => {
 		domContent.ticketCounter.classList.remove('no-opacity');
 	}, { once: true });
+	domContent.cover.removeEventListener('click', exitHistory);
 } /* exitHistory */
 
 /**
@@ -88,7 +89,7 @@ function translateCards() {
 		const geoSumDistance = (distance < 0 ? -1 : 1) * 300 * (1 - 0.9 ** Math.abs(distance));
 		const scaleFactor = 0.9 ** Math.abs(distance);
 		const cardMod = card;
-		cardMod.style.transform = `translate(calc(${geoSumDistance}vw - 50%), -50%) scale(${scaleFactor})`;
+		cardMod.style.transform = `translate(calc(${geoSumDistance}vw - 50%), 0) scale(${scaleFactor})`;
 	});
 } /* translateCards */
 
@@ -150,6 +151,7 @@ function displayStorage() {
 	}
 	currentCards[state.currentlySelected].selected = true;
 	domContent.inputCounter.innerText = currentCards.length;
+	domContent.cover.addEventListener('click', exitHistory);
 	handleHoverListeners(currentCards, 'add');
 	translateCards();
 } /* displayStorage */
