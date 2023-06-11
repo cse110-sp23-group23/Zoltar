@@ -25,7 +25,7 @@ jobs:
         npm ci -l verbose
         sudo apt-get update
         sudo apt-get install -y xvfb
-        export DISPLAY=:99
+        export $DISPLAY=:99
         Xvfb :99 -scren 0 1023x768x24 > /dev/null 2>&1 &
         sleep 3
     - name: Start server
