@@ -32,12 +32,11 @@ jobs:
         CI: true
     - name: Run TESTS
       run: |
-        xvfb-run --server-args="-screen 0 1024x768x24" percy exec -- npm run test
+        percy exec -- npm run test
       env:
         NODE_OPTIONS: --experimental-vm-modules
         PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
         CI: true
-        DISPLAY: :99
   lint:
     runs-on: ubuntu-latest
     steps:
