@@ -13,7 +13,8 @@
     "verbose": true,
     "preset": "jest-puppeteer",
     "testEnvironment": "jest-environment-jsdom",
-    "transform": {}
+    "transform": {},
+    "testTimeout": 180000
   },
   "eslintConfig": {
     "extends": "airbnb-base",

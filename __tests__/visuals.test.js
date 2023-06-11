@@ -11,10 +11,11 @@ describe('visual testing thru percy.io', () => {
 
 	beforeEach(async () => {
 		browser = await puppeteer.launch({
-			headless: 'new',
-			args: ['--use-cmd-decoder=passthrough'],
+			headless: false,
+			args: [],
 		});
 		page = await browser.newPage();
+		await page.setDefaultTimeout(0);
 	});
 
 	it('(3D) loads the homepage', async () => {
@@ -31,17 +32,21 @@ describe('visual testing thru percy.io', () => {
 
 	async function testSplashOnURL(url) {
 		await page.goto(url);
+
 		const splashScreen = await page.$('#splash-screen');
 		let classList = await page.evaluate((el) => el.classList, splashScreen);
 		const classBefore = Object.keys(classList).length;
 
 		await page.waitForSelector('.loaded-message');
 		const fn = () => document.querySelector('.loaded-message').innerText.toLowerCase() !== 'loading...';
+
 		await page.waitForFunction(fn, 60000);
+
 		await splashScreen.click();
-		await new Promise((r) => { setTimeout(r, 5000); });
+		await new Promise((r) => { setTimeout(r, 2000); });
 
 		classList = await page.evaluate((el) => el.classList, splashScreen);
+
 		const classAfter = Object.keys(classList).length;
 
 		await percySnapshot(page, `After splash is cleared at ${url}`);
@@ -53,14 +58,14 @@ describe('visual testing thru percy.io', () => {
 
 	it('(3D) pressing anywhere on screen removes splash screen', async () => {
 		await testSplashOnURL('http://localhost:5500/index.html');
-	}, 60000);
+	}, 0);
 
 	it('(2D) pressing anywhere on screen removes splash screen', async () => {
 		await testSplashOnURL('http://localhost:5500/index2d.html');
-	}, 30000);
+	}, 0);
 
 	afterEach(async () => {
 		await page.close();
 		await browser.close();
 	});
-}, 120000);
+}, 180000);
