@@ -22,8 +22,11 @@ describe('visual testing thru percy.io', () => {
 
 	beforeEach(async () => {
 		browser = await puppeteer.launch({
+			executablePath: process.env.PUPPETEER_EXEC_PATH,
 			headless: false,
-			args: [],
+			args: [
+				'--no-sandbox',
+			],
 		});
 		page = await browser.newPage();
 		await page.setDefaultTimeout(0);
