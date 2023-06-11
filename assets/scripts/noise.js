@@ -1,34 +1,46 @@
 let muted = false;
 
-let gainNode;
-let backgroundSource;
-let audioContext;
+const AUDIO_PATHS = {
+	background: {
+		path: 'assets/audio/background.wav',
+		loop: true,
+		defaultVolume: 0.1,
+	},
+	rumble: {
+		path: 'assets/audio/rumble.mp3',
+		loop: false,
+		defaultVolume: 1,
+	},
+}; // voice_lines automatically populated from below
 
-const SOURCES = {
-	thunder: 'assets/audio/rumble.mp3',
-	background: 'assets/audio/background.wav',
+const VOICE_LINES = {
+	number: 28,
+	range: [1, 10],
 };
 
-/**
- * Starts background noise, fading in over 5 seconds
- * @param none
- */
-export function playBackgroundNoise() {
-	if (!muted) {
-		gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-		gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 3);
-	}
-	backgroundSource.start();
-} /* playBackgroundNoise */
+const context = new window.AudioContext();
+const gainNodes = {}; // auto populated
+const buffers = {}; // auto populated
 
 /**
- * Plays rumbling noise
- * @param none
+ * Plays audio corresponding to passed name, muted if appropriate
+ * @param { String } name name of audio to play, must be in AUDIO_PATHS object with defined path
+ * @param { Double } rampTime time delta until ramp should be completed
  */
-export function playRumbleNoise() {
-	const thunder = new Audio(SOURCES.thunder);
-	thunder.play();
-} /* playRumbleNoise */
+export function playAudio(name, rampTime = 0) {
+	if (!AUDIO_PATHS[name]) return;
+
+	const source = context.createBufferSource();
+	source.buffer = buffers[name];
+	source.loop = AUDIO_PATHS[name].loop;
+	source.connect(gainNodes[name]);
+
+	if (!muted) {
+		gainNodes[name].gain.setValueAtTime(0, context.currentTime);
+		gainNodes[name].gain.linearRampToValueAtTime(AUDIO_PATHS[name].defaultVolume, context.currentTime + rampTime);
+	}
+	source.start();
+} /* playAudio */
 
 /**
  * Mutes all audio elements
@@ -36,7 +48,9 @@ export function playRumbleNoise() {
  */
 export function mute() {
 	muted = true;
-	gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.5);
+	Object.values(gainNodes).forEach((node) => {
+		node.gain.linearRampToValueAtTime(0, context.currentTime + 0.5);
+	});
 } /* mute */
 
 /**
@@ -45,25 +59,38 @@ export function mute() {
  */
 export function unmute() {
 	muted = false;
-	gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.5);
+	Object.entries(gainNodes).forEach(([key, node]) => {
+		node.gain.linearRampToValueAtTime(AUDIO_PATHS[key].defaultVolume, context.currentTime + 0.5);
+	});
 } /* unmute */
 
-function init() {
-	// background noise setup
-	audioContext = new window.AudioContext();
-	backgroundSource = audioContext.createBufferSource();
-	gainNode = audioContext.createGain();
-	gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-	backgroundSource.connect(gainNode);
-	gainNode.connect(audioContext.destination);
+/**
+ * Plays a random voice line from list of all options
+ * @param none
+ */
+export function playRandomVoiceLine() {
+	const randIndex = (Math.floor(Math.random() * VOICE_LINES.number)) + 1;
+	playAudio(`voiceLine${randIndex}`, 0.3);
+} /* playRandomVoiceLine */
 
-	fetch(SOURCES.background)
+// populates all voice lines into AUDIO_PATHS automatically
+for (let i = 1; i <= VOICE_LINES.number; i += 1) {
+	AUDIO_PATHS[`voiceLine${i}`] = {
+		path: `assets/audio/zoltar-voice-lines/zoltar-voice-${i}.mp3`,
+		loop: false,
+		defaultVolume: 1,
+	};
+}
+
+// loads all audio assets automatically, populating from AUDIO_PATHS object
+Object.entries(AUDIO_PATHS).forEach(([key, value]) => {
+	gainNodes[key] = context.createGain();
+	gainNodes[key].gain.setValueAtTime(0, context.currentTime);
+	gainNodes[key].connect(context.destination);
+	fetch(value.path)
 		.then((response) => response.arrayBuffer())
-		.then((data) => audioContext.decodeAudioData(data))
+		.then((data) => context.decodeAudioData(data))
 		.then((buffer) => {
-			backgroundSource.buffer = buffer;
-			backgroundSource.loop = true;
+			buffers[key] = buffer;
 		});
-} /* init */
-
-document.addEventListener('DOMContentLoaded', init);
+});

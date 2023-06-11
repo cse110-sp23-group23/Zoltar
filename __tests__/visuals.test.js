@@ -10,7 +10,7 @@ describe('visual testing thru percy.io', () => {
 	let page;
 
 	beforeEach(async () => {
-		browser = await puppeteer.launch();
+		browser = await puppeteer.launch({ headless: false });
 		page = await browser.newPage();
 	});
 
@@ -24,42 +24,34 @@ describe('visual testing thru percy.io', () => {
 		await percySnapshot(page, 'Loading 2D page image');
 	});
 
-	it('(3D) pressing anywhere on screen removes splash screen', async () => {
-		await page.goto('http://localhost:5500/index2d.html');
+	async function testSplashOnURL(url) {
+		await page.goto(url);
 		const splashScreen = await page.$('#splash-screen');
 		let classList = await page.evaluate((el) => el.classList, splashScreen);
 		const classBefore = Object.keys(classList).length;
 
 		const fn = () => document.querySelector('.loaded-message').innerText.toLowerCase() !== 'loading...';
-		await page.waitForFunction(fn);
+		await page.waitForFunction(fn, 60000);
 		await splashScreen.click();
-		await page.waitForTimeout(1000);
+		await new Promise((r) => { setTimeout(r, 2000); });
 
 		classList = await page.evaluate((el) => el.classList, splashScreen);
 		const classAfter = Object.keys(classList).length;
 
 		expect(classAfter).toBe(classBefore + 2);
 		expect(Object.values(classList)).toContain('hidden', 'no-opacity');
-	}, 30000);
+	}
+
+	it('(3D) pressing anywhere on screen removes splash screen', async () => {
+		await testSplashOnURL('http://localhost:5500/index.html');
+	}, 60000);
 
 	it('(2D) pressing anywhere on screen removes splash screen', async () => {
-		await page.goto('http://localhost:5500/index2d.html');
-		const splashScreen = await page.$('#splash-screen');
-		let classList = await page.evaluate((el) => el.classList, splashScreen);
-		const classBefore = Object.keys(classList).length;
-
-		await splashScreen.click();
-		await page.waitForTimeout(1000);
-
-		classList = await page.evaluate((el) => el.classList, splashScreen);
-		const classAfter = Object.keys(classList).length;
-
-		expect(classAfter).toBe(classBefore + 2);
-		expect(Object.values(classList)).toContain('hidden', 'no-opacity');
-	});
+		await testSplashOnURL('http://localhost:5500/index2d.html');
+	}, 30000);
 
 	afterEach(() => {
 		page.close();
 		browser.close();
 	});
-});
+}, 120000);

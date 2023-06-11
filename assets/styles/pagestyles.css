@@ -228,6 +228,7 @@ canvas {
 .history-wrapper {
 	display: flex;
 	justify-content: center;
+	transition: opacity 150ms ease-in-out;
 }
 
 .ticket-history {

@@ -1,4 +1,4 @@
-import { playBackgroundNoise } from './noise.js';
+import { playAudio } from './noise.js';
 
 const LOADED_MESSAGE = '[ press anywhere to continue ]';
 
@@ -11,7 +11,7 @@ const dom = {};
  */
 export function tellPageLoaded(controls) {
 	const go = () => {
-		playBackgroundNoise();
+		playAudio('background', 3);
 		dom.splash.classList.add('no-opacity');
 		dom.splash.addEventListener('transitionend', () => {
 			dom.splash.classList.add('hidden');

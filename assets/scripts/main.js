@@ -31,7 +31,7 @@ import { createFortuneOnTicket } from './fortunes.js';
 import { flickerDelay, flickVignette } from './util.js';
 import { options } from './options.js';
 import { setControls } from './settings.js';
-import { playRumbleNoise } from './noise.js';
+import { playAudio, playRandomVoiceLine } from './noise.js';
 
 // eslint-disable-next-line no-console
 console.log('%cWelcome to %cZoltar%c.live!', '', 'color: red; font-weight: bolder', '');
@@ -191,7 +191,8 @@ function eyeFrame(frame) {
  * @param none
  */
 function startShaking() {
-	playRumbleNoise();
+	playAudio('rumble', 0.3);
+	playRandomVoiceLine();
 	state.currentShakeDuration = options.shake.minDurationMS / 1000;
 } /* startShaking */
 
