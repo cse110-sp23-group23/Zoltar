@@ -9,9 +9,6 @@ permissions: write-all
 jobs:
   test:
     runs-on: [ubuntu-latest]
-    container: 
-      image: cimg/node:18.14.1-browsers
-      options: --network host
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -28,8 +25,7 @@ jobs:
         npm ci -l verbose
     - name: Start server
       run: |
-        nohup npm start &
-        sleep 5
+        npm start &
       env:
         CI: true
     - name: Run TESTS
