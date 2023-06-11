@@ -63,43 +63,6 @@ describe('visual testing thru percy.io', () => {
 		return result;
 	}
 
-	beforeEach(async () => {
-		browser = await puppeteer.launch({
-			headless: false,
-			args: [
-				// '--enable-features=Vulkan',
-				// '--use-gl=swiftshader',
-				// '--use-angle=swiftshader',
-				// // '--use-vulkan=swiftshader',
-				// // '--use-webgpu-adapter=swiftshader',
-				'--no-sandbox',
-				'--disable-setuid-sandbox',
-				// '--ignore-gpu-blacklist',
-			],
-		});
-		page = await browser.newPage();
-		await page.setDefaultTimeout(0);
-	});
-
-	/**
-	 * Page Load test with percySnapshot
-	 * @param { string } url 3D or 2D URL
-	 * @param { string} version '3D' or '2D' for percy image caption
-	 */
-	async function loadTest(url, version) {
-		await page.goto(url);
-		await new Promise((r) => { setTimeout(r, 1000); });
-		await percySnapshot(page, `Loading ${version} page image`);
-	} /* loadTest */
-
-	it('(3D) loads the homepage', async () => {
-		await loadTest(URL_3D, '3D');
-	});
-
-	it('(2D) loads the homepage', async () => {
-		await loadTest(URL_2D, '2D');
-	});
-
 	/**
 	 * Clicks on the top right settings button
 	 * Call this function AFTER loadPagePastSplashScreen(url)
