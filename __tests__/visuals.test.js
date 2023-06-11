@@ -10,7 +10,7 @@ describe('visual testing thru percy.io', () => {
 	let page;
 
 	beforeEach(async () => {
-		browser = await puppeteer.launch({ headless: false });
+		browser = await puppeteer.launch({ headless: 'new' });
 		page = await browser.newPage();
 	});
 
