@@ -6,8 +6,8 @@ import percySnapshot from '@percy/puppeteer';
 import puppeteer from 'puppeteer';
 
 const EIGHT_BALL_URL = 'https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/';
-const URL_3D = 'http://localhost:5500/index.html';
-const URL_2D = 'http://localhost:5500/index2d.html';
+const URL_3D = 'http://host.docker.internal:5500/index.html';
+const URL_2D = 'http://host.docker.internal:5500/index2d.html';
 
 describe('visual testing thru percy.io', () => {
 	let browser;
