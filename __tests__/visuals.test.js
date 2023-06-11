@@ -41,6 +41,8 @@ describe('visual testing thru percy.io', () => {
 		classList = await page.evaluate((el) => el.classList, splashScreen);
 		const classAfter = Object.keys(classList).length;
 
+		await percySnapshot(page, '(3d) after splash is cleared');
+
 		expect(classAfter).toBe(classBefore + 2);
 		expect(Object.values(classList)).toContain('hidden');
 		expect(Object.values(classList)).toContain('no-opacity');
