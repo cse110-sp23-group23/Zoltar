@@ -1,3 +1,5 @@
+import { mute, unmute } from './noise.js';
+
 const VOLUME_SRC_ON = './assets/images/volume_on.svg';
 const VOLUME_SRC_OFF = './assets/images/volume_off.svg';
 const DEFAULT_SETTINGS = {
@@ -25,11 +27,24 @@ export function setControls(passedControls) {
 } /* setControls */
 
 /**
+ * Mutes/unmutes audio depending on current settings
+ * @param none
+ */
+function updateAudioOutput() {
+	if (settings.isVolumeOn) {
+		unmute();
+	} else {
+		mute();
+	}
+}
+
+/**
  * Updates display of settings menu to match current settings
  * @param none
  */
 function refreshSettingsMenu() {
-	dom.volumeImg.src = settings.isVolumeOn ? VOLUME_SRC_OFF : VOLUME_SRC_ON;
+	dom.volumeImg.src = settings.isVolumeOn ? VOLUME_SRC_ON : VOLUME_SRC_OFF;
+	updateAudioOutput();
 } /* refreshSettingsMenu */
 
 /**

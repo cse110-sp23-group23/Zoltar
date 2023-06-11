@@ -31,6 +31,7 @@ import { createFortuneOnTicket } from './fortunes.js';
 import { flickerDelay, flickVignette } from './util.js';
 import { options } from './options.js';
 import { setControls } from './settings.js';
+import { playRumbleNoise } from './noise.js';
 
 // eslint-disable-next-line no-console
 console.log('%cWelcome to %cZoltar%c.live!', '', 'color: red; font-weight: bolder', '');
@@ -60,9 +61,6 @@ const textureLoader = new TextureLoader();
 const loader = new GLTFLoader(manager);
 const renderer = new WebGLRenderer({ alpha: false });
 const camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
-
-// Sound effects
-const rumble = new Audio('./assets/audio/rumble.mp3');
 
 // Light creation
 const spotlight = new SpotLight(options.light.spotlightColor, options.light.spotlightItensity);
@@ -193,7 +191,7 @@ function eyeFrame(frame) {
  * @param none
  */
 function startShaking() {
-	rumble.play();
+	playRumbleNoise();
 	state.currentShakeDuration = options.shake.minDurationMS / 1000;
 } /* startShaking */
 
@@ -243,7 +241,6 @@ function handleKeypress(event) {
 		state.responseGenerated = false;
 		flickVignette();
 		startThinkingAnimation();
-		rumble.load();
 		const paramOptions = {
 			callback: (ticketState) => {
 				state.responseGenerated = true;

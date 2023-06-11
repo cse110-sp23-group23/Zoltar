@@ -30,6 +30,8 @@ describe('visual testing thru percy.io', () => {
 		let classList = await page.evaluate((el) => el.classList, splashScreen);
 		const classBefore = Object.keys(classList).length;
 
+		const fn = () => document.querySelector('.loaded-message').innerText.toLowerCase() !== 'loading...';
+		await page.waitForFunction(fn);
 		await splashScreen.click();
 		await page.waitForTimeout(1000);
 
@@ -38,7 +40,7 @@ describe('visual testing thru percy.io', () => {
 
 		expect(classAfter).toBe(classBefore + 2);
 		expect(Object.values(classList)).toContain('hidden', 'no-opacity');
-	});
+	}, 30000);
 
 	it('(2D) pressing anywhere on screen removes splash screen', async () => {
 		await page.goto('http://localhost:5500/index2d.html');
