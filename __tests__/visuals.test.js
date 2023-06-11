@@ -41,7 +41,7 @@ describe('visual testing thru percy.io', () => {
 		await page.goto(url);
 		await new Promise((r) => { setTimeout(r, 1000); });
 		await percySnapshot(page, `Loading ${version} page image`);
-	}
+	} /* loadTest */
 
 	it('(3D) loads the homepage', async () => {
 		await loadTest(URL_3D, '3D');
@@ -67,7 +67,7 @@ describe('visual testing thru percy.io', () => {
 		// check if redirect works
 		const newURL = await page.evaluate(() => window.location.href);
 		expect(newURL).toBe(EIGHT_BALL_URL);
-	}
+	} /* testEightBall */
 
 	/**
 	 * Checks if Splash Screen disappears after loadPagePastSplashScreen() is called
@@ -83,7 +83,7 @@ describe('visual testing thru percy.io', () => {
 		expect(testData.classAfter).toBe(testData.classBefore + 2);
 		expect(Object.values(testData.classList)).toContain('hidden');
 		expect(Object.values(testData.classList)).toContain('no-opacity');
-	}
+	} /* testSplashScreen */
 
 	/**
 	 * Loads the respective page, then clicks on the splash screen to make it disappear
@@ -105,7 +105,7 @@ describe('visual testing thru percy.io', () => {
 		// clicks on splash screen
 		await splashScreen.click();
 		await new Promise((r) => { setTimeout(r, 2000); });
-	}
+	} /* loadPagePastSplashScreen */
 
 	it('(3D) pressing anywhere on screen removes splash screen', async () => {
 		await loadPagePastSplashScreen(URL_3D);
