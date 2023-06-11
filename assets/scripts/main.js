@@ -304,7 +304,9 @@ function init() {
 
 	window.addEventListener('click', shootRay);
 	window.addEventListener('keydown', handleKeypress);
-	window.addEventListener('resize', handleResize);
+	window.addEventListener('resize' || 'focus', handleResize);
+	renderer.domElement.addEventListener('mouseenter', handleResize);
+
 	window.addEventListener('beforeunload', (event) => {
 		const message = 'Leaving now will cause your ticket to be lost. Are you sure?';
 		if (safeToExit()) {
