@@ -11,6 +11,7 @@ jobs:
     runs-on: [ubuntu-latest]
     container: 
       image: cimg/node:18.14.1-browsers
+      options: --network host
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -27,7 +28,8 @@ jobs:
         npm ci -l verbose
     - name: Start server
       run: |
-        npm start &
+        nohup npm start &
+        sleep 5
       env:
         CI: true
     - name: Run TESTS
