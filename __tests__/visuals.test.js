@@ -7,7 +7,7 @@ import puppeteer from 'puppeteer';
 
 const EIGHT_BALL_URL = 'https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/';
 const URL_3D = 'http://127.0.0.1:5500/index.html';
-const URL_2D = 'http://127.0.0.1:5500/index2d.html';
+const URL_2D = 'http://172.17.0.1:5500/index2d.html';
 
 describe('visual testing thru percy.io', () => {
 	let browser;
