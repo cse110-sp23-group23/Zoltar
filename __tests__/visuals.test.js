@@ -154,6 +154,28 @@ describe('visual testing thru percy.io', () => {
 		await testSettingsMenuSliding();
 	});
 
+	it('(2D) clicking on Zoltar generates a fortune', async () => {
+		await loadPagePastSplashScreen(URL_2D);
+		const zoltar = await page.waitForSelector('#eight-ball-container');
+		await zoltar.click();
+		await page.waitForTimeout(2000);
+		testData.classList = await getClassList('.ticket-wrapper');
+		expect(Object.values(testData.classList)).toContain('ticket-hoverable');
+	});
+
+	it('(2D) test mute/unmute button', async () => {
+		await loadPagePastSplashScreen(URL_2D);
+		await clickSettingsButton();
+		const volumeButton = await page.waitForSelector('.volume');
+		await volumeButton.click();
+		let settings = JSON.parse(await page.evaluate(() => localStorage.getItem("settings")));
+		expect(settings.isVolumeOn).toBe(false);
+		await volumeButton.click();
+		settings = JSON.parse(await page.evaluate(() => localStorage.getItem("settings")));
+		expect(settings.isVolumeOn).toBe(true);
+	});
+
+
 	afterEach(async () => {
 		await page.close();
 		await browser.close();
