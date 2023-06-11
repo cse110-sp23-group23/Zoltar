@@ -10,7 +10,10 @@ describe('visual testing thru percy.io', () => {
 	let page;
 
 	beforeEach(async () => {
-		browser = await puppeteer.launch({ headless: 'new' });
+		browser = await puppeteer.launch({
+			headless: 'new',
+			args: ['--use-cmd-decoder=passthrough'],
+		});
 		page = await browser.newPage();
 	});
 
@@ -41,7 +44,7 @@ describe('visual testing thru percy.io', () => {
 		classList = await page.evaluate((el) => el.classList, splashScreen);
 		const classAfter = Object.keys(classList).length;
 
-		await percySnapshot(page, '(3d) after splash is cleared');
+		await percySnapshot(page, `After splash is cleared at ${url}`);
 
 		expect(classAfter).toBe(classBefore + 2);
 		expect(Object.values(classList)).toContain('hidden');
