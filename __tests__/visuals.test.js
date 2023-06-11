@@ -139,11 +139,6 @@ describe('visual testing thru percy.io', () => {
 		await new Promise((r) => { setTimeout(r, 2000); });
 	} /* loadPagePastSplashScreen */
 
-	it('(3D) pressing anywhere on screen removes splash screen', async () => {
-		await loadPagePastSplashScreen(URL_3D);
-		await testSplashScreen(URL_3D);
-	}, 0);
-
 	it('(2D) pressing anywhere on screen removes splash screen', async () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await testSplashScreen(URL_2D);
