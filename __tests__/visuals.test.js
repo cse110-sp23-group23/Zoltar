@@ -22,11 +22,16 @@ describe('visual testing thru percy.io', () => {
 
 	beforeEach(async () => {
 		browser = await puppeteer.launch({
-			executablePath: process.env.PUPPETEER_EXEC_PATH,
 			headless: false,
 			args: [
+				// '--enable-features=Vulkan',
+				// '--use-gl=swiftshader',
+				// '--use-angle=swiftshader',
+				// // '--use-vulkan=swiftshader',
+				// // '--use-webgpu-adapter=swiftshader',
 				'--no-sandbox',
 				'--disable-setuid-sandbox',
+				// '--ignore-gpu-blacklist',
 			],
 		});
 		page = await browser.newPage();
@@ -100,7 +105,17 @@ describe('visual testing thru percy.io', () => {
 
 		// wait for assets of page to load
 		await page.waitForSelector('.loaded-message');
+
 		const fn = () => document.querySelector('.loaded-message').innerText.toLowerCase() !== 'loading...';
+
+		console.log('reached here');
+		// setInterval(async () => {
+		// 	await page.screenshot({ // Screenshot the website using defined options
+		// 		path: './screenshot.png', // Save the screenshot in current directory
+		// 		fullPage: true, // take a fullpage screenshot
+		// 	});
+		// }, 5000);
+
 		await page.waitForFunction(fn, 60000);
 
 		// clicks on splash screen
