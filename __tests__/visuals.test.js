@@ -32,16 +32,23 @@ describe('visual testing thru percy.io', () => {
 		await page.setDefaultTimeout(0);
 	});
 
-	it('(3D) loads the homepage', async () => {
-		await page.goto(URL_3D);
+	/**
+	 * Page Load test with percySnapshot
+	 * @param { string } url 3D or 2D URL
+	 * @param { string} version '3D' or '2D' for percy image caption
+	 */
+	async function loadTest(url, version) {
+		await page.goto(url);
 		await new Promise((r) => { setTimeout(r, 1000); });
-		await percySnapshot(page, 'Loading 3D page image');
+		await percySnapshot(page, `Loading ${version} page image`);
+	}
+
+	it('(3D) loads the homepage', async () => {
+		await loadTest(URL_3D, '3D');
 	});
 
 	it('(2D) loads the homepage', async () => {
-		await page.goto(URL_2D);
-		await new Promise((r) => { setTimeout(r, 1000); });
-		await percySnapshot(page, 'Loading 2D page image');
+		await loadTest(URL_2D, '2D');
 	});
 
 	/**
