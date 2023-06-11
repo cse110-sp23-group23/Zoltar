@@ -16,11 +16,13 @@ describe('visual testing thru percy.io', () => {
 
 	it('(3D) loads the homepage', async () => {
 		await page.goto('http://localhost:5500');
+		await new Promise((r) => { setTimeout(r, 1000); });
 		await percySnapshot(page, 'Loading 3D page image');
 	});
 
 	it('(2D) loads the homepage', async () => {
-		await page.goto('http://localhost:5500/twodee.html');
+		await page.goto('http://localhost:5500/index2d.html');
+		await new Promise((r) => { setTimeout(r, 1000); });
 		await percySnapshot(page, 'Loading 2D page image');
 	});
 
