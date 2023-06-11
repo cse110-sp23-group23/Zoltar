@@ -47,6 +47,40 @@ describe('visual testing thru percy.io', () => {
 		await loadTest(URL_2D, '2D');
 	});
 
+	async function getClassList(tag) {
+		const arr = await page.waitForSelector(tag);
+		const result = await page.evaluate((el) => el.classList, arr);
+		return result;
+	}
+
+	/**
+	 * Clicks on the top right settings button
+	 * Call this function AFTER loadPagePastSplashScreen(url)
+	 * @param none
+	 */
+	async function clickSettingsButton() {
+		const settingsBtn = await page.waitForSelector('.settings-menu-button');
+		await settingsBtn.click();
+	}
+
+	/**
+	 * Tests sliding in of settings menu after button is clicked.
+	 * @param none
+	 */
+	async function testSettingsMenuSliding() {
+		await clickSettingsButton();
+
+		// Checks for 'settings-slide-in' class within settings menu
+		testData.classList = await getClassList('.settings-menu-settings');
+		expect(Object.values(testData.classList)).toContain('settings-slide-in');
+
+		await clickSettingsButton();
+
+		// Checks for absense of 'settings-slide-in' class within settings menu
+		testData.classList = await getClassList('.settings-menu-settings');
+		expect(Object.values(testData.classList)).not.toContain('settings-slide-in');
+	}
+
 	/**
 	 * Checks if Eight Ball in 2D redirects to Magic-8-Ball page
 	 * @param none
@@ -119,6 +153,11 @@ describe('visual testing thru percy.io', () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await testEightBall();
 	}, 0);
+
+	it('(2D) pressing settings button makes menu appear on screen', async () => {
+		await loadPagePastSplashScreen(URL_2D);
+		await testSettingsMenuSliding();
+	});
 
 	afterEach(async () => {
 		await page.close();
