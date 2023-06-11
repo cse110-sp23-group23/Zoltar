@@ -32,6 +32,7 @@ describe('visual testing thru percy.io', () => {
 		let classList = await page.evaluate((el) => el.classList, splashScreen);
 		const classBefore = Object.keys(classList).length;
 
+		await page.waitForSelector('.loaded-message');
 		const fn = () => document.querySelector('.loaded-message').innerText.toLowerCase() !== 'loading...';
 		await page.waitForFunction(fn, 60000);
 		await splashScreen.click();
