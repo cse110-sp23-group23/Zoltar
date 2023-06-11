@@ -57,6 +57,77 @@ describe('visual testing thru percy.io', () => {
 		await loadTest(URL_2D, '2D');
 	});
 
+	async function getClassList(tag) {
+		const arr = await page.waitForSelector(tag);
+		const result = await page.evaluate((el) => el.classList, arr);
+		return result;
+	}
+
+	beforeEach(async () => {
+		browser = await puppeteer.launch({
+			headless: false,
+			args: [
+				// '--enable-features=Vulkan',
+				// '--use-gl=swiftshader',
+				// '--use-angle=swiftshader',
+				// // '--use-vulkan=swiftshader',
+				// // '--use-webgpu-adapter=swiftshader',
+				'--no-sandbox',
+				'--disable-setuid-sandbox',
+				// '--ignore-gpu-blacklist',
+			],
+		});
+		page = await browser.newPage();
+		await page.setDefaultTimeout(0);
+	});
+
+	/**
+	 * Page Load test with percySnapshot
+	 * @param { string } url 3D or 2D URL
+	 * @param { string} version '3D' or '2D' for percy image caption
+	 */
+	async function loadTest(url, version) {
+		await page.goto(url);
+		await new Promise((r) => { setTimeout(r, 1000); });
+		await percySnapshot(page, `Loading ${version} page image`);
+	} /* loadTest */
+
+	it('(3D) loads the homepage', async () => {
+		await loadTest(URL_3D, '3D');
+	});
+
+	it('(2D) loads the homepage', async () => {
+		await loadTest(URL_2D, '2D');
+	});
+
+	/**
+	 * Clicks on the top right settings button
+	 * Call this function AFTER loadPagePastSplashScreen(url)
+	 * @param none
+	 */
+	async function clickSettingsButton() {
+		const settingsBtn = await page.waitForSelector('.settings-menu-button');
+		await settingsBtn.click();
+	}
+
+	/**
+	 * Tests sliding in of settings menu after button is clicked.
+	 * @param none
+	 */
+	async function testSettingsMenuSliding() {
+		await clickSettingsButton();
+
+		// Checks for 'settings-slide-in' class within settings menu
+		testData.classList = await getClassList('.settings-menu-settings');
+		expect(Object.values(testData.classList)).toContain('settings-slide-in');
+
+		await clickSettingsButton();
+
+		// Checks for absense of 'settings-slide-in' class within settings menu
+		testData.classList = await getClassList('.settings-menu-settings');
+		expect(Object.values(testData.classList)).not.toContain('settings-slide-in');
+	}
+
 	/**
 	 * Checks if Eight Ball in 2D redirects to Magic-8-Ball page
 	 * @param none
@@ -137,6 +208,11 @@ describe('visual testing thru percy.io', () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await testEightBall();
 	}, 0);
+
+	it('(2D) pressing settings button makes menu appear on screen', async () => {
+		await loadPagePastSplashScreen(URL_2D);
+		await testSettingsMenuSliding();
+	});
 
 	afterEach(async () => {
 		await page.close();
