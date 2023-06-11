@@ -92,6 +92,10 @@ body {
 .flipped {
 	transform: rotate3d(0, 1, 0, 180deg);
 }
+  
+.ticket-front-content li {
+	font-size: 2vw;
+}
 
 .ticket-title {
 	font-family: Carolingia, fantasy;
@@ -107,6 +111,10 @@ body {
 	color: #333;
 	text-align: center;
 	line-height: 1.5;
+}
+
+.ticket-front-content li {
+	font-size: 2vw;
 }
 
 .ticket-text {

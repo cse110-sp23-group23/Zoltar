@@ -200,15 +200,23 @@
 			<img class="clickable" src="./assets/images/menu.svg" draggable="false">
 		</button>
 		<section class="settings-menu-settings">
-			<img class="instructions-button settings-menu-icon clickable" src="./assets/images/help.svg" draggable="false">
-			<img class="credits-button settings-menu-icon clickable" src="./assets/images/information.svg" draggable="false">
-			<img class="volume settings-menu-icon clickable" src="./assets/images/volume_on.svg" draggable="false">
-			<img class="exit-zoltar settings-menu-icon clickable" src="./assets/images/exit.svg" draggable="false">
+			<button class="instructions-button settings-menu-icon clickable">
+				<img src="assets/images/help.svg" draggable="false">
+			</button>
+			<button class="credits-button settings-menu-icon clickable">
+				<img src="assets/images/information.svg" draggable="false">
+			</button>
+			<button class="volume settings-menu-icon clickable">
+				<img src="assets/images/volume_on.svg" draggable="false">
+			</button>
+			<button class="exit-zoltar settings-menu-icon clickable">
+				<img src="assets/images/exit.svg" draggable="false">
+			</button>
 		</section>
 	</div>
 	<!--end Settings Menu-->
 	<!--Credits Ticket-->
-	<div class="credits hidden settings-ticket">
+	<div class="credits hidden-animation settings-ticket">
 		<div class="ticket-wrapper">
 			<div class="ticket-background">
 				<!--start background SVG-->
@@ -244,7 +252,7 @@
 		</div>
 	</div>
 	<!--Instructions Ticket-->
-	<div class="instructions hidden settings-ticket">
+	<div class="instructions hidden-animation settings-ticket">
 		<div class="ticket-wrapper">
 			<div class="ticket-background">
 				<!--start background SVG-->
@@ -267,11 +275,11 @@
 				<button class="close-settings-ticket" type="button">
 					<img src="assets/images/close.png" alt="exit button" draggable="false">
 				</button>
-				<p class="ticket-title">Instructions</p>
-				<p class="ticket-text centered">Press "Space" or click on Zoltar to get a Fortune
-					<br> Click on bottom right ticket to show ticket history
-					<br> idk man what else is there
-				</p>
+				<p class="ticket-title">INSTRUCTIONS</p>
+				<ul>
+						<li>Press [space] or left click Zoltar to recieve your fortune.</li>
+						<li>To view saved tickets, click the ticket icon in the bottom right corner.</li>
+				</ul>
 				<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule"
 					draggable="false">
 			</div>
