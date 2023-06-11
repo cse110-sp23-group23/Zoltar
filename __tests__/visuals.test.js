@@ -64,6 +64,20 @@ describe('visual testing thru percy.io', () => {
 		await testSplashOnURL('http://localhost:5500/index2d.html');
 	}, 0);
 
+	it('(2D) pressing on eight ball redirects to Magic 8 Ball', async () => {
+		const EIGHT_BALL_URL = 'https://cse110-sp23-group23.github.io/cse110-sp23-group23/source/8ball/';
+		await testSplashOnURL('http://localhost:5500/index2d.html');
+
+		const eightBallBtn = await page.waitForSelector('#eight-ball-image');
+		await eightBallBtn.click();
+
+		const newpage = () => document.querySelector('h1').innerText === 'The Mystic 8 Ball';
+		await page.waitForFunction(newpage, 5000);
+
+		const newURL = await page.evaluate(() => window.location.href);
+		expect(newURL).toBe(EIGHT_BALL_URL);
+	}, 0);
+
 	afterEach(async () => {
 		await page.close();
 		await browser.close();
