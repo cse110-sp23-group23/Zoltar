@@ -6,11 +6,6 @@
   
 ## Running tests
 - `npm run test`
-   
-   If ```npm run test``` doesnt work, use 
-
-  - `NODE_OPTIONS=--experimental-vm-modules npm run test`
-
       - If using Windows Command Prompt, you may need to use `npm install -g win-node-env` before trying the above command
 
 Output should look something like this:
