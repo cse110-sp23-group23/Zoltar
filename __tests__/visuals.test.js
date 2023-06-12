@@ -13,11 +13,20 @@ describe('visual testing thru percy.io', () => {
 	let browser;
 	let page;
 	let splashScreen;
+	let zoltar;
+	let mainTicket;
+	let closeBtn;
+	let saveBtn;
+	let discardBtn;
+	let countTicketBtn;
 	const testData = {
 		classBefore: '',
 		classAfter: '',
 		classList: '',
 	};
+
+	const SAVE = 1;
+	const DISCARD = 0;
 
 	beforeEach(async () => {
 		browser = await puppeteer.launch({
@@ -51,6 +60,75 @@ describe('visual testing thru percy.io', () => {
 		const arr = await page.waitForSelector(tag);
 		const result = await page.evaluate((el) => el.classList, arr);
 		return result;
+	}
+
+	async function checkTicketCount(int) {
+		const ticketCount = await page.$('#ticket-count');
+		const innerText = await ticketCount.getProperty('innerText');
+		const value = await innerText.jsonValue();
+
+		expect(Number(value)).toBe(int);
+	}
+
+	async function generateMainTicket() {
+		zoltar = await page.waitForSelector('#eight-ball-container');
+		await checkTicketCount(0);
+
+		await zoltar.click();
+		testData.classList = await getClassList('.ticket-wrapper');
+		const updatesClass = () => document.querySelector('.ticket-wrapper').classList.contains('ticket-hoverable');
+
+		await page.waitForFunction(updatesClass, 5000);
+		testData.classList = await getClassList('.ticket-wrapper');
+		mainTicket = await page.waitForSelector('.ticket-wrapper');
+
+		expect(Object.values(testData.classList)).toContain('ticket-hoverable');
+	}
+
+	async function mainTicketHandler(action) {
+		await mainTicket.click();
+
+		const ticketFlip = () => document.querySelector('.ticket-back-content').classList.contains('flipped');
+
+		await page.waitForFunction(ticketFlip, 5000);
+
+		await page.waitForTimeout(500);
+		closeBtn = await page.waitForSelector('#close-ticket');
+		await closeBtn.click();
+
+		if (action) {
+			saveBtn = await page.waitForSelector('#save-button');
+			await saveBtn.click();
+			const updateCount = () => document.querySelector('#ticket-count').innerText === '1';
+			await page.waitForFunction(updateCount, 3000);
+			await checkTicketCount(1);
+		} else {
+			discardBtn = await page.waitForSelector('#discard-button');
+			await discardBtn.click();
+			await checkTicketCount(0);
+		}
+	}
+
+	async function deleteSavedTicket() {
+		countTicketBtn = await page.waitForSelector('.count-tickets-icon');
+		await countTicketBtn.click();
+		await page.waitForTimeout(2000);
+
+		const historyWrapperAppears = () => document.querySelector('.history-wrapper').classList.length === 1;
+
+		await page.waitForFunction(historyWrapperAppears, 5000);
+
+		const historicalTickets = await page.$$('historical-ticket');
+		const shadowRoot = await historicalTickets[0].getProperty('shadowRoot');
+
+		const overlay = await shadowRoot.waitForSelector('.ticket-flip-overlay');
+
+		await overlay.hover();
+
+		discardBtn = await shadowRoot.$('.discard-history-button');
+
+		await discardBtn.click();
+		await checkTicketCount(0);
 	}
 
 	/**
@@ -139,19 +217,32 @@ describe('visual testing thru percy.io', () => {
 		await new Promise((r) => { setTimeout(r, 2000); });
 	} /* loadPagePastSplashScreen */
 
-	it('(2D) pressing anywhere on screen removes splash screen', async () => {
+	it('(UI) pressing anywhere on screen removes splash screen', async () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await testSplashScreen(URL_2D);
 	}, 0);
 
-	it('(2D) pressing on eight ball redirects to Magic 8 Ball', async () => {
+	it('(UI) pressing on eight ball redirects to Magic 8 Ball', async () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await testEightBall();
 	}, 0);
 
-	it('(2D) pressing settings button makes menu appear on screen', async () => {
+	it('(UI) pressing settings button makes menu appear on screen', async () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await testSettingsMenuSliding();
+	});
+
+	it('(User flow) Save ticket, then delete Ticket', async () => {
+		await loadPagePastSplashScreen(URL_2D);
+		await generateMainTicket();
+		await mainTicketHandler(SAVE);
+		await deleteSavedTicket();
+	});
+
+	it('(User flow) Generate ticket, then discard it', async () => {
+		await loadPagePastSplashScreen(URL_2D);
+		await generateMainTicket();
+		await mainTicketHandler(DISCARD);
 	});
 
 	afterEach(async () => {
