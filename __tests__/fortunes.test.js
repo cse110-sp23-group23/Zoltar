@@ -1,4 +1,4 @@
-import { produceRandomNumbers } from '../assets/scripts/fortunes.js';
+import { produceRandomNumbers } from '../assets/scripts/util.js';
 
 /**
  * Tests:

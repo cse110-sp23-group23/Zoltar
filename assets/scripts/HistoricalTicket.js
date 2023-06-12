@@ -1,6 +1,5 @@
-import { convertArrToReadableString } from './ticket.js';
 import { deleteCard } from './storage.js';
-import { toggleClassToArr } from './util.js';
+import { toggleClassToArr, convertArrToReadableString } from './util.js';
 
 /**
  * Location of template for ticket structure to use

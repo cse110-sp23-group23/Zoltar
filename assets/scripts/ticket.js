@@ -1,5 +1,5 @@
 import { saveState } from './storage.js';
-import { slowHideElement, toggleClassToArr } from './util.js';
+import { slowHideElement, toggleClassToArr, convertArrToReadableString } from './util.js';
 
 const ANIMATION_LENGTH_MS = 500;
 const IMAGE_BANK_PREFIX_BACK = 'assets/images/image-bank-back/background-card-';
@@ -92,24 +92,7 @@ function hideSavePrompt(index) {
 	if (index === 1) {
 		saveState(state);
 	}
-} /* killBlur */
-
-/**
- * Takes in an integer array and returns a string of integers separated by
- * 		commas with an 'and' after final comma
- * @param { Array<Integer> } arr
- * @return { String }
- */
-export function convertArrToReadableString(arr) {
-	if (arr.length === 0) return '';
-	if (arr.length === 1) return arr[0].toString();
-
-	return arr.reduce((prevText, nextNum, i, array) => {
-		const isLastItem = i === array.length - 1;
-		const delimiter = isLastItem ? ', and' : ',';
-		return `${prevText}${delimiter} ${nextNum}`;
-	});
-} /* convertArrToReadableString */
+} /* hideSavePrompt */
 
 /**
  * Places current state onto ticket
@@ -120,7 +103,7 @@ export function updateTicket() {
 	ticket.numbers.innerText = convertArrToReadableString(state.currentNumbers);
 	ticket.backgroundImage.src = `${IMAGE_BANK_PREFIX_BACK}${state.currentImageBack}.webp`;
 	ticket.frontImage.src = `${IMAGE_BANK_PREFIX_FRONT}${state.currentImageFront}.webp`;
-} /* update */
+} /* updateTicket */
 
 // hide ticket when user hits escape and card currently shown
 window.addEventListener('keydown', (event) => {

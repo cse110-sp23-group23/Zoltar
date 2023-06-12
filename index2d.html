@@ -91,8 +91,8 @@
 	<!--end main ticket-->
 	<!--ticket history interface and controls-->
 	<div class="save-delete-ticket hidden">
-		<button id="discard-button">Discard</button>
-		<button id="save-button">Save</button>
+		<button id="discard-button" class="neg-button">Discard</button>
+		<button id="save-button" class="pos-button">Save</button>
 	</div>
 	<button class="count-tickets-icon">
 		<div id="ticket-count">0</div>
@@ -212,6 +212,14 @@
 				<img src="assets/images/exit.svg" draggable="false" alt="exit zoltar">
 			</button>
 		</section>
+	</div>
+	<div class="exit-confirmation hidden">
+		<h1 class="confirmation-leave-message">Are you sure you want to leave?<span id="unsaved-warning"> You have 
+			<span class="red-text">unsaved</span> progress.</span></h1>
+		<div class="buttons-group">
+			<button id="leave-button" class="neg-button">Leave</button>
+			<button id="stay-button" class="pos-button">Stay</button>
+		</div>
 	</div>
 	<!--end Settings Menu-->
 	<!--Credits Ticket-->

@@ -78,3 +78,40 @@ export function slowHideElement(el) {
 		el.classList.remove('no-opacity');
 	}, { once: true });
 } /* slowHideElement */
+
+/**
+ * Takes in an integer array and returns a string of integers separated by
+ * 		commas with an 'and' after final comma
+ * @param { Array<Integer> } arr
+ * @return { String }
+ */
+export function convertArrToReadableString(arr) {
+	if (arr.length === 0) return '';
+	if (arr.length === 1) return arr[0].toString();
+
+	return arr.reduce((prevText, nextNum, i, array) => {
+		const isLastItem = i === array.length - 1;
+		const delimiter = isLastItem ? ', and' : ',';
+		return `${prevText}${delimiter} ${nextNum}`;
+	});
+} /* convertArrToReadableString */
+
+/**
+ * Generates an array of n distinct integers spaced between low and high.
+ * Gives back an empty array if no input n, or if there aren't enough numbers
+ * 		between high and low to fill the array
+ * @param { Integer } n number of unique integers to generate
+ * @param { Integer } low bottom bound for random integers, inclusive (default 0)
+ * @param { Integer } high top bound for random integers, exclusive (default 100)
+ * @return { Array<Integer> } array of n unique integers
+ */
+export function produceRandomNumbers(n, low = 0, high = 100) {
+	if (n === undefined || (high - low) < n) { // no input or not enough numbers
+		return [];
+	}
+	const list = new Set();
+	while (list.size < n) {
+		list.add(Math.floor(Math.random() * (high - low)) + low);
+	}
+	return [...list];
+} /* produceRandomNumbers */

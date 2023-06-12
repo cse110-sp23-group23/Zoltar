@@ -1,31 +1,11 @@
 import { state, updateTicket } from './ticket.js';
-import { loadJsonArr, chooseOptionFromArr } from './util.js';
+import { loadJsonArr, chooseOptionFromArr, produceRandomNumbers } from './util.js';
 
 const ENDPOINT_URL = 'https://zoltar-gpt-api-team-23.netlify.app/.netlify/functions/gptendpoint';
 const ENABLE_GPT_FLAG = false;
 
 let responseBank = [];
 let imageBank = [];
-
-/**
- * Generates an array of n distinct integers spaced between low and high.
- * Gives back an empty array if no input n, or if there aren't enough numbers
- * 		between high and low to fill the array
- * @param { Integer } n number of unique integers to generate
- * @param { Integer } low bottom bound for random integers, inclusive (default 0)
- * @param { Integer } high top bound for random integers, exclusive (default 100)
- * @return { Array<Integer> } array of n unique integers
- */
-export function produceRandomNumbers(n, low = 0, high = 100) {
-	if (n === undefined || (high - low) < n) { // no input or not enough numbers
-		return [];
-	}
-	const list = new Set();
-	while (list.size < n) {
-		list.add(Math.floor(Math.random() * (high - low)) + low);
-	}
-	return [...list];
-} /* produceRandomNumbers */
 
 /**
  * Takes in a message, queries openAI though serverless function, returns

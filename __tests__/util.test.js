@@ -1,5 +1,9 @@
-import { clamp, chooseOptionFromArr, toggleClassToArr } from '../assets/scripts/util.js';
-import { convertArrToReadableString } from '../assets/scripts/ticket.js';
+import {
+	clamp,
+	chooseOptionFromArr,
+	toggleClassToArr,
+	convertArrToReadableString,
+} from '../assets/scripts/util.js';
 
 /**
  * Test:
