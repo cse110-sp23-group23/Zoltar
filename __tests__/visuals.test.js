@@ -15,11 +15,7 @@ describe('End to End tests + Percy.io', () => {
 	let splashScreen;
 	let zoltar;
 	let mainTicket;
-	const testData = {
-		classBefore: '',
-		classAfter: '',
-		classList: '',
-	};
+	const testData = {};
 	const buttons = {};
 
 	const SAVE = 1;
