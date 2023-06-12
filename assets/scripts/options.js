@@ -46,6 +46,11 @@ export const options = {
 		position: new Vector3(-2.005, -0.02, -0.75),
 		rotateY: 0.50,
 	},
+	machineHitbox: {
+		geometry: new BoxGeometry(1.3, 3, 0.2),
+		position: new Vector3(-2.45, 0.6, -0.75),
+		rotateY: 0.50,
+	},
 	ticketSlide: {
 		speed: 4,
 		initialPosition: new Vector3(-1.82, -0.051, -0.45),

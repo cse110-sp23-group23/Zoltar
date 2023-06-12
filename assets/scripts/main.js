@@ -89,13 +89,28 @@ loader.load('assets/models/fixedangle.glb', (gltf) => {
 });
 
 // Ticket dispenser hitbox
-const hitboxMat = new MeshBasicMaterial({ color: 0xff0000 });
-hitboxMat.opacity = 0; // set to positive value to display hitbox
-hitboxMat.transparent = true;
+const hitboxMat = new MeshBasicMaterial({
+	color: 0xff0000,
+	opacity: 0, // set to pos to display hitbox for testing
+	transparent: true,
+	depthWrite: false,
+});
 const hitbox = new Mesh(options.ticketHitbox.geometry, hitboxMat);
 hitbox.position.copy(options.ticketHitbox.position);
 hitbox.rotateY(options.ticketHitbox.rotateY);
 scene.add(hitbox);
+
+// Zoltar hitbox
+const machineBoxMat = new MeshBasicMaterial({
+	color: 0xff00ff,
+	opacity: 0, // set to pos to display hitbox for testing
+	transparent: true,
+	depthWrite: false,
+});
+const machineBox = new Mesh(options.machineHitbox.geometry, machineBoxMat);
+machineBox.position.copy(options.machineHitbox.position);
+machineBox.rotateY(options.machineHitbox.rotateY);
+scene.add(machineBox);
 
 // Ticket
 options.ticketMat.material.roughness = 1;
@@ -218,17 +233,40 @@ function addCardToScene() {
 } /* addCardToScene */
 
 /**
+ * Starts ticket deployment process (i.e. on space or lmb press) if
+ * possible at time of call, otherwise nothing
+ * @param none
+ */
+function tryToStartSequence() {
+	if (!canTriggerEvent()) return;
+	state.ticketSpawned = true;
+	state.responseGenerated = false;
+	flickVignette();
+	startThinkingAnimation();
+	const paramOptions = {
+		callback: (ticketState) => {
+			state.responseGenerated = true;
+			setTicketMapToImage(ticketState.currentImageBack);
+		},
+	};
+	createFortuneOnTicket(paramOptions);
+} /* tryToStartSequence */
+
+/**
  * Shoots ray from camera and measures instersection with hitbox of
- * ticket; if hit, displays cards
+ * ticket; if hit, displays cards. If hits machine, starts sequence like space.
  * @param { Object } event event listener action
  */
 function shootRay(event) {
 	pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
 	pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 	raycaster.setFromCamera(pointer, camera);
-	const intersects = raycaster.intersectObjects([hitbox, ticket]);
-	if (intersects.length > 0 && state.ticketSpawned) {
+	const intersects = raycaster.intersectObjects([hitbox, ticket, machineBox]);
+	const interObjects = intersects.map((inter) => inter.object);
+	if ((interObjects.includes(hitbox) || interObjects.includes(ticket)) && state.ticketSpawned) {
 		addCardToScene();
+	} else if (interObjects.includes(machineBox)) {
+		tryToStartSequence();
 	}
 } /* shootRay */
 
@@ -237,19 +275,7 @@ function shootRay(event) {
  * @param { Event } event - keypress event passed by eventlistener
  */
 function handleKeypress(event) {
-	if (event.key === ' ' && canTriggerEvent()) {
-		state.ticketSpawned = true;
-		state.responseGenerated = false;
-		flickVignette();
-		startThinkingAnimation();
-		const paramOptions = {
-			callback: (ticketState) => {
-				state.responseGenerated = true;
-				setTicketMapToImage(ticketState.currentImageBack);
-			},
-		};
-		createFortuneOnTicket(paramOptions);
-	}
+	if (event.key === ' ') tryToStartSequence();
 } /* handleKeypress */
 
 /**
@@ -302,7 +328,7 @@ function init() {
 		});
 	});
 
-	window.addEventListener('click', shootRay);
+	renderer.domElement.addEventListener('click', shootRay);
 	window.addEventListener('keydown', handleKeypress);
 	window.addEventListener('resize' || 'focus', handleResize);
 	renderer.domElement.addEventListener('mouseenter', handleResize);
