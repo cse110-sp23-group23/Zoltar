@@ -100,7 +100,6 @@ jobs:
       run: |
         rm -r -f __tests__
         rm README.md
-        rm license.txt
         rm package.json
     - name: Push to new branch
       run: |
