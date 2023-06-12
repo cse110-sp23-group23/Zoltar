@@ -1,4 +1,5 @@
 let muted = false;
+let currentlyPlayingVoice = false;
 
 const AUDIO_PATHS = {
 	background: {
@@ -28,7 +29,7 @@ const buffers = {}; // auto populated
  * @param { Double } rampTime time delta until ramp should be completed
  */
 export function playAudio(name, rampTime = 0) {
-	if (!AUDIO_PATHS[name]) return;
+	if (!AUDIO_PATHS[name] || currentlyPlayingVoice) return;
 
 	const source = context.createBufferSource();
 	source.buffer = buffers[name];
@@ -40,6 +41,9 @@ export function playAudio(name, rampTime = 0) {
 		gainNodes[name].gain.linearRampToValueAtTime(AUDIO_PATHS[name].defaultVolume, context.currentTime + rampTime);
 	}
 	source.start();
+
+	if (name.includes('voiceLine')) currentlyPlayingVoice = true;
+	if (name.includes('voiceLine')) source.onended = () => { currentlyPlayingVoice = false; };
 } /* playAudio */
 
 /**

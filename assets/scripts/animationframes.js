@@ -48,6 +48,7 @@ export function animateShakeFrame(delta, args) {
 		args.state.shakeEndHappened = true;
 		args.ticket.position.copy(args.options.ticketSlide.initialPosition);
 		args.scene.add(args.ticket); // spawn ticket
+		args.state.ticketDoneSliding = false;
 		args.state.slideCameraTowardDefault = true; // move back to original position
 	}
 } /* animateShakeFrame */
@@ -104,6 +105,7 @@ export function conditionalAnimateSlideCameraFrame(delta, args) {
  */
 export function animateTicketSlideFrame(delta, args) {
 	if (args.ticket.position.distanceTo(args.options.ticketSlide.finalPosition) <= 0.01) {
+		if (args.state.ticketSpawned) args.state.ticketDoneSliding = true;
 		return;
 	}
 	const ticketAdjustment = calcMidDistance(

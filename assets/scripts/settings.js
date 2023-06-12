@@ -36,7 +36,7 @@ function updateAudioOutput() {
 	} else {
 		mute();
 	}
-}
+} /* updateAudioOutput */
 
 /**
  * Updates display of settings menu to match current settings
