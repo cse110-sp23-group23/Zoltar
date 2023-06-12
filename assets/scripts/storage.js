@@ -1,4 +1,5 @@
 import { toggleClassToArr, clamp, slowHideElement } from './util.js';
+import { playRandomVoiceLine } from './noise.js';
 
 let domContent = {};
 let currentCards = [];
@@ -161,6 +162,7 @@ function displayStorage() {
 	domContent.cover.addEventListener('click', exitHistory);
 	handleHoverListeners(currentCards, 'add');
 	translateCards();
+	playRandomVoiceLine();
 } /* displayStorage */
 
 /**
