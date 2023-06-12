@@ -88,29 +88,28 @@ loader.load('assets/models/fixedangle.glb', (gltf) => {
 	scene.add(object);
 });
 
-// Ticket dispenser hitbox
-const hitboxMat = new MeshBasicMaterial({
-	color: 0xff0000,
-	opacity: 0, // set to pos to display hitbox for testing
-	transparent: true,
-	depthWrite: false,
-});
-const hitbox = new Mesh(options.ticketHitbox.geometry, hitboxMat);
-hitbox.position.copy(options.ticketHitbox.position);
-hitbox.rotateY(options.ticketHitbox.rotateY);
-scene.add(hitbox);
+/**
+ * Creates and returns a general transparent rectangular object (i.e. hitbox)
+ * @param { Object } settings object holding all the specs for hitbox
+ * @return { Object3D } hitbox object
+ */
+function createHitbox(settings) {
+	const mat = new MeshBasicMaterial({
+		color: 0xff00ff,
+		opacity: 0, // set to pos to display hitbox for testing
+		transparent: true,
+		depthWrite: false,
+	});
+	const hitbox = new Mesh(settings.geometry, mat);
+	hitbox.position.copy(settings.position);
+	hitbox.rotateY(settings.rotateY);
+	scene.add(hitbox);
+	return hitbox;
+} /* settings */
 
-// Zoltar hitbox
-const machineBoxMat = new MeshBasicMaterial({
-	color: 0xff00ff,
-	opacity: 0, // set to pos to display hitbox for testing
-	transparent: true,
-	depthWrite: false,
-});
-const machineBox = new Mesh(options.machineHitbox.geometry, machineBoxMat);
-machineBox.position.copy(options.machineHitbox.position);
-machineBox.rotateY(options.machineHitbox.rotateY);
-scene.add(machineBox);
+// Hitboxes
+const zoltarHitbox = createHitbox(options.machineHitbox);
+const ticketHitbox = createHitbox(options.ticketHitbox);
 
 // Ticket
 options.ticketMat.material.roughness = 1;
@@ -261,11 +260,11 @@ function shootRay(event) {
 	pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
 	pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 	raycaster.setFromCamera(pointer, camera);
-	const intersects = raycaster.intersectObjects([hitbox, ticket, machineBox]);
+	const intersects = raycaster.intersectObjects([ticketHitbox, ticket, zoltarHitbox]);
 	const interObjects = intersects.map((inter) => inter.object);
-	if ((interObjects.includes(hitbox) || interObjects.includes(ticket)) && state.ticketSpawned) {
+	if ((interObjects.includes(ticketHitbox) || interObjects.includes(ticket)) && state.ticketSpawned) {
 		addCardToScene();
-	} else if (interObjects.includes(machineBox)) {
+	} else if (interObjects.includes(zoltarHitbox)) {
 		tryToStartSequence();
 	}
 } /* shootRay */
