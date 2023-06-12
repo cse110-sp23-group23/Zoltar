@@ -36,7 +36,7 @@ function updateAudioOutput() {
 	} else {
 		mute();
 	}
-}
+} /* updateAudioOutput */
 
 /**
  * Updates display of settings menu to match current settings
@@ -129,6 +129,14 @@ function settingsTicketHandler(ticket) {
 } /* settingsTicketHandler */
 
 /**
+ * Asks user for confirmation if they have ticket currently pending, otherwise
+ * says goodbye and goes back to start
+ */
+function exitPage() {
+
+} /* exitPage */
+
+/**
  * Handles keydown event listener for setttings. Closes currently open settings tickets
  * or menu if any exist on 'escape' keypress.
  * @param event
@@ -160,8 +168,7 @@ function init() {
 		cover: document.querySelector('.cover'),
 		settingsTickets: document.querySelectorAll('.settings-ticket'),
 	};
-	// eslint-disable-next-line no-restricted-globals
-	dom.exitButton.addEventListener('click', location.reload.bind(location));
+	dom.exitButton.addEventListener('click', exitPage);
 	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
 	dom.volume.addEventListener('click', toggleMute);
 	dom.instructionsButton.addEventListener('click', () => { settingsTicketHandler(dom.instructionsTicket); });

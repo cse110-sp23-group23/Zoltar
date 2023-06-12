@@ -3,6 +3,7 @@ import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
 import { flickVignette } from './util.js';
 import { setControls } from './settings.js';
+import { playAudio, playRandomVoiceLine } from './noise.js';
 
 // eslint-disable-next-line no-console
 console.log('%cWelcome to %cZoltar%c.live!', '', 'color: red; font-weight: bolder', '');
@@ -18,9 +19,6 @@ export const state = {
 };
 
 let dom = {};
-
-// Sound effects
-const rumble = new Audio('./assets/audio/rumble.mp3');
 
 /**
  * Returns whether or not new event can be queued
@@ -39,7 +37,8 @@ export function canTriggerEvent() {
  * @param none
  */
 function startShaking() {
-	rumble.play();
+	playAudio('rumble', 0.3);
+	playRandomVoiceLine();
 	dom.body.classList.add('shake');
 } /* startShaking */
 

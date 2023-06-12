@@ -38,12 +38,12 @@ function flickerLights() {
 			}, FLICKER_DELAY);
 		}, FLICKER_DELAY);
 	}, FLICKER_DELAY);
-}
+} /* flickerLights */
 
 /**
  * When the mouse moves, takes all the elements with the class 'camera' and shifts
  * their positions relative to the mouse
- * @param e event
+ * @param { Event } e event pased by listener
  */
 function cameraMove(e) {
 	frame += 1;
@@ -66,7 +66,7 @@ function cameraMove(e) {
 			+ ${-xValue * speedx}px)) translateY(calc(-50% 
 			+ ${-yValue * speedy}px)) rotateY(${rotateDegree * rotation}deg)`;
 	});
-}
+} /* cameraMove */
 
 /**
  * Event Listener that creates a 3D like effect for the 2d Zoltar.
@@ -81,6 +81,5 @@ function init() {
 	|| (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
 	// Disable camera movement if browser is Safari or device itself is iOS/iPadOS
 	if (isSafari || isIOS) window.removeEventListener('mousemove', cameraMove);
-}
-
+} /* init */
 document.addEventListener('DOMContentLoaded', init);

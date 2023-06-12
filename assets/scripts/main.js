@@ -43,6 +43,7 @@ const state = {
 	currentFlickerCount: 0,
 	slideCameraTowardDefault: false,
 	ticketSpawned: false,
+	ticketDoneSliding: false,
 	flickerOn: false,
 	flickerTime: 0,
 	curFlickerOffInterval: options.flicker.timingFunc(), // changes each iteration
@@ -197,7 +198,7 @@ function fadeEyes(dir, speed, numLayers) {
 function eyeFrame(frame) {
 	fadeEyes(frame[0], frame[2], frame[1]);
 	return flickerDelay(frame[3]);
-}
+} /* eyeFrame */
 
 /**
  * Triggers the screen to shake for predetermined time. Ticket dispenses after
@@ -252,6 +253,18 @@ function tryToStartSequence() {
 } /* tryToStartSequence */
 
 /**
+ * Helper to return if ray cast hit hitbox and ticket was indeed there
+ * @param { Array<Object3D> } intersections array of objects collided by ray
+ * @return { Boolean } true if intersection validly hit ticket('s hitbox)
+*/
+function didHitTicket(intersections) {
+	return (intersections.includes(ticketHitbox) || intersections.includes(ticket))
+		&& state.ticketSpawned
+		&& state.ticketDoneSliding
+		&& ticket.parent === scene;
+} /* didHitTicket */
+
+/**
  * Shoots ray from camera and measures instersection with hitbox of
  * ticket; if hit, displays cards. If hits machine, starts sequence like space.
  * @param { Object } event event listener action
@@ -262,7 +275,7 @@ function shootRay(event) {
 	raycaster.setFromCamera(pointer, camera);
 	const intersects = raycaster.intersectObjects([ticketHitbox, ticket, zoltarHitbox]);
 	const interObjects = intersects.map((inter) => inter.object);
-	if ((interObjects.includes(ticketHitbox) || interObjects.includes(ticket)) && state.ticketSpawned) {
+	if (didHitTicket(interObjects)) {
 		addCardToScene();
 	} else if (interObjects.includes(zoltarHitbox)) {
 		tryToStartSequence();

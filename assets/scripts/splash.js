@@ -3,6 +3,7 @@ import { playAudio } from './noise.js';
 const LOADED_MESSAGE = '[ press anywhere to continue ]';
 
 const dom = {};
+let curControls;
 
 /**
  * Adds event listeners to trigger dismissal of splash screen
@@ -10,15 +11,15 @@ const dom = {};
  * @param { LockedControls } [controls] object containing controls
  */
 export function tellPageLoaded(controls) {
+	curControls = controls;
 	const go = () => {
 		playAudio('background', 3);
 		dom.splash.classList.add('no-opacity');
 		dom.splash.addEventListener('transitionend', () => {
 			dom.splash.classList.add('hidden');
-		});
+		}, { once: true });
 		if (controls) {
-			const controlRef = controls;
-			controlRef.API.enabled = true;
+			curControls.API.enabled = true;
 		}
 		window.removeEventListener('mousedown', go);
 		window.removeEventListener('keydown', go);
