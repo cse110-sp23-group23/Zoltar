@@ -15,15 +15,12 @@ describe('visual testing thru percy.io', () => {
 	let splashScreen;
 	let zoltar;
 	let mainTicket;
-	let closeBtn;
-	let saveBtn;
-	let discardBtn;
-	let countTicketBtn;
 	const testData = {
 		classBefore: '',
 		classAfter: '',
 		classList: '',
 	};
+	const buttons = {};
 
 	const SAVE = 1;
 	const DISCARD = 0;
@@ -64,14 +61,25 @@ describe('visual testing thru percy.io', () => {
 		return result;
 	} /* getClassList */
 
+	/**
+	 * Checks inner text of bottom right Ticket
+	 * And runs a test with expected value
+	 * Doesnt use local storage
+	 * @param { Number } int expected number to return
+	 */
 	async function checkTicketCount(int) {
 		const ticketCount = await page.$('#ticket-count');
 		const innerText = await ticketCount.getProperty('innerText');
 		const value = await innerText.jsonValue();
 
 		expect(Number(value)).toBe(int);
-	}
+	} /* checkTicketCount */
 
+	/**
+	 * Generates the main ticket
+	 * Call AFTER loadPagePastSplashScreen()
+	 * @param none
+	 */
 	async function generateMainTicket() {
 		zoltar = await page.waitForSelector('#eight-ball-container');
 		await checkTicketCount(0);
@@ -85,8 +93,14 @@ describe('visual testing thru percy.io', () => {
 		mainTicket = await page.waitForSelector('.ticket-wrapper');
 
 		expect(Object.values(testData.classList)).toContain('ticket-hoverable');
-	}
+	} /* generateMainTicket */
 
+	/**
+	 * Clicks on the main ticket and choose to discard or save
+	 * based on parameter
+	 * Call AFTER generateMainTicket()
+	 * @param { Boolean } action DISCARD or SAVE
+	 */
 	async function mainTicketHandler(action) {
 		await mainTicket.click();
 
@@ -95,25 +109,30 @@ describe('visual testing thru percy.io', () => {
 		await page.waitForFunction(ticketFlip, 5000);
 
 		await page.waitForTimeout(500);
-		closeBtn = await page.waitForSelector('#close-ticket');
-		await closeBtn.click();
+		buttons.close = await page.waitForSelector('#close-ticket');
+		await buttons.close.click();
 
 		if (action) {
-			saveBtn = await page.waitForSelector('#save-button');
-			await saveBtn.click();
+			buttons.save = await page.waitForSelector('#save-button');
+			await buttons.save.click();
 			const updateCount = () => document.querySelector('#ticket-count').innerText === '1';
 			await page.waitForFunction(updateCount, 3000);
 			await checkTicketCount(1);
 		} else {
-			discardBtn = await page.waitForSelector('#discard-button');
-			await discardBtn.click();
+			buttons.discard = await page.waitForSelector('#discard-button');
+			await buttons.discard.click();
 			await checkTicketCount(0);
 		}
-	}
+	} /* mainTicketHandler */
 
+	/**
+	 * Deletes ticket that exists ticket history
+	 * Call AFTER mainTicketHandler(SAVE)
+	 * @param none
+	 */
 	async function deleteSavedTicket() {
-		countTicketBtn = await page.waitForSelector('.count-tickets-icon');
-		await countTicketBtn.click();
+		buttons.countTicket = await page.waitForSelector('.count-tickets-icon');
+		await buttons.countTicket.click();
 		await page.waitForTimeout(2000);
 
 		const historyWrapperAppears = () => document.querySelector('.history-wrapper').classList.length === 1;
@@ -127,11 +146,11 @@ describe('visual testing thru percy.io', () => {
 
 		await overlay.hover();
 
-		discardBtn = await shadowRoot.$('.discard-history-button');
+		buttons.discard = await shadowRoot.$('.discard-history-button');
 
-		await discardBtn.click();
+		await buttons.discard.click();
 		await checkTicketCount(0);
-	}
+	} /* deleteSavedTicket */
 
 	/**
 	 * Clicks on the top right settings button
