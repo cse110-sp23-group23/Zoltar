@@ -152,11 +152,16 @@ body {
 	z-index: 2000;
 }
 
+.red-text {
+	color: #E40000;
+}
+
 .confirmation-leave-message {
 	font-family: Cinzel, fantasy;
 	font-size: 2vw;
 	color: rgba(253, 219, 38, 0.95);
 	text-align: center;
+	text-shadow: 0 0 1vw black;
 }
 
 .buttons-group {

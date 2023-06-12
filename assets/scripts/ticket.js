@@ -1,5 +1,5 @@
 import { saveState } from './storage.js';
-import { toggleClassToArr } from './util.js';
+import { slowHideElement, toggleClassToArr } from './util.js';
 
 const ANIMATION_LENGTH_MS = 500;
 const IMAGE_BANK_PREFIX_BACK = 'assets/images/image-bank-back/background-card-';
@@ -87,7 +87,8 @@ function flipTicket() {
  * @param { Integer } index representing button clicked; 0 for discard, 1 for save
  */
 function hideSavePrompt(index) {
-	toggleClassToArr([buttons.main, buttons.cover, ticket.ticketCount, dom.settings], 'hidden');
+	toggleClassToArr([buttons.main, ticket.ticketCount, dom.settings], 'hidden');
+	slowHideElement(buttons.cover);
 	if (index === 1) {
 		saveState(state);
 	}

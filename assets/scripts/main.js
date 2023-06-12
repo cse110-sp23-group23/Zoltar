@@ -30,7 +30,7 @@ import { tellPageLoaded } from './splash.js';
 import { createFortuneOnTicket } from './fortunes.js';
 import { flickerDelay, flickVignette } from './util.js';
 import { options } from './options.js';
-import { setControls } from './settings.js';
+import { setControls, setSafeToExitFunc } from './settings.js';
 import { playAudio, playRandomVoiceLine } from './noise.js';
 
 // eslint-disable-next-line no-console
@@ -310,6 +310,7 @@ function handleResize() {
 function safeToExit() {
 	return !isTicketCurrentlyDisplayed() && !state.ticketSpawned && !isSaveDiscardVisible();
 } /* safeToExit */
+setSafeToExitFunc(safeToExit); // setter for function in settings.js
 
 /**
  * Animation farm; generates each frame and calls self

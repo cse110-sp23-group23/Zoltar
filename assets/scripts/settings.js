@@ -18,6 +18,7 @@ const state = {
 };
 
 let controls;
+let safeToExit;
 
 /**
  * Allows external functions to tell settings functions which type of controls, 3d or 2d
@@ -27,6 +28,14 @@ let controls;
 export function setControls(passedControls) {
 	controls = passedControls;
 } /* setControls */
+
+/**
+ * Allows dynamic setting of current meaning of safe to exit for setting menu
+ * @param { Function } func function set use
+ */
+export function setSafeToExitFunc(func) {
+	safeToExit = func;
+} /* giveSafeToExitFunc */
 
 /**
  * Mutes/unmutes audio depending on current settings
@@ -139,6 +148,7 @@ function closeExitPageMenu() {
 	controls.API.enabled = true;
 	toggleClassToArr([dom.exitConfirmation, dom.ticketCount, dom.settings], 'hidden');
 	slowHideElement(dom.cover);
+	dom.cover.removeEventListener('click', closeExitPageMenu);
 } /* closeExitPageMenu */
 
 /**
@@ -166,10 +176,12 @@ function handleKeydown(event) {
 function exitPage() {
 	state.exitOpen = true;
 	controls.API.enabled = false;
+	dom.unsavedChangesMsg.style.display = (safeToExit() ? 'none' : 'inline');
 	closeAllSettingsTickets();
 	toggleClassToArr([dom.exitConfirmation, dom.cover, dom.ticketCount, dom.settings], 'hidden');
 	dom.confirmExit.addEventListener('click', window.location.reload.bind(window.location), { once: true });
 	dom.denyExit.addEventListener('click', closeExitPageMenu, { once: true });
+	dom.cover.addEventListener('click', closeExitPageMenu, { once: true });
 } /* exitPage */
 
 /**
@@ -195,6 +207,7 @@ function findElementsInDOM() {
 		exitConfirmation: document.querySelector('.exit-confirmation'),
 		confirmExit: document.querySelector('#leave-button'),
 		denyExit: document.querySelector('#stay-button'),
+		unsavedChangesMsg: document.querySelector('#unsaved-warning'),
 	};
 } /* findElementsInDom */
 
