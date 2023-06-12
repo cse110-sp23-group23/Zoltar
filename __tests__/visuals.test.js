@@ -29,10 +29,7 @@ describe('visual testing thru percy.io', () => {
 	const DISCARD = 0;
 
 	beforeEach(async () => {
-		browser = await puppeteer.launch({
-			headless: false,
-			args: [],
-		});
+		browser = await puppeteer.launch({ headless: 'new' });
 		page = await browser.newPage();
 		await page.setDefaultTimeout(0);
 	});
@@ -56,11 +53,16 @@ describe('visual testing thru percy.io', () => {
 		await loadTest(URL_2D, '2D');
 	});
 
+	/**
+	 * Fetches and returns classlist of element in dom of page
+	 * @param { String } tag tag of HTMLElement to fetch
+	 * @returns { Array<Class> }
+	 */
 	async function getClassList(tag) {
 		const arr = await page.waitForSelector(tag);
 		const result = await page.evaluate((el) => el.classList, arr);
 		return result;
-	}
+	} /* getClassList */
 
 	async function checkTicketCount(int) {
 		const ticketCount = await page.$('#ticket-count');
@@ -179,7 +181,7 @@ describe('visual testing thru percy.io', () => {
 
 	/**
 	 * Checks if Splash Screen disappears after loadPagePastSplashScreen() is called
-	 * @param { string } url 2d or 3d url
+	 * @param { String } url 2d or 3d url
 	 */
 	async function testSplashScreen(url) {
 		// checks splash screen class names after it is supposed to disappear
@@ -195,7 +197,7 @@ describe('visual testing thru percy.io', () => {
 
 	/**
 	 * Loads the respective page, then clicks on the splash screen to make it disappear
-	 * @param {*} url 2D or 3D url
+	 * @param { String } url 2D or 3D url
 	 */
 	async function loadPagePastSplashScreen(url) {
 		await page.goto(url);
