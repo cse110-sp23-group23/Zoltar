@@ -1,84 +1,76 @@
 {
 	"fortunes": [
 		{
-			"id": 1,
 			"message": "The stars in the cosmic canvas align for you, forming a celestial masterpiece of good fortune. A magnificent opportunity is on the imminent horizon. Prepare yourself to seize it when it arrives. Remember, fortune favors not only the brave but the prepared. Let your courage guide you, for it's the beacon that lights your path to greatness."
 		},
 		{
-			"id": 2,
 			"message": "Challenges may loom large in your path, but fear them not. For your strength, both of character and spirit, is infinitely greater than any obstacle. Keep moving forward, your determination unwavering. Soon, the path will clear and the sun will shine brighter. Your resilience is your greatest weapon; wield it well."
 		},
 		{
-			"id": 3,
 			"message": "In the heart of your world, a significant relationship is about to deepen profoundly. Open your heart, let your guard down, and listen. Not just with your ears, but with your soul. Human connections are treasures beyond value; cherish them. Let love guide you, and you will never lose your way."
 		},
 		{
-			"id": 4,
 			"message": "The whispers of the wind speak of a journey. This journey may not be one of miles and landscapes, but of personal growth and self-discovery. Embrace this imminent change with open arms and a willing heart. Every step you take on this journey will lead you closer to your true self."
 		},
 		{
-			"id": 5,
 			"message": "Now is a time for patience, for the ripening of fate. Good things come to those who wait, those who trust in the rhythm of time. Don't rush, don't force. Just trust in the process, and enjoy the journey. Patience, after all, is not the ability to wait, but the ability to keep a good attitude while waiting."
 		},
 		{
-			"id": 6,
 			"message": "A door once closed, perhaps by circumstance, perhaps by choice, is about to reopen. When it does, don't hesitate, don't doubt. What lies beyond is a path you were always meant to tread, a destiny waiting to unfold. The past may guide you, but it's the future where your potential truly lies."
 		},
 		{
-			"id": 7,
 			"message": "In the stillness and silence, you'll find your deepest answers. Take time to reflect and meditate, to delve into the depths of your consciousness. Your inner wisdom is your greatest guide, your most faithful companion. Listen to it, trust in it, for it knows the way even when the path is unclear."
 		},
 		{
-			"id": 8,
 			"message": "You're closer to your goals than you think, even if the peak is shrouded in mist. Keep pushing forward, keep climbing. Success is not in never falling, but in rising every time we fall. Every setback is but a setup for a greater comeback. Embrace your journey and your strength will propel you to your dreams."
 		},
 		{
-			"id": 9,
 			"message": "A lost object, a relic of past times, will soon be found, and with it, a lost memory will resurface. This rediscovery will lead to a much-needed insight, a key to unlocking a puzzle that's been on your mind. The past has a way of illuminating the present, of guiding us toward a brighter future."
 		},
 		{
-			"id": 10,
 			"message": "Luck is not merely knocking on your door, it's ready to burst in. Be bold in your decisions, fearless in your actions. Take that risk you've been contemplating, leap into the unknown. The universe is ready to reward your courage, to celebrate your audacity. Luck, after all, favors the bold. Embrace the adventure that awaits you."
 		},
 		{
-			"id": 11,
-			"message": "In the coming days, a hidden opportunity shall arise. Embrace the unknown with courage, for it shall lead you to unexpected realms of success and fulfillment. Trust in your intuition, and victory shall be yours."
-		},
-		{
-			"id": 12,
 			"message": "A journey lies before you, both in heart and in mind. Seek knowledge and wisdom in every step, for enlightenment awaits. Embrace change and let your curiosity guide you, for it shall unlock the doors to a world of endless possibilities."
 		},
 		{
-			"id": 13,
 			"message": "Dark clouds gather, foretelling trials on your horizon. But fear not, for within adversity lies the spark of resilience. Stay vigilant, remain steadfast, and trust in your inner strength. Through the tempest, you shall emerge stronger, wiser, and ready to embrace a brighter future."
 		},
 		{
-			"id": 14,
 			"message": "The universe dances with anticipation, aligning the stars to shower you with blessings. Prepare your heart to receive the gift of serendipity. Opportunities shall bloom like wildflowers, and your dreams shall find wings to soar. Embrace the joy that awaits, for your time is near."
 		},
 		{
-			"id": 15,
 			"message": "A radiant dawn approaches, casting its light upon your path. Trust in your instincts, for they shall be your guiding stars. Seize the moment, and watch as the universe weaves its wonders into the tapestry of your life. Success and fulfillment await your arrival."
 		},
 		{
-			"id": 16,
-			"message": "A serendipitous encounter awaits, leading to a new friendship that shall nourish your soul and inspire your dreams. Open your heart and embrace the joy of shared connections."
+			"message": "An unexpected encounter will soon bring joy and brightness into your life. Remain open to possibilities, open to change. Sometimes, the most profound moments come in the most unexpected packages. Let the currents of life carry you toward this fortuitous meeting. Remember, life's greatest gifts are often hidden beneath the surface."
 		},
 		{
-			"id": 17,
-			"message": "A time of stability lies ahead, where routine may lull you into complacency. Seek balance in familiarity, but be mindful not to stagnate. Look for opportunities to inject passion and novelty into your everyday life."
+			"message": "Like the mighty oak tree, your potential for growth is limitless. Stay grounded, keep reaching for the sky, and let your heart remain as resilient as the oak's sturdy trunk. Your dreams are not merely destinations, they are a journey of growth. Every step, every moment, is an opportunity for expansion and progress."
 		},
 		{
-			"id": 18,
-			"message": "A decision looms, shrouded in ambiguity. Weigh your options carefully, for hasty choices may lead to unforeseen consequences. Trust your intuition, seek counsel, and navigate this crossroad with caution."
+			"message": "Your creativity is a unique gem, a radiant beacon in a world that thrives on innovation. Nurture this gift, let it flourish and shine. Your ideas have the power to transform, to heal, to inspire. Don't shy away from your brilliance. Share it with the world, and watch as it reflects back at you tenfold."
 		},
 		{
-			"id": 19,
-			"message": "A storm brews, testing your resilience. Endure the hardships, for they are the forge upon which your strength is tempered. Embrace the lessons, learn, and grow. Remember, even amidst darkness, the seeds of growth are sown."
+			"message": "The road ahead may seem winding and long, but do not despair. With each twist and turn, you are given a new perspective, a fresh start. Your journey is not merely about reaching the end, but about discovering the hidden wonders along the way. So take heart and remember, every winding road leads to beautiful destinations."
 		},
 		{
-			"id": 19,
-			"message": "Beware, for betrayal lurks in the shadows. Trust is a fragile gift, easily shattered. Guard your heart and discern the true intentions of those around you. Vigilance shall be your shield against the treacheries of the world."
-		} 
+			"message": "A word of encouragement, a gesture of kindness, a moment of compassion - these are the true seeds of greatness. You have the power to make a positive impact, to touch lives in ways unimaginable. So go forth and spread love, for it's the most powerful force that exists. Your kindness will reverberate through the cosmos."
+		},
+		{
+			"message": "A transformation is on the horizon. Like the butterfly emerging from its cocoon, you too will rise above the struggles and challenges, evolving into a stronger, wiser version of yourself. Embrace this change, for it is the essence of life. Remember, without change, there would be no butterflies."
+		},
+		{
+			"message": "You are about to stumble upon an opportunity that might seem insignificant at first glance. Do not dismiss it, for great things often come from small beginnings. Keep an open mind and a discerning eye. This could be the chance you've been waiting for, the first step towards the fulfillment of your dreams."
+		},
+		{
+			"message": "The glow of happiness is about to light up your life, filling your world with joy and laughter. Embrace this happiness and spread it to others. Like a ripple in a pond, your joy will extend far beyond your own life, touching and transforming those around you. The world needs your light; let it shine."
+		},
+		{
+			"message": "The seeds of wisdom are sprouting within you. Nurture them with experience, water them with understanding, and give them light with love. Your wisdom will become your compass, guiding you towards your true north. And remember, the wise do not seek the right answers, they ask the right questions."
+		},
+		{
+			"message": "In the symphony of life, your melody is about to take center stage. Prepare for recognition, for applause, for appreciation. Stay humble, stay grateful. Remember, it's not about the applause, it's about the music you create. So play your part with passion, and the world will dance to your tune."
+		}
 	] 
 }
