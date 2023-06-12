@@ -100,6 +100,9 @@ function hideSavePrompt(index) {
  * @return { String }
  */
 export function convertArrToReadableString(arr) {
+	if (arr.length === 0) return '';
+	if (arr.length === 1) return arr[0].toString();
+
 	return arr.reduce((prevText, nextNum, i, array) => {
 		const isLastItem = i === array.length - 1;
 		const delimiter = isLastItem ? ', and' : ',';
