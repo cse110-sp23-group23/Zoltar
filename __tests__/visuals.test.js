@@ -21,7 +21,7 @@ const SAVE = 1;
 const DISCARD = 0;
 
 const beforebefore = async () => {
-	browser = await puppeteer.launch({ headless: false });
+	browser = await puppeteer.launch({ headless: 'new' });
 	page = await browser.newPage();
 	await page.setDefaultTimeout(0);
 };
