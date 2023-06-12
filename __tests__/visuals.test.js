@@ -26,7 +26,7 @@ describe('End to End tests + Percy.io', () => {
 	const DISCARD = 0;
 
 	beforeEach(async () => {
-		browser = await puppeteer.launch({ headless: false });
+		browser = await puppeteer.launch({ headless: 'new' });
 		page = await browser.newPage();
 		await page.setDefaultTimeout(0);
 	});

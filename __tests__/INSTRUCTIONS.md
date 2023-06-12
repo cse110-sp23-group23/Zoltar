@@ -3,6 +3,7 @@
 ## Installing testing dependencies
 - Download [Node.js](https://nodejs.org/en/download)
 - `npm install`
+- Make sure Google Chrome is your default browser
   
 ## Running tests
 - `npm run test`
