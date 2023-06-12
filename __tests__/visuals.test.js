@@ -253,6 +253,17 @@ describe('End to End tests + Percy.io', () => {
 	} /* loadPagePastSplashScreen */
 
 	/**
+	 * Checks localStorage contents after toggling volume on/off
+	 * @param { boolean } volumeOn true (unmuted) or false (muted)
+	 */
+	async function toggleMuteTest(volumeOn) {
+		const volumeButton = await page.waitForSelector('.volume');
+		await volumeButton.click();
+		let settings = JSON.parse(await page.evaluate(() => localStorage.getItem('settings')));
+		expect(settings.isVolumeOn).toBe(volumeOn);
+	}
+
+	/**
 	 * Checks Menu Ticket functionality for respective button
 	 * @param { string } ticket 'instructions' or 'credits'
 	 */
@@ -289,13 +300,8 @@ describe('End to End tests + Percy.io', () => {
 	it('(UI) test mute/unmute button', async () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await clickSettingsButton();
-		const volumeButton = await page.waitForSelector('.volume');
-		await volumeButton.click();
-		let settings = JSON.parse(await page.evaluate(() => localStorage.getItem('settings')));
-		expect(settings.isVolumeOn).toBe(false);
-		await volumeButton.click();
-		settings = JSON.parse(await page.evaluate(() => localStorage.getItem('settings')));
-		expect(settings.isVolumeOn).toBe(true);
+		await toggleMuteTest(false);
+		await toggleMuteTest(true);
 	});
 
 	it('(User flow) Generate ticket, save, then delete Ticket', async () => {
