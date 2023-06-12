@@ -106,6 +106,7 @@ async function mainTicketHandler(action) {
 
 	if (action) {
 		buttons.save = await page.waitForSelector('#save-button');
+		await page.waitForTimeout(1500);
 		await buttons.save.click();
 		const updateCount = () => document.querySelector('#ticket-count').innerText === '1';
 		await page.waitForFunction(updateCount, 3000);
@@ -123,6 +124,7 @@ async function mainTicketHandler(action) {
  */
 async function clickTicketHistoryButton() {
 	buttons.countTicket = await page.waitForSelector('.count-tickets-icon');
+	await page.waitForTimeout(1500);
 	await buttons.countTicket.click();
 	await page.waitForTimeout(2000);
 } /* clickTicketHistoryButton */

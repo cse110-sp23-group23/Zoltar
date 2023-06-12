@@ -18,7 +18,7 @@ const state = {
 };
 
 let controls;
-let safeToExit;
+let safeToExit = () => true;
 
 /**
  * Allows external functions to tell settings functions which type of controls, 3d or 2d
