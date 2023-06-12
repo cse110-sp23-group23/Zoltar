@@ -53,8 +53,8 @@ class HistoricalTicket extends HTMLElement {
 		fortuneSlot.replaceChildren(fortuneContentNode);
 		numbersSlot.replaceChildren(luckyNumbersNode);
 
-		this.dom.headerImage.src = `assets/images/image-bank-front/header-${state.currentImageFront}.png`;
-		this.dom.backImage.src = `assets/images/image-bank-back/background-card-${state.currentImageBack}.png`;
+		this.dom.headerImage.src = `assets/images/image-bank-front/header-${state.currentImageFront}.webp`;
+		this.dom.backImage.src = `assets/images/image-bank-back/background-card-${state.currentImageBack}.webp`;
 	} /* set content */
 
 	/**

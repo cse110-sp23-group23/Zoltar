@@ -114,8 +114,8 @@ export function convertArrToReadableString(arr) {
 export function updateTicket() {
 	ticket.text.innerText = state.currentMessage;
 	ticket.numbers.innerText = convertArrToReadableString(state.currentNumbers);
-	ticket.backgroundImage.src = `${IMAGE_BANK_PREFIX_BACK}${state.currentImageBack}.png`;
-	ticket.frontImage.src = `${IMAGE_BANK_PREFIX_FRONT}${state.currentImageFront}.png`;
+	ticket.backgroundImage.src = `${IMAGE_BANK_PREFIX_BACK}${state.currentImageBack}.webp`;
+	ticket.frontImage.src = `${IMAGE_BANK_PREFIX_FRONT}${state.currentImageFront}.webp`;
 } /* update */
 
 // hide ticket when user hits escape and card currently shown

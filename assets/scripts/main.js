@@ -169,7 +169,7 @@ export function canTriggerEvent() {
  * @param { String } nameOfImage name of image in format of prefix-name structure
  */
 export function setTicketMapToImage(nameOfImage) {
-	const mapTexture = textureLoader.load(`${options.ticketMat.urlPrefix}${nameOfImage}-map.png`);
+	const mapTexture = textureLoader.load(`${options.ticketMat.urlPrefix}${nameOfImage}-map.webp`);
 	options.ticketMat.material.map = mapTexture;
 } /* setTicketMapToImage */
 

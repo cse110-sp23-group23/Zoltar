@@ -37,15 +37,15 @@
 	<div class="vignette-cover hidden"></div>
 	<section id="splash-screen" class="before-screen">
 		<img class="splash-screen-image" src="./assets/images/zoltar-splash-3d.webp" alt="zoltar splash screen image" 
-			fetchpriority="high" draggable="false">
+			fetchpriority="high" draggable="false" height="100px">
 		<div class="titles">
 			<h1 class="splash-title">ZOLTAR!</h1>
-			<h4 class="loaded-message">loading...</h4>
+			<h2 class="loaded-message">loading...</h2>
 		</div>
 		<div class="long-loading-message hidden">
-			<h4 class="link-to-2d">
+			<h2 class="link-to-2d">
 				Oops! If you want to use a faster version, click <a href="index2d.html">here</a>.
-			</h4>
+			</h2>
 		</div>
 	</section>
 	<!--end splash screen-->
@@ -68,22 +68,22 @@
 			<!--end SVG-->
 		</div>
 		<div class="ticket-back-content">
-			<img src="assets/images/image-bank-back/background-card-king.png" class="ticket-back-image"
+			<img src="assets/images/image-bank-back/background-card-king.webp" class="ticket-back-image"
 				alt="medieval image on back of card" draggable="false">
 		</div>
 		<div class="ticket-front-content flipped">
-			<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule" draggable="false">
+			<img src="assets/images/horizontalrule.webp" class="rule top" alt="top decorative rule" draggable="false">
 			<button id="close-ticket" type="button">
-				<img src="assets/images/close.png" alt="exit button" draggable="false">
+				<img src="assets/images/close.webp" alt="exit button" draggable="false">
 			</button>
 			<p class="ticket-title">YOUR FORTUNE</p>
-			<img src="assets/images/image-bank-front/header-classic.png" class="ticket-header-image"
+			<img src="assets/images/image-bank-front/header-classic.webp" class="ticket-header-image"
 				alt="header decorative image" draggable="false">
 			<p class="ticket-text" id="fortune-content">Zoltar foresees a fateful encounter with a one-eyed, bow-tied
 				llama, revealing an ancient guacamole recipe. This divine discovery shall bring world peace and avocado
 				enlightenment. Trust the llama's wisdom.</p>
 			<p class="ticket-text">Your lucky numbers are <span id="ticket-lucky-numbers">12, 14, 37, and 72</span>.</p>
-			<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule"
+			<img src="assets/images/horizontalrule.webp" class="rule bottom" alt="bottom decorative rule"
 				draggable="false">
 		</div>
 	</div>
@@ -98,21 +98,21 @@
 	</button>
 	<div class="history-wrapper hidden">
 		<button id="close-history" type="button">
-			<img src="assets/images/close.png" alt="exit button" draggable="false">
+			<img src="assets/images/close.webp" alt="exit button" draggable="false">
 		</button>
 		<div class="ticket-history">
 
 		</div>
 		<div class="ticket-history-controls">
 			<button id="left-button">
-				<img src="assets/images/left-arrow.png" alt="left control arrow" draggable="false">
+				<img src="assets/images/left-arrow.webp" alt="left control arrow" draggable="false">
 			</button>
 			<input type="text" id="ticket-history-input" value="1">
 			<label class="ticket-history-label" for="ticket-history-input">
 				/ <span id="ticket-history-total">0</span>
 			</label>
 			<button id="right-button">
-				<img src="assets/images/right-arrow.png" alt="right control arrow" draggable="false">
+				<img src="assets/images/right-arrow.webp" alt="right control arrow" draggable="false">
 			</button>
 		</div>
 	</div>
@@ -140,20 +140,20 @@
 				</div>
 			</div>
 			<div class="ticket-back-content flipped">
-				<img src="assets/images/image-bank-back/background-card-king.png" class="ticket-back-image"
+				<img src="assets/images/image-bank-back/background-card-king.webp" class="ticket-back-image"
 					alt="medieval image on back of card" draggable="false">
 			</div>
 			<div class="ticket-front-content">
-				<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule"
+				<img src="assets/images/horizontalrule.webp" class="rule top" alt="top decorative rule"
 					draggable="false">
 				<p class="ticket-title">YOUR FORTUNE</p>
-				<img src="assets/images/image-bank-front/header-classic.png" class="ticket-header-image"
+				<img src="assets/images/image-bank-front/header-classic.webp" class="ticket-header-image"
 					alt="header decorative image" draggable="false">
 				<p class="ticket-text">
 					<slot name="fortune-content"></slot>
 				</p>
 				<p class="ticket-text">Your lucky numbers are <slot name="lucky-numbers"></slot>.</p>
-				<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule"
+				<img src="assets/images/horizontalrule.webp" class="rule bottom" alt="bottom decorative rule"
 					draggable="false">
 				<div class="ticket-flip-overlay hidden">
 					<button class="flip-history-button">Flip</button>
@@ -166,20 +166,20 @@
 	<!-- Settings Menu -->
 	<div class="settings-menu-container">
 		<button class="settings-menu-button">
-			<img class="clickable" src="./assets/images/menu.svg" draggable="false">
+			<img class="clickable" src="./assets/images/menu.svg" draggable="false" alt="settings button">
 		</button>
 		<section class="settings-menu-settings">
 			<button class="instructions-button settings-menu-icon clickable">
-				<img src="assets/images/help.svg" draggable="false">
+				<img src="assets/images/help.svg" draggable="false" alt="instructions button">
 			</button>
 			<button class="credits-button settings-menu-icon clickable">
-				<img src="assets/images/information.svg" draggable="false">
+				<img src="assets/images/information.svg" draggable="false" alt="credits button">
 			</button>
 			<button class="volume settings-menu-icon clickable">
-				<img src="assets/images/volume_on.svg" draggable="false">
+				<img src="assets/images/volume_on.svg" draggable="false" alt="volume mute/unmute button">
 			</button>
 			<button class="exit-zoltar settings-menu-icon clickable">
-				<img src="assets/images/exit.svg" draggable="false">
+				<img src="assets/images/exit.svg" draggable="false" alt="exit zoltar">
 			</button>
 		</section>
 	</div>
@@ -204,9 +204,9 @@
 				<!--end SVG-->
 			</div>
 			<div class="ticket-front-content">
-				<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule" draggable="false">
+				<img src="assets/images/horizontalrule.webp" class="rule top" alt="top decorative rule" draggable="false">
 				<button class="close-settings-ticket" type="button">
-					<img src="assets/images/close.png" alt="exit button" draggable="false">
+					<img src="assets/images/close.webp" alt="exit button" draggable="false">
 				</button>
 				<p class="ticket-title">CREDITS</p>
 				<p class="ticket-text">
@@ -224,11 +224,12 @@
 					</a>
 					<p class="copyright">Copyright © 2023 UC San Diego</p>
 				</div>
-				<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule"
+				<img src="assets/images/horizontalrule.webp" class="rule bottom" alt="bottom decorative rule"
 					draggable="false">
 			</div>
 		</div>
 	</div>
+	<!--End Credits Ticket-->
 	<!--Instructions Ticket-->
 	<div class="instructions hidden-animation settings-ticket">
 		<div class="ticket-wrapper">
@@ -249,9 +250,9 @@
 				<!--end SVG-->
 			</div>
 			<div class="ticket-front-content">
-				<img src="assets/images/horizontalrule.png" class="rule top" alt="top decorative rule" draggable="false">
+				<img src="assets/images/horizontalrule.webp" class="rule top" alt="top decorative rule" draggable="false">
 				<button class="close-settings-ticket" type="button">
-					<img src="assets/images/close.png" alt="exit button" draggable="false">
+					<img src="assets/images/close.webp" alt="exit button" draggable="false">
 				</button>
 				<p class="ticket-title">INSTRUCTIONS</p>
 				<p class="ticket-text">Prepare for an otherworldly journey with the all-knowing Zoltar! Follow these steps to unveil your destiny.</p>
@@ -263,12 +264,12 @@
 					<li>Revisit past fortunes by clicking on the ticket icon in the bottom right corner.</li>					
 				</ul>
 				<p class="ticket-text">Zoltar is waiting. Are you ready to meet your destiny?</p>
-				<img src="assets/images/horizontalrule.png" class="rule bottom" alt="bottom decorative rule"
+				<img src="assets/images/horizontalrule.webp" class="rule bottom" alt="bottom decorative rule"
 					draggable="false">
 			</div>
 		</div>
 	</div>
-	
+	<!--End Instructions Ticket-->
 	<script>
 		// offer 2d version after 20s, loaded inline for faster execution
 		setTimeout(() => {

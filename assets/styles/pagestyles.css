@@ -27,7 +27,7 @@ body {
 }
 
 .custom-mouse {
-	cursor: url('../images/customcursorpoint.png'), auto;
+	cursor: url('../images/customcursorpoint.webp'), auto;
 }
 
 .before-screen {
@@ -101,7 +101,7 @@ body {
 
 .link-to-2d a:hover {
 	text-decoration: underline;
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 }
 
 .save-delete-ticket {
@@ -133,7 +133,7 @@ body {
 
 #save-button:hover {
 	background-color: rgba(213, 179, 0, 0.95);
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 }
 
 #discard-button {
@@ -142,7 +142,7 @@ body {
 
 #discard-button:hover {
 	background-color: rgba(180, 180, 180, 0.95);
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 }
 
 .cover {
@@ -193,7 +193,7 @@ canvas {
 	bottom: 3vw;
 	right: 3vw;
 	background-color: transparent;
-	background-image: url('../images/card_icon.png');
+	background-image: url('../images/card_icon.webp');
 	background-size: cover;
 	width: 5vw;
 	height: 7vw;
@@ -216,7 +216,7 @@ canvas {
 }
 
 .count-tickets-icon:hover {
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 	transform: rotate3d(-1, -1, 0.1, -16deg) scale(0.97);
 	box-shadow: inset -4vw 6vw 7vw rgba(255, 217, 0, 0.12);
 }
@@ -269,7 +269,7 @@ canvas {
 }
 
 .ticket-history-controls button:hover {
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 	filter: brightness(75%);
 }
 
@@ -286,7 +286,7 @@ canvas {
 }
 
 #ticket-history-input:hover {
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 	background-color: rgba(203, 203, 203, 0.95);
 }
 
@@ -308,7 +308,7 @@ canvas {
 }
 
 #close-history:hover {
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 }
 
 .ticket-history-label {
@@ -387,7 +387,7 @@ historical-ticket {
 }
 
 .clickable {
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 }
 
 .splash-screen-image {

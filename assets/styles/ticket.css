@@ -34,7 +34,7 @@ body {
 	padding: 0;
 	background-color: transparent;
 	border: none;
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 }
 
 #close-ticket img {
@@ -48,7 +48,7 @@ body {
 	padding: 0;
 	background-color: transparent;
 	border: none;
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 }
 
 .close-settings-ticket img {
@@ -130,7 +130,7 @@ body {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-image: url("../images/natural-paper.png");
+	background-image: url("../images/natural-paper.webp");
 	background-size: 100% auto;
 	filter: url(#weathered-edges);
 	background-color: #E0C9A6;
@@ -144,7 +144,7 @@ body {
 }
 
 .ticket-hoverable:hover {
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 	transform: translate(-50%, -50%) rotate3d(-1, -1, -0.1, -15deg);
 }
 

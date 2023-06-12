@@ -75,7 +75,7 @@
 }
 
 .ticket-hoverable:hover {
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 	transform: rotate3d(-1, -1, -0.1, -15deg);
 }
 
@@ -94,7 +94,7 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-image: url("../images/natural-paper.png");
+	background-image: url("../images/natural-paper.webp");
 	background-size: 100% auto;
 	filter: url(#weathered-edges);
 	background-color: #E0C9A6;
@@ -136,7 +136,7 @@
 }
 
 .ticket-flip-overlay button:hover {
-	cursor: url('../images/customcursorclick.png'), pointer;
+	cursor: url('../images/customcursorclick.webp'), pointer;
 }
 
 .flip-history-button {
