@@ -259,7 +259,7 @@ describe('End to End tests + Percy.io', () => {
 	async function toggleMuteTest(volumeOn) {
 		const volumeButton = await page.waitForSelector('.volume');
 		await volumeButton.click();
-		let settings = JSON.parse(await page.evaluate(() => localStorage.getItem('settings')));
+		const settings = JSON.parse(await page.evaluate(() => localStorage.getItem('settings')));
 		expect(settings.isVolumeOn).toBe(volumeOn);
 	}
 
