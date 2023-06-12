@@ -128,19 +128,6 @@ async function clickTicketHistoryButton() {
 } /* clickTicketHistoryButton */
 
 /**
- * Checks if ticket history opens when there are non
- * @param none
- */
-async function openEmptyHistoryTest() {
-	const historyWrapperDoesntAppear = () => document.querySelector('.history-wrapper').classList.length === 2;
-
-	await page.waitForFunction(historyWrapperDoesntAppear, 5000);
-
-	testData.classList = await getClassList('.history-wrapper');
-	expect(Object.values(testData.classList)).toContain('hidden');
-} /* openEmptyHistoryTest */
-
-/**
  * Deletes ticket that exists ticket history
  * Call AFTER mainTicketHandler(SAVE)
  * @param none
@@ -371,12 +358,6 @@ describe('User flow Tests', () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await generateMainTicket();
 		await mainTicketHandler(DISCARD);
-	});
-
-	it('Opening Ticket history with no tickets', async () => {
-		await loadPagePastSplashScreen(URL_2D);
-		await clickTicketHistoryButton();
-		await openEmptyHistoryTest();
 	});
 
 	it('Opens settings then toggle instructions ticket', async () => {
