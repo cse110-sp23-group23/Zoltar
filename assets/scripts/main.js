@@ -82,7 +82,7 @@ controls.API.enabled = false;
 setControls(controls);
 
 // glTf 2.0 Loader
-loader.load('assets/models/fixedangle.glb', (gltf) => {
+loader.load('assets/models/zoltarmain.glb', (gltf) => {
 	const object = gltf.scene;
 	object.scale.copy(options.model.scale);
 	object.position.copy(options.model.position);
