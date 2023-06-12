@@ -415,3 +415,8 @@ historical-ticket {
 .gh-footer .copyright {
 	margin: 0;
 }
+
+.dead-button {
+	visibility: hidden;
+	pointer-events: none;
+}

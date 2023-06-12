@@ -91,6 +91,13 @@ function translateCards() {
 		const cardMod = card;
 		cardMod.style.transform = `translate(calc(${geoSumDistance}vw - 50%), 0) scale(${scaleFactor})`;
 	});
+	domContent.leftButton.classList.remove('dead-button');
+	domContent.rightButton.classList.remove('dead-button');
+	if (state.currentlySelected === 0) {
+		domContent.leftButton.classList.add('dead-button');
+	} else if (state.currentlySelected === currentCards.length - 1) {
+		domContent.rightButton.classList.add('dead-button');
+	}
 } /* translateCards */
 
 /**
