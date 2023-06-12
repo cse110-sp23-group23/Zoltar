@@ -87,8 +87,8 @@ body {
 }
 
 .link-to-2d {
-	font-family: Bodoni, monospace;
-	font-size: 2.5vw;
+	font-family: Cinzel, monospace;
+	font-size: 1.5vw;
 	color: white;
 	font-weight: 100;
 	margin-bottom: 10vh;
@@ -106,15 +106,14 @@ body {
 
 .save-delete-ticket {
 	position: absolute;
-	display: block;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 200;
 }
 
-#save-button,
-#discard-button {
+.pos-button,
+.neg-button {
 	border-radius: 0.35vw;
 	width: 12vw;
 	text-align: center;
@@ -126,23 +125,43 @@ body {
 	transition: background-color 200ms ease-in-out;
 }
 
-#save-button {
+.pos-button {
 	background-color: rgba(253, 219, 38, 0.95);
 	margin-left: 3vw;
 }
 
-#save-button:hover {
+.pos-button:hover {
 	background-color: rgba(213, 179, 0, 0.95);
 	cursor: url('../images/customcursorclick.webp'), pointer;
 }
 
-#discard-button {
+.neg-button {
 	background-color: rgba(230, 230, 230, 0.95);
 }
 
-#discard-button:hover {
+.neg-button:hover {
 	background-color: rgba(180, 180, 180, 0.95);
 	cursor: url('../images/customcursorclick.webp'), pointer;
+}
+
+.exit-confirmation {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2000;
+}
+
+.confirmation-leave-message {
+	font-family: Cinzel, fantasy;
+	font-size: 2vw;
+	color: rgba(253, 219, 38, 0.95);
+	text-align: center;
+}
+
+.buttons-group {
+	display: flex;
+	justify-content: center;
 }
 
 .cover {

@@ -65,3 +65,16 @@ export function flickVignette() {
 		cover.classList.remove('vignette-cover');
 	});
 } /* flickVignette */
+
+/**
+ * For elements with opacity transition, sets to no opacity and then hides
+ * when transition is over
+ * @param { HTMLElement } el element to hide
+ */
+export function slowHideElement(el) {
+	el.classList.add('no-opacity');
+	el.addEventListener('transitionend', () => {
+		el.classList.add('hidden');
+		el.classList.remove('no-opacity');
+	}, { once: true });
+} /* slowHideElement */

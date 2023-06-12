@@ -1,4 +1,4 @@
-import { toggleClassToArr, clamp } from './util.js';
+import { toggleClassToArr, clamp, slowHideElement } from './util.js';
 
 let domContent = {};
 let currentCards = [];
@@ -20,8 +20,8 @@ export function historyIsOpen() {
  * @param none
  */
 function exitHistory() {
-	const arr = [domContent.cover, domContent.historyWrapper, domContent.historyIcon, domContent.settings];
-	toggleClassToArr(arr, 'hidden');
+	toggleClassToArr([domContent.historyWrapper, domContent.historyIcon, domContent.settings], 'hidden');
+	slowHideElement(domContent.cover);
 	domContent.historyIcon.classList.remove('count-tickets-flipped');
 	domContent.historyIcon.addEventListener('transitionend', () => {
 		domContent.ticketCounter.classList.remove('no-opacity');

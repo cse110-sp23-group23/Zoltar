@@ -1,4 +1,5 @@
 import { mute, unmute } from './noise.js';
+import { toggleClassToArr, slowHideElement } from './util.js';
 
 const VOLUME_SRC_ON = './assets/images/volume_on.svg';
 const VOLUME_SRC_OFF = './assets/images/volume_off.svg';
@@ -13,6 +14,7 @@ const state = {
 	isTicketDisplayed: false,
 	isSettingsOpen: false,
 	ticketOpened: null,
+	exitOpen: false,
 };
 
 let controls;
@@ -129,12 +131,15 @@ function settingsTicketHandler(ticket) {
 } /* settingsTicketHandler */
 
 /**
- * Asks user for confirmation if they have ticket currently pending, otherwise
- * says goodbye and goes back to start
+ * Closes out of exit confirmation menu when user chooses to stay on page
+ * @param none
  */
-function exitPage() {
-
-} /* exitPage */
+function closeExitPageMenu() {
+	state.exitOpen = false;
+	controls.API.enabled = true;
+	toggleClassToArr([dom.exitConfirmation, dom.ticketCount, dom.settings], 'hidden');
+	slowHideElement(dom.cover);
+} /* closeExitPageMenu */
 
 /**
  * Handles keydown event listener for setttings. Closes currently open settings tickets
@@ -147,9 +152,25 @@ function handleKeydown(event) {
 			closeAllSettingsTickets();
 		} else if (state.isSettingsOpen && dom.cover.classList.contains('hidden')) {
 			toggleSettingsContainer();
+		} else if (state.exitOpen) {
+			closeExitPageMenu();
 		}
 	}
 } /* handleEscape */
+
+/**
+ * Asks user for confirmation if they have ticket currently pending, otherwise
+ * says goodbye and goes back to start
+ * @param none
+ */
+function exitPage() {
+	state.exitOpen = true;
+	controls.API.enabled = false;
+	closeAllSettingsTickets();
+	toggleClassToArr([dom.exitConfirmation, dom.cover, dom.ticketCount, dom.settings], 'hidden');
+	dom.confirmExit.addEventListener('click', window.location.reload.bind(window.location), { once: true });
+	dom.denyExit.addEventListener('click', closeExitPageMenu, { once: true });
+} /* exitPage */
 
 function init() {
 	dom = {
@@ -167,6 +188,9 @@ function init() {
 		ticketCount: document.querySelector('.count-tickets-icon'),
 		cover: document.querySelector('.cover'),
 		settingsTickets: document.querySelectorAll('.settings-ticket'),
+		exitConfirmation: document.querySelector('.exit-confirmation'),
+		confirmExit: document.querySelector('#leave-button'),
+		denyExit: document.querySelector('#stay-button'),
 	};
 	dom.exitButton.addEventListener('click', exitPage);
 	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
