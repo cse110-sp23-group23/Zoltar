@@ -172,8 +172,12 @@ function exitPage() {
 	dom.denyExit.addEventListener('click', closeExitPageMenu, { once: true });
 } /* exitPage */
 
-function init() {
-	dom = {
+/**
+ * Finds and returns all elements necessary for settings.js file
+ * @return { Object<HTMLElement> } all elements needed for this file
+ */
+function findElementsInDOM() {
+	return {
 		settings: document.querySelector('.settings-menu-container'),
 		settingsButton: document.querySelector('.settings-menu-button img'),
 		volume: document.querySelector('.volume'),
@@ -192,6 +196,10 @@ function init() {
 		confirmExit: document.querySelector('#leave-button'),
 		denyExit: document.querySelector('#stay-button'),
 	};
+} /* findElementsInDom */
+
+function init() {
+	dom = findElementsInDOM();
 	dom.exitButton.addEventListener('click', exitPage);
 	dom.settingsButton.addEventListener('click', toggleSettingsContainer);
 	dom.volume.addEventListener('click', toggleMute);
