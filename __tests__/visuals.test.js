@@ -261,7 +261,7 @@ describe('End to End tests + Percy.io', () => {
 		await volumeButton.click();
 		const settings = JSON.parse(await page.evaluate(() => localStorage.getItem('settings')));
 		expect(settings.isVolumeOn).toBe(volumeOn);
-	}
+	} /* toggleMuteTest */
 
 	/**
 	 * Checks Menu Ticket functionality for respective button
