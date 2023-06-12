@@ -9,7 +9,7 @@ const EIGHT_BALL_URL = 'https://cse110-sp23-group23.github.io/cse110-sp23-group2
 const URL_3D = 'http://localhost:5500/index.html';
 const URL_2D = 'http://localhost:5500/index2d.html';
 
-describe('visual testing thru percy.io', () => {
+describe('End to End tests + Percy.io', () => {
 	let browser;
 	let page;
 	let splashScreen;
@@ -26,7 +26,7 @@ describe('visual testing thru percy.io', () => {
 	const DISCARD = 0;
 
 	beforeEach(async () => {
-		browser = await puppeteer.launch({ headless: 'new' });
+		browser = await puppeteer.launch({ headless: false });
 		page = await browser.newPage();
 		await page.setDefaultTimeout(0);
 	});
@@ -41,14 +41,6 @@ describe('visual testing thru percy.io', () => {
 		await new Promise((r) => { setTimeout(r, 1000); });
 		await percySnapshot(page, `Loading ${version} page image`);
 	} /* loadTest */
-
-	it('(3D) loads the homepage', async () => {
-		await loadTest(URL_3D, '3D');
-	});
-
-	it('(2D) loads the homepage', async () => {
-		await loadTest(URL_2D, '2D');
-	});
 
 	/**
 	 * Fetches and returns classlist of element in dom of page
@@ -160,7 +152,7 @@ describe('visual testing thru percy.io', () => {
 	async function clickSettingsButton() {
 		const settingsBtn = await page.waitForSelector('.settings-menu-button');
 		await settingsBtn.click();
-	}
+	} /* clickSettingsButton */
 
 	/**
 	 * Tests sliding in of settings menu after button is clicked.
@@ -178,7 +170,29 @@ describe('visual testing thru percy.io', () => {
 		// Checks for absense of 'settings-slide-in' class within settings menu
 		testData.classList = await getClassList('.settings-menu-settings');
 		expect(Object.values(testData.classList)).not.toContain('settings-slide-in');
-	}
+	} /* testSettingsMenuSliding */
+
+	/**
+	 * Opens the menu ticket by clicking its icon
+	 * @param { string } ticket 'instructions' or 'credits'
+	 */
+	async function openMenuTicket(ticket) {
+		buttons.menu = await page.waitForSelector(`.${ticket}-button`);
+		await buttons.menu.click();
+		testData.classList = await getClassList(`.${ticket}`);
+		expect(Object.values(testData.classList)).not.toContain('hidden-animation');
+	} /* openMenuTicket */
+
+	/**
+	 * Closes the menu ticket by clicking its icon
+	 * @param { string } ticket 'instructions' or 'credit'
+	 */
+	async function closeMenuTicket(ticket) {
+		await page.waitForTimeout(2000);
+		await buttons.menu.click();
+		testData.classList = await getClassList(`.${ticket}`);
+		expect(Object.values(testData.classList)).toContain('hidden-animation');
+	} /* loseMenuTicket */
 
 	/**
 	 * Checks if Eight Ball in 2D redirects to Magic-8-Ball page
@@ -238,6 +252,25 @@ describe('visual testing thru percy.io', () => {
 		await new Promise((r) => { setTimeout(r, 2000); });
 	} /* loadPagePastSplashScreen */
 
+	/**
+	 * Checks Menu Ticket functionality for respective button
+	 * @param { string } ticket 'instructions' or 'credits'
+	 */
+	async function menuTicketTest(ticket) {
+		await loadPagePastSplashScreen(URL_2D);
+		await testSettingsMenuSliding();
+		await openMenuTicket(ticket);
+		await closeMenuTicket(ticket);
+	} /* menuTicketTest */
+
+	it('(3D) loads the homepage', async () => {
+		await loadTest(URL_3D, '3D');
+	});
+
+	it('(2D) loads the homepage', async () => {
+		await loadTest(URL_2D, '2D');
+	});
+
 	it('(UI) pressing anywhere on screen removes splash screen', async () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await testSplashScreen(URL_2D);
@@ -253,7 +286,19 @@ describe('visual testing thru percy.io', () => {
 		await testSettingsMenuSliding();
 	});
 
-	it('(User flow) Save ticket, then delete Ticket', async () => {
+	it('(UI) test mute/unmute button', async () => {
+		await loadPagePastSplashScreen(URL_2D);
+		await clickSettingsButton();
+		const volumeButton = await page.waitForSelector('.volume');
+		await volumeButton.click();
+		let settings = JSON.parse(await page.evaluate(() => localStorage.getItem('settings')));
+		expect(settings.isVolumeOn).toBe(false);
+		await volumeButton.click();
+		settings = JSON.parse(await page.evaluate(() => localStorage.getItem('settings')));
+		expect(settings.isVolumeOn).toBe(true);
+	});
+
+	it('(User flow) Generate ticket, save, then delete Ticket', async () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await generateMainTicket();
 		await mainTicketHandler(SAVE);
@@ -264,6 +309,14 @@ describe('visual testing thru percy.io', () => {
 		await loadPagePastSplashScreen(URL_2D);
 		await generateMainTicket();
 		await mainTicketHandler(DISCARD);
+	});
+
+	it('(User flow) Opens settings then toggle instructions ticket', async () => {
+		await menuTicketTest('instructions');
+	});
+
+	it('(User flow) Opens settings then toggle credits ticket', async () => {
+		await menuTicketTest('credits');
 	});
 
 	afterEach(async () => {
