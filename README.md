@@ -9,6 +9,6 @@
 - Site: [zoltar.live](https://zoltar.live)
 - JSDOCS: [zoltar.live/jsdocs](https://zoltar.live/jsdocs)
 - Main repo: [https://github.com/cse110-sp23-group23/cse110-sp23-group23/](https://github.com/cse110-sp23-group23/cse110-sp23-group23/)
-- Public video: [https://youtu.be/FCAjVprAkjA](https://youtu.be/FCAjVprAkjA)
+- Public video: [https://www.youtube.com/watch?v=P_2KkEwSmiY](https://www.youtube.com/watch?v=P_2KkEwSmiY)
 
 **NOTE: This repo only contains code. General team documentation is contained in the main repo above.**
