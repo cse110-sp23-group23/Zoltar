@@ -13,3 +13,5 @@
 - Private video: [https://www.youtube.com/watch?v=hqSywrbr5Ds](https://www.youtube.com/watch?v=hqSywrbr5Ds)
 
 **NOTE: This repo only contains code. General team documentation is contained in the main repo above.**
+
+Our current CI/CD pipeline diagram can be viewed [here](https://github.com/cse110-sp23-group23/cse110-sp23-group23/blob/main/admin/cipipeline/pipeline.png).
